@@ -1,0 +1,291 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>KubeSphere 2.1.1 to kubernetes - 小炒肉</title><meta name=Description content="KubeSphere 2.1.1 to kubernetes"><meta property="og:title" content="KubeSphere 2.1.1 to kubernetes"><meta property="og:description" content="KubeSphere 2.1.1 to kubernetes"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/kubesphere-2.1.1/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2020-04-01T00:00:00+00:00"><meta property="article:modified_time" content="2020-04-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="KubeSphere 2.1.1 to kubernetes"><meta name=twitter:description content="KubeSphere 2.1.1 to kubernetes"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/kubesphere-2.1.1/><link rel=prev href=https://jicki.cn/kubeadm-1.18.0/><link rel=next href=https://jicki.cn/k8s-rollingupdate/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"KubeSphere 2.1.1 to kubernetes","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/kubesphere-2.1.1\/"},"genre":"posts","keywords":"kubernetes, kubeSphere, docker","wordcount":2888,"url":"https:\/\/jicki.cn\/kubesphere-2.1.1\/","datePublished":"2020-04-01T00:00:00+00:00","dateModified":"2020-04-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"KubeSphere 2.1.1 to kubernetes"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">KubeSphere 2.1.1 to kubernetes</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-04-01>2020-04-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2888 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id=/kubesphere-2.1.1/ class=leancloud_visitors data-flag-title="KubeSphere 2.1.1 to kubernetes">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#什么是-kubesphere>什么是 KubeSphere</a></li><li><a href=#kubesphere-特点>KubeSphere 特点</a></li><li><a href=#kubesphere-架构>KubeSphere 架构</a></li><li><a href=#kubesphere-部署>KubeSphere 部署</a><ul><li><a href=#kubernetes-集群信息>Kubernetes 集群信息</a></li><li><a href=#nfs-storageclass>NFS StorageClass</a></li><li><a href=#部署-kubesphere>部署 KubeSphere</a></li><li><a href=#访问-kubesphere>访问 KubeSphere</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=kubesphere>KubeSphere</h1><blockquote><p>以应用为中心的容器平台, Golang 语言开发并且完全开源。</p></blockquote><h2 id=什么是-kubesphere>什么是 KubeSphere</h2><ul><li>KubeSphere 是一款面向云原生设计的开源项目，在目前主流容器调度平台 Kubernetes 之上构建的分布式多租户容器管理平台，提供简单易用的操作界面以及向导式操作方式，在降低用户使用容器调度平台学习成本的同时，极大降低开发、测试、运维的日常工作的复杂度。</li></ul><h2 id=kubesphere-特点>KubeSphere 特点</h2><ul><li><p>极简体验，向导式 UI</p><ul><li><p>面向开发、测试、运维友好的用户界面，向导式用户体验，降低 Kubernetes 学习成本的设计理念</p></li><li><p>用户基于应用模板可以一键部署一个完整应用的所有服务，UI 提供全生命周期管理</p></li></ul></li><li><p>业务高可靠与高可用</p><ul><li><p><code>自动弹性伸缩</code>：部署 (Deployment) 支持根据访问量进行动态横向伸缩和容器资源的弹性扩缩容，保证集群和容器资源的高可用</p></li><li><p><code>提供健康检查</code>：支持为容器设置健康检查探针来检查容器的健康状态，确保业务的可靠性</p></li></ul></li><li><p>容器化 DevOps 持续交付</p><ul><li><p><code>DevOps</code>：基于 Jenkins 的可视化 CI/CD 流水线编辑，无需对 Jenkins 进行配置，同时内置丰富的 CI/CD 流水线模版</p></li><li><p><code>Source to Image (s2i)</code>: 从已有的代码仓库中获取代码，并通过 s2i 自动构建镜像完成应用部署并自动推送至镜像仓库，无需编写 Dockerfile</p></li><li><p><code>端到端的流水线设置</code>: 支持从仓库 (GitHub / SVN / Git)、代码编译、镜像制作、镜像安全、推送仓库、版本发布、到定时构建的端到端流水线设置</p></li><li><p><code>安全管理</code>: 支持代码静态分析扫描以对 DevOps 工程中代码质量进行安全管理</p></li><li><p><code>日志</code>: 日志完整记录 CI / CD 流水线运行全过程</p></li></ul></li><li><p>开箱即用的微服务治理</p><ul><li><p><code>灵活的微服务框架</code>: 基于 Istio 微服务框架提供可视化的微服务治理功能，将 Kubernetes 的服务进行更细粒度的拆分，支持无侵入的微服务治理</p></li><li><p><code>完善的治理功能</code>: 支持灰度发布、熔断、流量监测、流量管控、限流、链路追踪、智能路由等完善的微服务治理功能</p></li></ul></li><li><p>灵活的持久化存储方案</p><ul><li><p>支持 GlusterFS、CephRBD、NFS 等开源存储方案，支持有状态存储</p></li><li><p>NeonSAN CSI 插件对接 QingStor NeonSAN，以更低时延、更加弹性、更高性能的存储，满足核心业务需求</p></li><li><p>QingCloud CSI 插件对接 QingCloud 云平台各种性能的块存储服务</p></li></ul></li><li><p>灵活的网络方案支持</p><ul><li><p>支持 Calico、Flannel 等开源网络方案</p></li><li><p>分别开发了 QingCloud 云平台负载均衡器插件 和适用于物理机部署 Kubernetes 的 负载均衡器插件 Porter</p></li><li><p><code>商业验证的 SDN 能力</code>：可通过 QingCloud CNI 插件对接 QingCloud SDN，获得更安全、更高性能的网络支持</p></li></ul></li><li><p>多维度监控日志告警</p><ul><li><p>KubeSphere 全监控运维功能可通过可视化界面操作，同时，开放标准接口对接企业运维系统，以统一运维入口实现集中化运维</p></li><li><p><code>可视化秒级监控</code>: 秒级频率、双重维度、十六项指标立体化监控；提供服务组件监控，快速定位组件故障</p></li><li><p>提供按节点、企业空间、项目等资源用量排行</p></li><li><p>支持基于多租户、多维度的监控指标告警，目前告警策略支持集群节点级别和工作负载级别等两个层级</p></li><li><p>提供多租户日志管理，在 KubeSphere 的日志查询系统中，不同的租户只能看到属于自己的日志信息</p></li></ul></li></ul><h2 id=kubesphere-架构>KubeSphere 架构</h2><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubesphere/kubesphere-1.png data-srcset="https://jicki.cn/img/posts/kubesphere/kubesphere-1.png, https://jicki.cn/img/posts/kubesphere/kubesphere-1.png 1.5x, https://jicki.cn/img/posts/kubesphere/kubesphere-1.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubesphere/kubesphere-1.png title=图片2></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubesphere/kubesphere.png data-srcset="https://jicki.cn/img/posts/kubesphere/kubesphere.png, https://jicki.cn/img/posts/kubesphere/kubesphere.png 1.5x, https://jicki.cn/img/posts/kubesphere/kubesphere.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubesphere/kubesphere.png title=图片1></p><table><thead><tr><th>组件</th><th>功能说明</th></tr></thead><tbody><tr><td>ks-account</td><td>提供用户、权限管理相关的 API</td></tr><tr><td>ks-apiserver</td><td>整个集群管理的 API 接口和集群内部各个模块之间通信的枢纽，以及集群安全控制</td></tr><tr><td>ks-apigateway</td><td>负责处理服务请求和处理 API 调用过程中的所有任务</td></tr><tr><td>ks-console</td><td>提供 KubeSphere 的控制台服务</td></tr><tr><td>ks-controller-manager</td><td>实现业务逻辑的，例如创建企业空间时，为其创建对应的权限；或创建服务策略时，生成对应的 Istio 配置等</td></tr><tr><td>Metrics-server</td><td>Kubernetes 的监控组件，从每个节点的 Kubelet 采集指标信息</td></tr><tr><td>Prometheus</td><td>提供集群、节点、工作负载、API 对象等相关监控数据与服务</td></tr><tr><td>Elasticsearch</td><td>提供集群的日志索引、查询、数据管理等服务，在安装时也可对接您已有的 ES 减少资源消耗</td></tr><tr><td>Fluent Bit</td><td>提供日志接收与转发，可将采集到的⽇志信息发送到 ElasticSearch、Kafka</td></tr><tr><td>Jenkins</td><td>提供 CI/CD 流水线服务</td></tr><tr><td>SonarQube</td><td>可选安装项，提供代码静态检查与质量分析</td></tr><tr><td>Source-to-Image</td><td>将源代码自动将编译并打包成 Docker 镜像，方便快速构建镜像</td></tr><tr><td>Istio</td><td>提供微服务治理与流量管控，如灰度发布、金丝雀发布、熔断、流量镜像等</td></tr><tr><td>Jaeger</td><td>收集 Sidecar 数据，提供分布式 Tracing 服务</td></tr><tr><td>OpenPitrix</td><td>提供应用模板、应用部署与管理的服务</td></tr><tr><td>Alert</td><td>提供集群、Workload、Pod、容器级别的自定义告警服务</td></tr><tr><td>Notification</td><td>通用的通知服务，目前支持邮件通知</td></tr><tr><td>redis</td><td>将 ks-console 与 ks-account 的数据存储在内存中的存储系统</td></tr><tr><td>MySQL</td><td>集群后端组件的数据库，监控、告警、DevOps、OpenPitrix 共用 MySQL 服务</td></tr><tr><td>PostgreSQL</td><td>SonarQube 和 Harbor 的后端数据库</td></tr><tr><td>OpenLDAP</td><td>负责集中存储和管理用户账号信息与对接外部的 LDAP</td></tr><tr><td>存储</td><td>内置 CSI 插件对接云平台存储服务，可选安装开源的 NFS/Ceph/Gluster 的客户端</td></tr><tr><td>网络</td><td>可选安装 Calico/Flannel 等开源的网络插件，支持对接云平台 SDN</td></tr></tbody></table><h2 id=kubesphere-部署>KubeSphere 部署</h2><blockquote><p>KubeSphere 支持独立部署与 Linux 主机中, 也支持直接部署于 Kubernetes 集群中。</p></blockquote><ul><li><p>本文中将<code>KubeSphere</code> 部署于 Kubernetes 集群中。</p><ul><li><p>集群需求:</p><ul><li><p>Kubernetes 版本: <code>1.15.x</code>、<code>1.16.x</code>、<code>1.17.x</code>；</p></li><li><p>Helm版本： 2.10.0 ≤ Helm Version ＜ 3.0.0； 关于 helm 的tiller init 安装, 使用国内的镜像 <code>helm init --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.5 --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts</code></p></li><li><p>集群已有默认的存储类型（StorageClass）。 必须要有默认的 StorageClass, 可以安装 nfs,gfs,cephfs, openobs 等。</p></li><li><p>CSR signing 功能在 kube-apiserver 中被激活。</p></li><li><p>集群能够访问外网。</p></li></ul></li></ul></li></ul><h3 id=kubernetes-集群信息>Kubernetes 集群信息</h3><table><thead><tr><th>HostName</th><th>IP</th><th>Docker</th><th>Kernel</th><th>kuberneres</th><th>作用</th></tr></thead><tbody><tr><td>k8s-node-1</td><td>10.18.77.61</td><td>19.03.6-ce</td><td>4.14.173</td><td>1.18.0</td><td>Master节点</td></tr><tr><td>k8s-node-2</td><td>10.18.77.117</td><td>19.03.6-ce</td><td>4.14.173</td><td>1.18.0</td><td>Master节点 or Node节点</td></tr><tr><td>k8s-node-3</td><td>10.18.77.218</td><td>19.03.6-ce</td><td>4.14.173</td><td>1.18.0</td><td>Master节点 or Node节点 or nfs Server</td></tr></tbody></table><h3 id=nfs-storageclass>NFS StorageClass</h3><ul><li>NFS Server 节点安装服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-3 opt]# yum -y install nfs-utils rpcbind
+</code></pre></td></tr></table></div></div><ul><li>所有 K8S 节点都需要安装 <code>nfs-utils</code> 依赖, 否则无法挂载</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>yum -y install nfs-utils
+
+</code></pre></td></tr></table></div></div><ul><li>配置 NFS 目录与权限</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 添加 nfs 存储目录
+[root@k8s-node-3 opt]# mkdir -p /opt/nfsdata
+
+
+# 增加权限以及目录到 nfs
+[root@k8s-node-3 opt]# vi /etc/exports
+
+增加
+
+/opt/nfsdata   10.18.77.0/24(rw,sync,no_root_squash)
+</code></pre></td></tr></table></div></div><ul><li>启动 NFS 服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl enable rpcbind.service    
+systemctl enable nfs-server.service
+
+systemctl start rpcbind.service    
+systemctl start nfs-server.service
+
+
+# 查看信息
+[root@k8s-node-3 opt]# showmount -e 10.18.77.218
+Export list for 10.18.77.218:
+/opt/nfsdata 10.18.77.0/24
+</code></pre></td></tr></table></div></div><ul><li><p>部署 <code>StorageClass</code></p><ul><li><p>此版本为古老的版本, k8s 新版的存储驱动必须符合 CSI 接口实现。</p></li><li><p>官方有提供一个基于 CSI 接口的 <code>https://github.com/kubernetes-csi/csi-driver-nfs</code> 但是目前并不支持 <code>StorageClass</code></p></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 下载 yaml 文件
+
+for file in class.yaml deployment.yaml rbac.yaml;
+do 
+  wget https://raw.githubusercontent.com/kubernetes-incubator/external-storage/master/nfs-client/deploy/$file;
+done
+
+</code></pre></td></tr></table></div></div><ul><li>修改 deployment.yaml 文件</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># vi deployment.yaml
+
+# 修改如下部分
+
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: fuseim.pri/ifs
+            - name: NFS_SERVER
+              value: 10.18.77.218
+            - name: NFS_PATH
+              value: /opt/nfsdata
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 10.18.77.218
+            path: /opt/nfsdata
+</code></pre></td></tr></table></div></div><ul><li>创建服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 nfs]# kubectl apply -f .
+storageclass.storage.k8s.io/managed-nfs-storage created
+deployment.apps/nfs-client-provisioner created
+serviceaccount/nfs-client-provisioner created
+clusterrole.rbac.authorization.k8s.io/nfs-client-provisioner-runner created
+clusterrolebinding.rbac.authorization.k8s.io/run-nfs-client-provisioner created
+role.rbac.authorization.k8s.io/leader-locking-nfs-client-provisioner created
+rolebinding.rbac.authorization.k8s.io/leader-locking-nfs-client-provisioner created
+</code></pre></td></tr></table></div></div><ul><li>查看服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 nfs]# kubectl get pods
+NAME                                      READY   STATUS    RESTARTS   AGE
+nfs-client-provisioner-576d645cbc-6546h   1/1     Running   0          59s
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 nfs]# kubectl get storageclass
+NAME                  PROVISIONER      RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+managed-nfs-storage   fuseim.pri/ifs   Delete          Immediate           false                  74s
+
+</code></pre></td></tr></table></div></div><ul><li><p>标记一个默认的<code>StorageClass</code></p><ul><li>集群内只能有一个 <code>StorageClass</code> 能够标记为默认。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 注意 managed-nfs-storage 为 storageclass的名称
+
+kubectl patch storageclass managed-nfs-storage -p &#39;{&#34;metadata&#34;: {&#34;annotations&#34;:{&#34;storageclass.kubernetes.io/is-default-class&#34;:&#34;true&#34;}}}&#39;
+
+# 输出:
+storageclass.storage.k8s.io/managed-nfs-storage patched
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 再次查看 storageclass
+
+[root@k8s-node-1 nfs]# kubectl get storageclass
+NAME                            PROVISIONER      RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
+managed-nfs-storage (default)   fuseim.pri/ifs   Delete          Immediate           false                  6m19s
+</code></pre></td></tr></table></div></div><h3 id=部署-kubesphere>部署 KubeSphere</h3><ul><li><p>官方提供 <code>helm</code> 与 <code>yaml</code> 文件导入.</p></li><li><p>集群可用的资源符合 CPU > 1 Core，可用内存 > 2 G 。使用 minimal 版本</p><ul><li>minimal 版本只开启了最基本的KubeSphere组件。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl apply -f https://raw.githubusercontent.com/kubesphere/ks-installer/master/kubesphere-minimal.yaml
+</code></pre></td></tr></table></div></div><ul><li><p>集群可用的资源符合 CPU ≥ 8 Core，可用内存 ≥ 16 G。使用完整版本</p><ul><li>完整的版本, 开启了所有的 KubeSphere组件。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl apply -f https://raw.githubusercontent.com/kubesphere/ks-installer/master/kubesphere-complete-setup.yaml
+</code></pre></td></tr></table></div></div><ul><li><p>查看安装过程</p><ul><li><code>ks-installer</code> 可以看到是利用 <code>ansible</code> 安装的。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l app=ks-install -o jsonpath=&#39;{.items[0].metadata.name}&#39;) -f
+
+</code></pre></td></tr></table></div></div><ul><li>查看服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@localhost kubesphere]# kubectl get pods,svc -n kubesphere-system
+NAME                                         READY   STATUS    RESTARTS   AGE
+pod/ks-account-596657f8c6-dbsm4              1/1     Running   0          31m
+pod/ks-apigateway-78bcdc8ffc-jbghc           1/1     Running   0          31m
+pod/ks-apiserver-5b548d7c5c-jzxnt            1/1     Running   0          31m
+pod/ks-console-78bcf96dbf-2cdtx              1/1     Running   0          31m
+pod/ks-controller-manager-696986f8d9-v5lzp   1/1     Running   0          31m
+pod/ks-installer-75b8d89dff-f2hln            1/1     Running   0          32m
+pod/openldap-0                               1/1     Running   0          31m
+pod/redis-6fd6c6d6f9-mprdb                   1/1     Running   0          31m
+
+NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/ks-account      ClusterIP   10.254.43.12    &lt;none&gt;        80/TCP     31m
+service/ks-apigateway   ClusterIP   10.254.56.201   &lt;none&gt;        80/TCP     31m
+service/ks-apiserver    ClusterIP   10.254.25.243   &lt;none&gt;        80/TCP     31m
+service/ks-console      ClusterIP   10.254.58.101   &lt;none&gt;        80/TCP     31m
+service/openldap        ClusterIP   None            &lt;none&gt;        389/TCP    31m
+service/redis           ClusterIP   10.254.38.34    &lt;none&gt;        6379/TCP   31m
+</code></pre></td></tr></table></div></div><ul><li><p>修改默认访问端口</p><ul><li><p>默认配置, 使用 <code>nodeport</code> 映射30880 端口。</p></li><li><p>修改为 ingress 用域名访问</p></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 编辑 ks-console service
+kubectl edit svc/ks-console -n kubesphere-system
+
+
+# 去掉
+
+    nodePort: 30880
+
+    type: NodePort
+
+</code></pre></td></tr></table></div></div><ul><li><p>配置域名访问</p><ul><li>配置ssl (可选)</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 使用自签的ssl证书
+
+kubectl -n kubesphere-system create \
+  secret tls tls-kubesphere-ingress \
+  --cert=3258931_kubesphere.jicki.cn.pem \
+  --key=3258931_kubesphere.jicki.cn.key
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 编写 kubesphere-ingress.yaml 文件
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ks-console-ingress
+  namespace: kubesphere-system
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: &#34;30&#34;
+    nginx.ingress.kubernetes.io/proxy-read-timeout: &#34;1800&#34;
+    nginx.ingress.kubernetes.io/proxy-send-timeout: &#34;1800&#34;
+spec:
+  rules:
+  - host: kubesphere.jicki.cn
+    http:
+      paths:
+      - backend:
+          serviceName: ks-console
+          servicePort: 80
+  tls:
+  - hosts:
+    - kubesphere.jicki.cn
+    secretName: tls-kubesphere-ingress
+</code></pre></td></tr></table></div></div><ul><li>查看服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@localhost kubesphere]# kubectl get ingress -n kubesphere-system
+NAME                 HOSTS                 ADDRESS   PORTS     AGE
+ks-console-ingress   kubesphere.jicki.cn             80, 443   14m
+</code></pre></td></tr></table></div></div><h3 id=访问-kubesphere>访问 KubeSphere</h3><blockquote><p>默认账号密码 用户名: admin 密码: P@88w0rd</p></blockquote><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubesphere/kubesphere-2.png data-srcset="https://jicki.cn/img/posts/kubesphere/kubesphere-2.png, https://jicki.cn/img/posts/kubesphere/kubesphere-2.png 1.5x, https://jicki.cn/img/posts/kubesphere/kubesphere-2.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubesphere/kubesphere-2.png title=图3></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubesphere/kubesphere-3.png data-srcset="https://jicki.cn/img/posts/kubesphere/kubesphere-3.png, https://jicki.cn/img/posts/kubesphere/kubesphere-3.png 1.5x, https://jicki.cn/img/posts/kubesphere/kubesphere-3.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubesphere/kubesphere-3.png title=图4></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubesphere/kubesphere-4.png data-srcset="https://jicki.cn/img/posts/kubesphere/kubesphere-4.png, https://jicki.cn/img/posts/kubesphere/kubesphere-4.png 1.5x, https://jicki.cn/img/posts/kubesphere/kubesphere-4.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubesphere/kubesphere-4.png title=图5></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubesphere/kubesphere-5.png data-srcset="https://jicki.cn/img/posts/kubesphere/kubesphere-5.png, https://jicki.cn/img/posts/kubesphere/kubesphere-5.png 1.5x, https://jicki.cn/img/posts/kubesphere/kubesphere-5.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubesphere/kubesphere-5.png title=图6></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2020-04-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/kubesphere-2.1.1/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes" data-via=jicki234 data-hashtags=kubernetes,kubeSphere,docker><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/kubesphere-2.1.1/ data-hashtag=kubernetes><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes" data-description="KubeSphere 2.1.1 to kubernetes"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes" data-description="KubeSphere 2.1.1 to kubernetes"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/kubesphere-2.1.1/ data-title="KubeSphere 2.1.1 to kubernetes"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/kubernetes/>kubernetes</a>,&nbsp;<a href=/tags/kubesphere/>kubeSphere</a>,&nbsp;<a href=/tags/docker/>docker</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/kubeadm-1.18.0/ class=prev rel=prev title="kubeadm v1.18.0 HA"><i class="fas fa-angle-left fa-fw"></i>kubeadm v1.18.0 HA</a>
+<a href=/k8s-rollingupdate/ class=next rel=next title="Kubernetes RollingUpdate">Kubernetes RollingUpdate<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

@@ -1,0 +1,397 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Go学习笔记 - 小炒肉</title><meta name=Description content="Go学习笔记"><meta property="og:title" content="Go学习笔记"><meta property="og:description" content="Go学习笔记"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/golang-study-note-1/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2000-01-01T00:00:00+00:00"><meta property="article:modified_time" content="2000-01-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Go学习笔记"><meta name=twitter:description content="Go学习笔记"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/golang-study-note-1/><link rel=prev href=https://jicki.cn/golang-study-note-2/><link rel=next href=https://jicki.cn/golang-study-note-0/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Go学习笔记","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/golang-study-note-1\/"},"genre":"posts","keywords":"golang","wordcount":3253,"url":"https:\/\/jicki.cn\/golang-study-note-1\/","datePublished":"2000-01-01T00:00:00+00:00","dateModified":"2000-01-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Go学习笔记"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Go学习笔记</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/golang/><i class="far fa-folder fa-fw"></i>golang</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2000-01-01>2000-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3253 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id=/golang-study-note-1/ class=leancloud_visitors data-flag-title=Go学习笔记>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#标识符与关键字>标识符与关键字</a><ul><li><a href=#标识符>标识符</a></li><li><a href=#关键字>关键字</a></li><li><a href=#变量>变量</a></li><li><a href=#常量>常量</a></li></ul></li><li><a href=#数据类型>数据类型</a><ul><li><a href=#整型>整型</a></li><li><a href=#特殊类型>特殊类型</a></li><li><a href=#数字字面量语法number-literals-syntax>数字字面量语法（Number literals syntax）</a></li><li><a href=#八进制和十六进制>八进制和十六进制</a></li><li><a href=#浮点型>浮点型</a></li><li><a href=#复数>复数</a></li><li><a href=#布尔类型>布尔类型</a></li><li><a href=#字符串string>字符串(string)</a></li><li><a href=#byte-与-rune-类型>byte 与 rune 类型</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=go语言基础>Go语言基础</h1><h2 id=标识符与关键字>标识符与关键字</h2><h3 id=标识符>标识符</h3><ul><li>在编程语言中标识符就是程序员定义的具有特殊意义的词, 比如 变量名、常量名、函数名等. Go语言中标识符由字母数据和<code>_</code>(下划线)组成,并且只能以字母和<code>_</code>开头。比如 <code>Abc</code>、<code>_Abc</code>、<code>a123</code></li></ul><h3 id=关键字>关键字</h3><ul><li><p>关键字是指编程语言中预先定义了具有特殊含义的标识符。关键字和保留字都不建议用作变量名。</p></li><li><p>Go语言中有25个关键字:</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=nb>break</span>     default      func    interface  <span class=k>select</span>
+<span class=k>case</span>      defer        go      map        struct
+chan      <span class=k>else</span>         goto    package    switch
+const     fallthrough  <span class=k>if</span>      range      <span class=nb>type</span>
+<span class=k>continue</span>  <span class=k>for</span>          import  <span class=k>return</span>     var
+</code></pre></td></tr></table></div></div><ul><li>Go语言中的37个保留字:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>常量: <span class=nb>true</span>  <span class=nb>false</span>  iota  nil
+
+类型:  
+    int      int8      int16        int64
+    uint     uint8     uint16       uint32   uint64  uintptr
+    float32  float64   complex128   complex64
+    bool     byte      rune         string   error
+
+方法<span class=o>(</span>functions<span class=o>)</span>:
+    make      len    cap   new   append   copy   close   delete
+    complex   real   imag
+    panic     recover
+
+</code></pre></td></tr></table></div></div><h3 id=变量>变量</h3><ul><li><p>变量的含义: 程序运行过程中的数据都是保存在内存中，我们想要在代码中操作某个数据时就需要去内存上找到这个变量，但是如果我们直接在代码中通过内存地址去操作变量的话，代码的可读性会非常差而且还容易出错，所以我们就利用变量将这个数据的内存地址保存起来，以后直接通过这个变量就能找到内存上对应的数据了。</p></li><li><p>变量类型: 变量 的功能是存储数据。不同的变量保存的数据类型可能会不一样。常见变量的数据类型有: 整型、浮点型、布尔型等。 Go语言中的每一个变量都有自己的类型，并且变量必须经过声明才能开始使用。</p></li><li><p>变量声明: Go语言中的变量需要声明后才能使用，同一作用域内不支持重复声明。 并且Go语言的变量声明后必须使用, 否则会报错。</p></li><li><p>变量声明格式: <code>var 变量名 变量类型</code>, 函数外的变量声明必须都是以 var 开头进行声明。</p></li><li><p>变量赋值: <code>var 变量名 变量类型 = 值</code> <code>var 变量名1,变量名2 = 变量1的值, 变量2的值</code>。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kn>package</span> <span class=nx>main</span>
+
+<span class=kn>import</span> <span class=s>&#34;fmt&#34;</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 标准声明
+</span><span class=c1></span>	<span class=kd>var</span> <span class=nx>name</span> <span class=kt>string</span>
+	<span class=kd>var</span> <span class=nx>age</span> <span class=kt>int</span>
+	<span class=kd>var</span> <span class=nx>isOk</span> <span class=kt>bool</span>
+	<span class=c1>// 批量声明
+</span><span class=c1></span>	<span class=kd>var</span> <span class=p>(</span>
+		<span class=nx>a</span> <span class=kt>string</span>
+		<span class=nx>b</span> <span class=kt>int</span>
+		<span class=nx>c</span> <span class=kt>bool</span>
+	<span class=p>)</span>
+	<span class=c1>// 变量赋值
+</span><span class=c1></span>	<span class=nx>name</span> <span class=p>=</span> <span class=s>&#34;名字&#34;</span>
+	<span class=nx>age</span> <span class=p>=</span> <span class=mi>19</span>
+	<span class=nx>isOk</span> <span class=p>=</span> <span class=kc>false</span>
+	<span class=nx>a</span> <span class=p>=</span> <span class=s>&#34;A&#34;</span>
+	<span class=nx>b</span> <span class=p>=</span> <span class=mi>12</span>
+	<span class=nx>c</span> <span class=p>=</span> <span class=kc>true</span>
+	<span class=c1>// 短变量声明,只能在函数内使用
+</span><span class=c1></span>	<span class=nx>d</span> <span class=o>:=</span> <span class=s>&#34;dddd&#34;</span>
+	<span class=c1>// 输出
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>age</span><span class=p>,</span> <span class=nx>isOk</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=nx>c</span><span class=p>,</span> <span class=nx>d</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=常量>常量</h3><ul><li><p>相对于变量，常量是恒定不变的值，多用于定义程序运行期间不会改变的那些值。 常量的声明和变量声明非常类似，只是把var换成了const，常量在定义的时候必须赋值。</p></li><li><p>常量定义与赋值: <code>const 常量名 = 值</code></p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 常量定义
+</span><span class=c1></span><span class=kd>const</span> <span class=nx>a</span> <span class=p>=</span> <span class=mi>3333</span>
+<span class=kd>const</span> <span class=nx>b</span> <span class=p>=</span> <span class=mi>4444</span>
+
+<span class=c1>// 批量定义
+</span><span class=c1></span><span class=kd>const</span> <span class=p>(</span>
+	<span class=nx>c</span> <span class=p>=</span> <span class=mi>5555</span>
+	<span class=nx>d</span> <span class=p>=</span> <span class=mi>6666</span>
+<span class=p>)</span>
+
+<span class=c1>// 常量如果不写值会继承上一个的值
+</span><span class=c1></span><span class=kd>const</span> <span class=p>(</span>
+	<span class=nx>e</span> <span class=p>=</span> <span class=mi>7777</span>
+	<span class=nx>f</span>
+	<span class=nx>g</span>
+<span class=p>)</span>
+</code></pre></td></tr></table></div></div><ul><li><p><code>iota</code> 关键字: <code>iota</code> 是go语言中的常量计数器, 只能在常量表达式中使用。</p></li><li><p><code>iota</code> 在<code>const</code>关键字出现时将被重置为0。<code>const</code>中每新增一行常量声明将使<code>iota</code>计数一次(<code>iota</code> 可理解为<code>const</code>语句块中的行索引)。 使用<code>iota</code>能简化定义，在定义枚举时很有用。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>const</span> <span class=p>(</span>
+	<span class=nx>a</span> <span class=p>=</span> <span class=kc>iota</span> <span class=c1>//0
+</span><span class=c1></span>	<span class=nx>b</span>        <span class=c1>//1
+</span><span class=c1></span>	<span class=nx>c</span>        <span class=c1>//2
+</span><span class=c1></span>	<span class=nx>d</span>        <span class=c1>//3
+</span><span class=c1></span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><ul><li><code>iota</code> 在常量使用 <code>_</code>(忽略)仍然会占用一位。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>const</span> <span class=p>(</span>
+    <span class=nx>a</span> <span class=p>=</span> <span class=kc>iota</span> <span class=c1>//0
+</span><span class=c1></span>    <span class=nx>b</span>        <span class=c1>//1
+</span><span class=c1></span>    <span class=nx>_</span>
+    <span class=nx>d</span>        <span class=c1>//3
+</span><span class=c1></span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>const</span> <span class=p>(</span>
+	<span class=nx>a1</span> <span class=p>=</span> <span class=kc>iota</span> <span class=c1>//0
+</span><span class=c1></span>	<span class=nx>a2</span>        <span class=c1>//1
+</span><span class=c1></span>	<span class=nx>a3</span> <span class=p>=</span> <span class=mi>100</span>  <span class=c1>//100
+</span><span class=c1></span>	<span class=nx>a4</span> <span class=p>=</span> <span class=kc>iota</span> <span class=c1>//3
+</span><span class=c1></span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>const</span> <span class=p>(</span>
+	<span class=nx>b1</span><span class=p>,</span> <span class=nx>b2</span> <span class=p>=</span> <span class=kc>iota</span> <span class=o>+</span> <span class=mi>1</span><span class=p>,</span> <span class=kc>iota</span> <span class=o>+</span> <span class=mi>2</span> <span class=c1>// 1, 2
+</span><span class=c1></span>	<span class=nx>b3</span><span class=p>,</span> <span class=nx>b4</span>                      <span class=c1>// 2, 3
+</span><span class=c1></span>	<span class=nx>b5</span><span class=p>,</span> <span class=nx>b6</span>                      <span class=c1>// 3, 4
+</span><span class=c1></span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><h2 id=数据类型>数据类型</h2><ul><li>Go语言中有丰富的数据类型，除了基本的整型、浮点型、布尔型、字符串外，还有数组、切片、结构体、函数、map、通道（channel）等。</li></ul><h3 id=整型>整型</h3><ul><li>整型分为以下两个大类： 按长度分为：<code>int8</code>、<code>int16</code>、<code>int32</code>、<code>int64</code> 对应的无符号整型：<code>uint8</code>、<code>uint16</code>、<code>uint32</code>、<code>uint64</code> 其中，<code>uint8</code>就是我们熟知的<code>byte</code>型，<code>int16</code>对应C语言中的<code>short</code>型，<code>int64</code>对应C语言中的<code>long</code>型。</li></ul><table><thead><tr><th>类型</th><th>描述</th></tr></thead><tbody><tr><td>int8</td><td>有符号 8位整型 (-128 到 127)</td></tr><tr><td>int16</td><td>有符号 16位整型 (-32768 到 32767)</td></tr><tr><td>int32</td><td>有符号 32位整型 (-2147483648 到 2147483647)</td></tr><tr><td>int64</td><td>有符号 64位整型 (-9223372036854775808 到 9223372036854775807)</td></tr><tr><td>uint8</td><td>无符号8位整型(0 到 255)</td></tr><tr><td>uint16</td><td>无符号16位整型(0 到 65535)</td></tr><tr><td>uint32</td><td>无符号32位整型(0 到 4294967295)</td></tr><tr><td>uint64</td><td>无符号 64位整型 (0 到 18446744073709551615)</td></tr></tbody></table><h3 id=特殊类型>特殊类型</h3><ul><li><code>int</code>, <code>uint</code> 在不同平台中有差异。</li></ul><table><thead><tr><th>类型</th><th>描述</th></tr></thead><tbody><tr><td>uint</td><td>32位操作系统上就是uint32，64位操作系统上就是uint64</td></tr><tr><td>int</td><td>32位操作系统上就是int32，64位操作系统上就是int64</td></tr><tr><td>uintptr</td><td>无符号整型，用于存放一个指针</td></tr></tbody></table><ul><li>获取对象的长度的内建<code>len()</code>函数返回的长度可以根据不同平台的字节长度进行变化。实际使用中，<code>slice</code>切片或 <code>map</code> 的元素数量等都可以用<code>int</code>来表示。在涉及到二进制传输、读写文件的结构描述时，为了保持文件的结构不会受到不同编译目标平台字节长度的影响，不要使用<code>int</code>和<code>uint</code>。</li></ul><h3 id=数字字面量语法number-literals-syntax>数字字面量语法（Number literals syntax）</h3><ul><li>数字字面量语法，便于开发者以二进制、八进制或十六进制浮点数的格式定义数字。<code>v := 0b00101101</code>， 代表二进制的 101101，相当于十进制的 45。 <code>v := 0o377</code>，代表八进制的 377，相当于十进制的 255。 <code>v := 0x1p-2</code>，代表十六进制的 1 除以 2²，也就是 0.25。 而且还允许我们用 <code>_</code> 来分隔数字, 比如说: <code>v := 123_456</code> 等于 123456。</li></ul><h3 id=八进制和十六进制>八进制和十六进制</h3><ul><li><code>fmt</code> 包中可转换成这类进制的值。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go>	<span class=c1>// 十进制
+</span><span class=c1></span>	<span class=kd>var</span> <span class=nx>a</span> <span class=kt>int</span> <span class=p>=</span> <span class=mi>10</span>
+	<span class=c1>// %b 表示转换成二进制
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%b \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>)</span>
+	<span class=c1>// %d 表示转换成十进制
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>)</span>
+
+	<span class=c1>// 八进制
+</span><span class=c1></span>	<span class=kd>var</span> <span class=nx>b</span> <span class=kt>int</span> <span class=p>=</span> <span class=mo>077</span>
+	<span class=c1>// %o 表示转换成八进制
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%o \n&#34;</span><span class=p>,</span> <span class=nx>b</span><span class=p>)</span>
+	<span class=c1>// %d 表示转换成十进制
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%d \n&#34;</span><span class=p>,</span> <span class=nx>b</span><span class=p>)</span>
+
+	<span class=c1>// 十六进制
+</span><span class=c1></span>	<span class=kd>var</span> <span class=nx>c</span> <span class=kt>int</span> <span class=p>=</span> <span class=mh>0xff</span>
+	<span class=c1>// 直接打印值
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>c</span><span class=p>)</span>
+	<span class=c1>// %x 表示转换成十六进制
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%x \n&#34;</span><span class=p>,</span> <span class=nx>c</span><span class=p>)</span>
+
+</code></pre></td></tr></table></div></div><h3 id=浮点型>浮点型</h3><ul><li>Go语言支持两种浮点型数: <code>float32</code> 和<code>float64</code>。这两种浮点型数据格式遵循IEEE 754标准: <code>float32</code> 的浮点数的最大范围约为 3.4e38, 可以使用常量定义: <code>math.MaxFloat32</code>. <code>float64</code> 的浮点数的最大范围约为 <code>1.8e308</code>, 可以使用一个常量定义: <code>math.MaxFloat64</code>。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 打印 32位 最大浮点数 3.4028234663852886e+38
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>math</span><span class=p>.</span><span class=nx>MaxFloat32</span><span class=p>)</span>
+	<span class=c1>// 打印 64位 最大浮点数 1.7976931348623157e+308
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>math</span><span class=p>.</span><span class=nx>MaxFloat64</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=复数>复数</h3><ul><li>复数有实部和虚部, <code>complex64</code>的实部和虚部为32位, <code>complex128</code>的实部和虚部为64位。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go>	<span class=kd>var</span> <span class=nx>c1</span> <span class=kt>complex64</span>
+	<span class=nx>c1</span> <span class=p>=</span> <span class=mi>1</span> <span class=o>+</span> <span class=m>2i</span>
+	<span class=kd>var</span> <span class=nx>c2</span> <span class=kt>complex128</span>
+	<span class=nx>c2</span> <span class=p>=</span> <span class=mi>2</span> <span class=o>+</span> <span class=m>3i</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>c1</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>c2</span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><h3 id=布尔类型>布尔类型</h3><ul><li>Go语言中以<code>bool</code>类型进行声明布尔型数据，布尔型数据只有<code>true</code>（真）和<code>false</code>（假）两个值。</li><li>布尔类型变量的默认值为false。布尔类型不能进行数值运算,也无法与其他类型进行转换。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=kd>var</span> <span class=nx>b</span> <span class=kt>bool</span>
+	<span class=c1>// 默认值为 false
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>b</span><span class=p>)</span>
+	<span class=c1>// 赋值
+</span><span class=c1></span>	<span class=nx>b</span> <span class=p>=</span> <span class=kc>true</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>b</span><span class=p>)</span>
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div><h3 id=字符串string>字符串(string)</h3><ul><li>Go语言中的字符串以原生数据类型出现, 使用字符串就像使用其他原生数据类型（int、bool、float32、float64 等）一样. Go 语言里的字符串的内部实现使用UTF-8编码. 字符串的值为 <code>双引号(")</code> 中的内容, 可以在Go语言的源码中直接添加非ASCII码字符.</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 字符串
+</span><span class=c1></span>	<span class=nx>s1</span> <span class=o>:=</span> <span class=s>&#34;hello&#34;</span>
+	<span class=nx>s2</span> <span class=o>:=</span> <span class=s>&#34;哈喽&#34;</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s1</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s2</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>字符串转移 - Go 语言的字符串常见转义符包含回车、换行、单双引号、制表符等，如下表所示。</li></ul><table><thead><tr><th>转义符</th><th>含义</th></tr></thead><tbody><tr><td><code>\r</code></td><td>回车符(返回行首)</td></tr><tr><td><code>\n</code></td><td>换行符(直接跳到下一行的同列位置)</td></tr><tr><td><code>\t</code></td><td>制表符</td></tr><tr><td><code>\'</code></td><td>单引号</td></tr><tr><td><code>\"</code></td><td>双引号</td></tr><tr><td><code>\\</code></td><td>反斜杠</td></tr></tbody></table><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=c1>// 转义 如下反斜杠
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;c:\\golang\\bin\\go.exe&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>多行字符串 - Go语言中要定义一个多行字符串时，就必须使用<code>反引号</code>字符</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go>
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 多行字符串
+</span><span class=c1></span>	<span class=nx>s3</span> <span class=o>:=</span> <span class=s>`
+</span><span class=s>	第一行
+</span><span class=s>	第二行
+</span><span class=s>	第三行
+</span><span class=s>	&#34;&#34;
+</span><span class=s>	&#39;&#39;
+</span><span class=s>	\
+</span><span class=s>    `</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>字符串常用操作</li></ul><table><thead><tr><th>方法</th><th>介绍</th></tr></thead><tbody><tr><td><code>len(str)</code></td><td>求长度</td></tr><tr><td><code>+或fmt.Sprintf</code></td><td>拼接字符串</td></tr><tr><td><code>strings.Split</code></td><td>分割</td></tr><tr><td><code>strings.contains</code></td><td>判断是否包含</td></tr><tr><td><code>strings.HasPrefix</code>,<code>strings.HasSuffix</code></td><td>前缀/后缀判断</td></tr><tr><td><code>strings.Index()</code>,<code>strings.LastIndex()</code></td><td>子串出现的位置</td></tr><tr><td><code>strings.Join(a[]string, sep string)</code></td><td>join操作</td></tr></tbody></table><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 字符串
+</span><span class=c1></span>	<span class=nx>s1</span> <span class=o>:=</span> <span class=s>&#34;hello&#34;</span>
+	<span class=nx>s2</span> <span class=o>:=</span> <span class=s>&#34;哈喽&#34;</span>
+	<span class=nx>s4</span> <span class=o>:=</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Sprintf</span><span class=p>(</span><span class=s>&#34;%s -- %s&#34;</span><span class=p>,</span> <span class=nx>s1</span><span class=p>,</span> <span class=nx>s2</span><span class=p>)</span>
+	<span class=nx>s5</span> <span class=o>:=</span> <span class=s>&#34;how old are you&#34;</span>
+	<span class=c1>// 返回字符串长度
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nb>len</span><span class=p>(</span><span class=nx>s5</span><span class=p>))</span>
+	<span class=c1>// 字符串拼接
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s1</span> <span class=o>+</span> <span class=nx>s2</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s4</span><span class=p>)</span>
+	<span class=c1>// 字符串分割
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>Split</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34; &#34;</span><span class=p>))</span>
+	<span class=c1>// 切割后变成 slice 切片
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;类型 = %T \n&#34;</span><span class=p>,</span> <span class=nx>strings</span><span class=p>.</span><span class=nf>Split</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34; &#34;</span><span class=p>))</span>
+
+	<span class=c1>// 判断字符串是否包含某个字符,返回 布尔值
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>Contains</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34;ow&#34;</span><span class=p>))</span>
+
+	<span class=c1>// 判断前缀,与后缀, 返回 布尔值
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>HasPrefix</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34;how&#34;</span><span class=p>))</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>HasSuffix</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34;you&#34;</span><span class=p>))</span>
+
+	<span class=c1>// 判断字符串的位置 ,结果为 1 (从0开始)
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>Index</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34;o&#34;</span><span class=p>))</span>
+	<span class=c1>// 判断字符串最后出现的位置 , 结果为 13
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>LastIndex</span><span class=p>(</span><span class=nx>s5</span><span class=p>,</span> <span class=s>&#34;o&#34;</span><span class=p>))</span>
+
+	<span class=c1>// join 操作, 以为定义的符号连接字符串
+</span><span class=c1></span>	<span class=nx>s6</span> <span class=o>:=</span> <span class=p>[]</span><span class=kt>string</span><span class=p>{</span><span class=s>&#34;how&#34;</span><span class=p>,</span> <span class=s>&#34;old&#34;</span><span class=p>,</span> <span class=s>&#34;are&#34;</span><span class=p>,</span> <span class=s>&#34;you&#34;</span><span class=p>}</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>s6</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>strings</span><span class=p>.</span><span class=nf>Join</span><span class=p>(</span><span class=nx>s6</span><span class=p>,</span> <span class=s>&#34;-&#34;</span><span class=p>))</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><h3 id=byte-与-rune-类型>byte 与 rune 类型</h3><ul><li><p>组成每个字符串的元素叫做“字符”, 可以通过遍历或者单个获取字符串元素获得字符。 字符用单引号（’）包裹起来。</p></li><li><p>byte: 其实就是<code>uint8</code>类型，或者叫 <code>byte</code> 型，代表了ASCII码的一个字符。</p></li><li><p>rune: 其实就是 <code>int32</code>类型, 代表一个 UTF-8 字符。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=kd>var</span> <span class=nx>c1</span> <span class=kt>byte</span> <span class=p>=</span> <span class=sc>&#39;c&#39;</span>
+	<span class=kd>var</span> <span class=nx>c2</span> <span class=kt>rune</span> <span class=p>=</span> <span class=sc>&#39;c&#39;</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;c1 = %v type = %T \nc2 = %v type = %T\n&#34;</span><span class=p>,</span> <span class=nx>c1</span><span class=p>,</span> <span class=nx>c1</span><span class=p>,</span> <span class=nx>c2</span><span class=p>,</span> <span class=nx>c2</span><span class=p>)</span>
+
+	<span class=nx>s</span> <span class=o>:=</span> <span class=s>&#34;hello 世界&#34;</span>
+	<span class=c1>// for range 循环可以遍历 字符加符号的
+</span><span class=c1></span>	<span class=k>for</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>v</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>s</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%c \n&#34;</span><span class=p>,</span> <span class=nx>v</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2000-01-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/golang-study-note-1/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记 data-via=jicki234 data-hashtags=golang><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/golang-study-note-1/ data-hashtag=golang><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记 data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记 data-description=Go学习笔记><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记 data-description=Go学习笔记><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/golang-study-note-1/ data-title=Go学习笔记><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/golang/>golang</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/golang-study-note-2/ class=prev rel=prev title=Go学习笔记><i class="fas fa-angle-left fa-fw"></i>Go学习笔记</a>
+<a href=/golang-study-note-0/ class=next rel=next title=Go学习笔记>Go学习笔记<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

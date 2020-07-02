@@ -1,0 +1,2405 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>hyperledger-fabric v2.0 - 小炒肉</title><meta name=Description content="hyperledger-fabric v2.0"><meta property="og:title" content="hyperledger-fabric v2.0"><meta property="og:description" content="hyperledger-fabric v2.0"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/hyperledger-fabric-2.0/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2020-03-23T00:00:00+00:00"><meta property="article:modified_time" content="2020-03-23T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="hyperledger-fabric v2.0"><meta name=twitter:description content="hyperledger-fabric v2.0"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/hyperledger-fabric-2.0/><link rel=prev href=https://jicki.cn/kubernetes-flannel/><link rel=next href=https://jicki.cn/rancher-2.x-kubernetes/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"hyperledger-fabric v2.0","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/hyperledger-fabric-2.0\/"},"genre":"posts","keywords":"fabric, docker","wordcount":5192,"url":"https:\/\/jicki.cn\/hyperledger-fabric-2.0\/","datePublished":"2020-03-23T00:00:00+00:00","dateModified":"2020-03-23T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"hyperledger-fabric v2.0"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">hyperledger-fabric v2.0</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/fabric/><i class="far fa-folder fa-fw"></i>fabric</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-03-23>2020-03-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5192 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id=/hyperledger-fabric-2.0/ class=leancloud_visitors data-flag-title="hyperledger-fabric v2.0">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#hyperleger-fabric-是什么>Hyperleger fabric 是什么?</a></li><li><a href=#hyperledger-fabric-交易流程>Hyperledger Fabric 交易流程</a></li><li><a href=#部署-hyperledger-fabric-v20>部署 Hyperledger Fabric v2.0</a><ul><li><a href=#准备阶段>准备阶段</a></li><li><a href=#安装-docker>安装 docker</a></li><li><a href=#安装-docker-compose>安装 docker-compose</a></li><li><a href=#hyperledger-fabric-images>Hyperledger Fabric images</a></li><li><a href=#创建-crypto-configyaml-文件>创建 crypto-config.yaml 文件</a></li><li><a href=#创建-configtxgenyaml-文件>创建 configtxgen.yaml 文件</a></li><li><a href=#生成证书和创世区块>生成证书和创世区块</a></li><li><a href=#启动-fabric>启动 fabric</a></li><li><a href=#创建-channel>创建 Channel</a></li><li><a href=#加入-channel-join>加入 Channel (Join)</a></li><li><a href=#更新组织的-anchor-peer>更新组织的 anchor peer</a></li><li><a href=#安装-chaincode>安装 ChainCode</a></li><li><a href=#chaincode-投票>chaincode 投票</a></li><li><a href=#提交确认--submit->提交确认 ( submit )</a></li><li><a href=#操作-chaincode>操作 chaincode</a></li><li><a href=#查看-docker-container>查看 docker container</a></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>fabric v2.0 , 单机 多节点 RAFT 手动部署, 所有服务均 开启 SSL 认证。</p></blockquote><h1 id=hyperledger-fabric>hyperledger fabric</h1><h2 id=hyperleger-fabric-是什么>Hyperleger fabric 是什么?</h2><ul><li>Linux基金会于2015年创建了Hyperledger项目，以推进跨行业的区块链技术。Hyperledger Fabric是Hyperledger中的区块链项目之一。像其他区块链技术一样，它具有分类帐，使用智能合约，并且是参与者用来管理其交易的系统。Hyperledger Fabric与其他区块链系统最大的不同体现在私有和许可。</li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/fabric/fabric.png data-srcset="https://jicki.cn/img/posts/fabric/fabric.png, https://jicki.cn/img/posts/fabric/fabric.png 1.5x, https://jicki.cn/img/posts/fabric/fabric.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/fabric/fabric.png title=图1></p><ul><li>Hyperledger Fabric 是一个（平台），提供分布式账本解决方案的平台，Hyperledger Fabric 由模块化架构支撑，并具备极佳的<code>保密性</code>、<code>可伸缩性</code>、<code>灵活性</code>、<code>可扩展性</code>，Hyperledger Fabric 被设计成（模块直接插拔，适用多种场景），支持不同的模块组件直接拔插启用，并能适应在经济生态系统中错综复杂的各种场景。</li></ul><h2 id=hyperledger-fabric-交易流程>Hyperledger Fabric 交易流程</h2><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/fabric/fabric-2.png data-srcset="https://jicki.cn/img/posts/fabric/fabric-2.png, https://jicki.cn/img/posts/fabric/fabric-2.png 1.5x, https://jicki.cn/img/posts/fabric/fabric-2.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/fabric/fabric-2.png title=图2></p><h2 id=部署-hyperledger-fabric-v20>部署 Hyperledger Fabric v2.0</h2><blockquote><p>官网 github &mdash; <a href=https://github.com/hyperledger/fabric>https://github.com/hyperledger/fabric</a></p></blockquote><h3 id=准备阶段>准备阶段</h3><ul><li><p>docker-ce</p></li><li><p>docker-compose</p></li><li><p>Hyperledger Fabric images</p></li></ul><h3 id=安装-docker>安装 docker</h3><ul><li>升级内核</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+<span class=c1># 导入 Key</span>
+
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+
+
+<span class=c1># 安装 Yum 源</span>
+
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+
+
+
+<span class=c1># 更新 kernel</span>
+
+yum --enablerepo<span class=o>=</span>elrepo-kernel install -y kernel-lt kernel-lt-devel
+
+
+<span class=c1># 配置 内核优先</span>
+
+grub2-set-default <span class=m>0</span>
+
+</code></pre></td></tr></table></div></div><ul><li>开启内核 namespace 支持</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 执行如下
+grubby --args=&#34;user_namespace.enable=1&#34; --update-kernel=&#34;$(grubby --default-kernel)&#34;
+
+
+
+# 必须重启系统
+
+reboot
+
+</code></pre></td></tr></table></div></div><ul><li>修改内核参数</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>cat&lt;&lt;EOF &gt; /etc/sysctl.d/docker.conf
+# 要求iptables不对bridge的数据进行处理
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-arptables = 1
+EOF
+
+
+
+# 生效配置
+sysctl --system
+</code></pre></td></tr></table></div></div><ul><li>检查环境状态</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>curl -s https://raw.githubusercontent.com/docker/docker/master/contrib/check-config.sh <span class=p>|</span> bash
+
+</code></pre></td></tr></table></div></div><ul><li>安装 docker</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 指定安装,并指定安装源
+
+export VERSION=19.03
+curl -fsSL &#34;https://get.docker.com/&#34; | bash -s -- --mirror Aliyun
+
+</code></pre></td></tr></table></div></div><ul><li>docker 额外配置</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>mkdir -p /etc/docker/
+cat&gt;/etc/docker/daemon.json<span class=s>&lt;&lt;EOF
+</span><span class=s>{
+</span><span class=s>  &#34;bip&#34;: &#34;172.17.0.1/16&#34;,
+</span><span class=s>  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;],
+</span><span class=s>  &#34;registry-mirrors&#34;: [&#34;https://dockerhub.azk8s.cn&#34;,&#34;https://gcr.azk8s.cn&#34;,&#34;https://quay.azk8s.cn&#34;],
+</span><span class=s>  &#34;data-root&#34;: &#34;/opt/docker&#34;,
+</span><span class=s>  &#34;storage-driver&#34;: &#34;overlay2&#34;,
+</span><span class=s>  &#34;storage-opts&#34;: [
+</span><span class=s>    &#34;overlay2.override_kernel_check=true&#34;
+</span><span class=s>  ],
+</span><span class=s>  &#34;log-driver&#34;: &#34;json-file&#34;,
+</span><span class=s>  &#34;log-opts&#34;: {
+</span><span class=s>    &#34;max-size&#34;: &#34;100m&#34;,
+</span><span class=s>    &#34;max-file&#34;: &#34;5&#34;
+</span><span class=s>  }
+</span><span class=s>}
+</span><span class=s>EOF</span>
+</code></pre></td></tr></table></div></div><ul><li>启动 docker</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 配置开机启动</span>
+systemctl <span class=nb>enable</span> docker
+
+
+<span class=c1># 启动 docker</span>
+systemctl start docker
+
+</code></pre></td></tr></table></div></div><h3 id=安装-docker-compose>安装 docker-compose</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 国内下载点
+curl -L https://get.daocloud.io/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` &gt; /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+
+
+# github 下载
+curl -L &#34;https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose
+
+chmod +x /usr/local/bin/docker-compose
+</code></pre></td></tr></table></div></div><h3 id=hyperledger-fabric-images>Hyperledger Fabric images</h3><ul><li>由于 image 镜像较大,下载过程会比较久, 所以这里提前将 images 下载到本地。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nv>FABRIC_TAG</span><span class=o>=</span>2.0
+
+<span class=k>function</span> pullImages<span class=o>()</span> <span class=o>{</span>
+  docker pull hyperledger/fabric-couchdb:0.4.20
+  docker pull hyperledger/fabric-ca:1.4.6
+  <span class=k>for</span> image in peer orderer ccenv tools<span class=p>;</span> <span class=k>do</span>
+    <span class=nb>echo</span> <span class=s2>&#34;Pull image hyperledger/fabric-</span><span class=nv>$image</span><span class=s2>:</span><span class=nv>$FABRIC_TAG</span><span class=s2>&#34;</span>
+    docker pull hyperledger/fabric-<span class=s2>&#34;</span><span class=nv>$image</span><span class=s2>&#34;</span>:<span class=s2>&#34;</span><span class=nv>$FABRIC_TAG</span><span class=s2>&#34;</span>
+    sleep <span class=m>1</span>
+  <span class=k>done</span>
+<span class=o>}</span>
+
+<span class=nb>echo</span> <span class=s2>&#34;Pull images for hyperledger fabric network.&#34;</span>
+
+pullImages
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=o>[</span>root@localhost jicki<span class=o>]</span><span class=c1># docker images</span>
+REPOSITORY                   TAG                 IMAGE ID            CREATED             SIZE
+hyperledger/fabric-tools     2.0                 5c9a03790913        <span class=m>3</span> weeks ago         512MB
+hyperledger/fabric-peer      2.0                 5c7e5946f3dc        <span class=m>3</span> weeks ago         57.2MB
+hyperledger/fabric-orderer   2.0                 92bd220edcdd        <span class=m>3</span> weeks ago         39.7MB
+hyperledger/fabric-ccenv     2.0                 800087268d9b        <span class=m>3</span> weeks ago         529MB
+hyperledger/fabric-ca        1.4.6               3b96a893c1e4        <span class=m>3</span> weeks ago         150MB
+
+</code></pre></td></tr></table></div></div><h3 id=创建-crypto-configyaml-文件>创建 crypto-config.yaml 文件</h3><ul><li><p>Fabric 网络成员加密配置</p></li><li><p>如下配置 3个 orderer 节点, 2个Org组织, 每个组织下有 2个Peer节点。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>OrdererOrgs:
+  - Name: Orderer
+    Domain: jicki.cn
+    CA:
+        Country: CN
+        Province: GuangDong
+        Locality: ShenZhen
+    Specs:
+      - Hostname: orderer0
+      - Hostname: orderer1
+      - Hostname: orderer2
+
+PeerOrgs:
+  - Name: Org1
+    Domain: org1.jicki.cn
+    EnableNodeOUs: true
+    CA:
+        Country: CN
+        Province: GuangDong
+        Locality: ShenZhen
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+
+  - Name: Org2
+    Domain: org2.jicki.cn
+    EnableNodeOUs: true
+    CA:
+        Country: CN
+        Province: GuangDong
+        Locality: ShenZhen
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+
+</code></pre></td></tr></table></div></div><h3 id=创建-configtxgenyaml-文件>创建 configtxgen.yaml 文件</h3><ul><li>网络初始化以及通道配置</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+---
+Organizations:
+    - <span class=p>&amp;</span>OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/jicki.cn/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;OrdererMSP.member&#39;)&#34;</span>
+            Writers:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;OrdererMSP.member&#39;)&#34;</span>
+            Admins:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;OrdererMSP.admin&#39;)&#34;</span>
+
+        OrdererEndpoints:
+            - orderer0.jicki.cn:7050
+    - <span class=p>&amp;</span>Org1
+        Name: Org1MSP
+        ID: Org1MSP
+        MSPDir: crypto-config/peerOrganizations/org1.jicki.cn/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org1MSP.admin&#39;, &#39;Org1MSP.peer&#39;, &#39;Org1MSP.client&#39;)&#34;</span>
+            Writers:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org1MSP.admin&#39;, &#39;Org1MSP.client&#39;)&#34;</span>
+            Admins:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org1MSP.admin&#39;)&#34;</span>
+            Endorsement:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org1MSP.peer&#39;)&#34;</span>
+
+        AnchorPeers:
+            - Host: peer0.org1.jicki.cn
+              Port: <span class=m>7051</span>
+    - <span class=p>&amp;</span>Org2
+        Name: Org2MSP
+        ID: Org2MSP
+        MSPDir: crypto-config/peerOrganizations/org2.jicki.cn/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org2MSP.admin&#39;, &#39;Org2MSP.peer&#39;, &#39;Org2MSP.client&#39;)&#34;</span>
+            Writers:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org2MSP.admin&#39;, &#39;Org2MSP.client&#39;)&#34;</span>
+            Admins:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org2MSP.admin&#39;)&#34;</span>
+            Endorsement:
+                Type: Signature
+                Rule: <span class=s2>&#34;OR(&#39;Org2MSP.peer&#39;)&#34;</span>
+
+        AnchorPeers:
+            - Host: peer0.org2.jicki.cn
+              Port: <span class=m>7051</span>
+Capabilities:
+    Channel: <span class=p>&amp;</span>ChannelCapabilities
+        V2_0: <span class=nb>true</span>
+
+    Orderer: <span class=p>&amp;</span>OrdererCapabilities
+        V2_0: <span class=nb>true</span>
+
+    Application: <span class=p>&amp;</span>ApplicationCapabilities
+        V2_0: <span class=nb>true</span>
+
+Application: <span class=p>&amp;</span>ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Readers&#34;</span>
+        Writers:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Writers&#34;</span>
+        Admins:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;MAJORITY Admins&#34;</span>
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;MAJORITY Endorsement&#34;</span>
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;MAJORITY Endorsement&#34;</span>
+
+    Capabilities:
+        &lt;&lt;: *ApplicationCapabilities
+
+Orderer: <span class=p>&amp;</span>OrdererDefaults
+    OrdererType: etcdraft
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: <span class=m>10</span>
+        AbsoluteMaxBytes: <span class=m>99</span> MB
+        PreferredMaxBytes: <span class=m>512</span> KB
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Readers&#34;</span>
+        Writers:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Writers&#34;</span>
+        Admins:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;MAJORITY Admins&#34;</span>
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Writers&#34;</span>
+
+Channel: <span class=p>&amp;</span>ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Readers&#34;</span>
+        Writers:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;ANY Writers&#34;</span>
+        Admins:
+            Type: ImplicitMeta
+            Rule: <span class=s2>&#34;MAJORITY Admins&#34;</span>
+    Capabilities:
+        &lt;&lt;: *ChannelCapabilities
+
+Profiles:
+    TwoOrgsChannel:
+        Consortium: SampleConsortium
+        &lt;&lt;: *ChannelDefaults
+        Application:
+            &lt;&lt;: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+            Capabilities:
+                &lt;&lt;: *ApplicationCapabilities
+
+    SampleMultiNodeEtcdRaft:
+        &lt;&lt;: *ChannelDefaults
+        Capabilities:
+            &lt;&lt;: *ChannelCapabilities
+        Orderer:
+            &lt;&lt;: *OrdererDefaults
+            OrdererType: etcdraft
+            EtcdRaft:
+                Consenters:
+                - Host: orderer0.jicki.cn
+                  Port: <span class=m>7050</span>
+                  ClientTLSCert: crypto-config/ordererOrganizations/jicki.cn/orderers/orderer0.jicki.cn/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/jicki.cn/orderers/orderer0.jicki.cn/tls/server.crt
+                - Host: orderer1.jicki.cn
+                  Port: <span class=m>7050</span>
+                  ClientTLSCert: crypto-config/ordererOrganizations/jicki.cn/orderers/orderer1.jicki.cn/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/jicki.cn/orderers/orderer1.jicki.cn/tls/server.crt
+                - Host: orderer2.jicki.cn
+                  Port: <span class=m>7050</span>
+                  ClientTLSCert: crypto-config/ordererOrganizations/jicki.cn/orderers/orderer2.jicki.cn/tls/server.crt
+                  ServerTLSCert: crypto-config/ordererOrganizations/jicki.cn/orderers/orderer2.jicki.cn/tls/server.crt
+            Addresses:
+                - orderer0.jicki.cn:7050
+                - orderer1.jicki.cn:7050
+                - orderer2.jicki.cn:7050
+
+            Organizations:
+            - *OrdererOrg
+            Capabilities:
+                &lt;&lt;: *OrdererCapabilities
+        Application:
+            &lt;&lt;: *ApplicationDefaults
+            Organizations:
+            - &lt;&lt;: *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                - *Org1
+                - *Org2
+
+</code></pre></td></tr></table></div></div><h3 id=生成证书和创世区块>生成证书和创世区块</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 下载证书生成工具</span>
+
+<span class=nb>cd</span> /opt/jicki
+
+wget https://github.com/hyperledger/fabric/releases/download/v2.0.0/hyperledger-fabric-linux-amd64-2.0.0.tar.gz
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=o>[</span>root@localhost jicki<span class=o>]</span><span class=c1># tar zxvf hyperledger-fabric-linux-amd64-2.0.0.tar.gz</span> 
+bin/
+bin/configtxgen
+bin/orderer
+bin/peer
+bin/discover
+bin/idemixgen
+bin/configtxlator
+bin/cryptogen
+config/
+config/configtx.yaml
+config/core.yaml
+config/orderer.yaml
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 为方便使用 我们配置一个 环境变量</span>
+
+vi /etc/profile
+
+
+<span class=c1># fabric env</span>
+<span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$PATH</span>:/opt/jicki/bin
+
+
+<span class=c1># 使文件生效</span>
+<span class=nb>source</span> /etc/profile
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 首先需要创建一个文件夹</span>
+mkdir -p /opt/jicki/channel-artifacts
+
+</code></pre></td></tr></table></div></div><ul><li>生成证书</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 然后这里使用 cryptogen 软件来生成相应的证书了</span>
+
+<span class=o>[</span>root@localhost jicki<span class=o>]</span><span class=c1># cryptogen generate --config=./crypto-config.yaml</span>
+org1.jicki.cn
+org2.jicki.cn
+
+</code></pre></td></tr></table></div></div><ul><li>生成区块</li></ul><blockquote><p><code>-profile</code> 在 configtx.yaml 文件中查找 Profiles: 下面字段</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+<span class=c1># generate genesis block for orderer</span>
+<span class=c1># 生成启动 orderer 所需要的创世区块文件</span>
+<span class=c1># 这里特别注意 orderer 的channelID 与 下面创建的 channelID 千万不能相同。</span>
+
+
+configtxgen -profile SampleMultiNodeEtcdRaft <span class=se>\
+</span><span class=se></span> -outputBlock ./channel-artifacts/genesis.block <span class=se>\
+</span><span class=se></span> -channelID orderer-channel
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+2020-03-23 19:01:00.548 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> main -&gt; INFO <span class=m>001</span> Loading configuration
+2020-03-23 19:01:00.576 CST <span class=o>[</span>common.tools.configtxgen.localconfig<span class=o>]</span> completeInitialization -&gt; INFO <span class=m>002</span> orderer type: etcdraft
+2020-03-23 19:01:00.576 CST <span class=o>[</span>common.tools.configtxgen.localconfig<span class=o>]</span> completeInitialization -&gt; INFO <span class=m>003</span> Orderer.EtcdRaft.Options unset, setting to tick_interval:<span class=s2>&#34;500ms&#34;</span> election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216 
+2020-03-23 19:01:00.576 CST <span class=o>[</span>common.tools.configtxgen.localconfig<span class=o>]</span> Load -&gt; INFO <span class=m>004</span> Loaded configuration: /opt/jicki/configtx.yaml
+2020-03-23 19:01:00.578 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> doOutputBlock -&gt; INFO <span class=m>005</span> Generating genesis block
+2020-03-23 19:01:00.578 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> doOutputBlock -&gt; INFO <span class=m>006</span> Writing genesis block
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># generate channel configuration transaction</span>
+<span class=c1># 生成用于配置自定义 channel 的交易文件</span>
+<span class=c1># 这里特别注意 configuration 的channelID 不能与上面 Orderer的channelID相同.</span>
+
+configtxgen <span class=se>\
+</span><span class=se></span>    -profile TwoOrgsChannel <span class=se>\
+</span><span class=se></span>    -outputCreateChannelTx ./channel-artifacts/channel.tx <span class=se>\
+</span><span class=se></span>    -channelID mychannel
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+
+2020-03-23 19:02:33.902 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> main -&gt; INFO <span class=m>001</span> Loading configuration
+2020-03-23 19:02:33.929 CST <span class=o>[</span>common.tools.configtxgen.localconfig<span class=o>]</span> Load -&gt; INFO <span class=m>002</span> Loaded configuration: /opt/jicki/configtx.yaml
+2020-03-23 19:02:33.929 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> doOutputChannelCreateTx -&gt; INFO <span class=m>003</span> Generating new channel configtx
+2020-03-23 19:02:33.932 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> doOutputChannelCreateTx -&gt; INFO <span class=m>004</span> Writing new channel tx
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 生成用于配置 anchor peer 的交易文件</span>
+
+
+<span class=c1># Org1</span>
+
+configtxgen <span class=se>\
+</span><span class=se></span>    -profile TwoOrgsChannel <span class=se>\
+</span><span class=se></span>    -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx <span class=se>\
+</span><span class=se></span>    -channelID mychannel <span class=se>\
+</span><span class=se></span>    -asOrg Org1MSP
+
+
+
+<span class=c1># Org2</span>
+
+configtxgen <span class=se>\
+</span><span class=se></span>  -profile TwoOrgsChannel <span class=se>\
+</span><span class=se></span>  -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx <span class=se>\
+</span><span class=se></span>  -channelID mychannel <span class=se>\
+</span><span class=se></span>  -asOrg Org2MSP
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+
+2020-03-23 19:04:41.859 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> main -&gt; INFO <span class=m>001</span> Loading configuration
+2020-03-23 19:04:41.888 CST <span class=o>[</span>common.tools.configtxgen.localconfig<span class=o>]</span> Load -&gt; INFO <span class=m>002</span> Loaded configuration: /opt/jicki/configtx.yaml
+2020-03-23 19:04:41.889 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> doOutputAnchorPeersUpdate -&gt; INFO <span class=m>003</span> Generating anchor peer update
+2020-03-23 19:04:41.890 CST <span class=o>[</span>common.tools.configtxgen<span class=o>]</span> doOutputAnchorPeersUpdate -&gt; INFO <span class=m>004</span> Writing anchor peer update
+
+</code></pre></td></tr></table></div></div><h3 id=启动-fabric>启动 fabric</h3><ul><li>docker-compose.yaml 文件</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span><span class=lnt>153
+</span><span class=lnt>154
+</span><span class=lnt>155
+</span><span class=lnt>156
+</span><span class=lnt>157
+</span><span class=lnt>158
+</span><span class=lnt>159
+</span><span class=lnt>160
+</span><span class=lnt>161
+</span><span class=lnt>162
+</span><span class=lnt>163
+</span><span class=lnt>164
+</span><span class=lnt>165
+</span><span class=lnt>166
+</span><span class=lnt>167
+</span><span class=lnt>168
+</span><span class=lnt>169
+</span><span class=lnt>170
+</span><span class=lnt>171
+</span><span class=lnt>172
+</span><span class=lnt>173
+</span><span class=lnt>174
+</span><span class=lnt>175
+</span><span class=lnt>176
+</span><span class=lnt>177
+</span><span class=lnt>178
+</span><span class=lnt>179
+</span><span class=lnt>180
+</span><span class=lnt>181
+</span><span class=lnt>182
+</span><span class=lnt>183
+</span><span class=lnt>184
+</span><span class=lnt>185
+</span><span class=lnt>186
+</span><span class=lnt>187
+</span><span class=lnt>188
+</span><span class=lnt>189
+</span><span class=lnt>190
+</span><span class=lnt>191
+</span><span class=lnt>192
+</span><span class=lnt>193
+</span><span class=lnt>194
+</span><span class=lnt>195
+</span><span class=lnt>196
+</span><span class=lnt>197
+</span><span class=lnt>198
+</span><span class=lnt>199
+</span><span class=lnt>200
+</span><span class=lnt>201
+</span><span class=lnt>202
+</span><span class=lnt>203
+</span><span class=lnt>204
+</span><span class=lnt>205
+</span><span class=lnt>206
+</span><span class=lnt>207
+</span><span class=lnt>208
+</span><span class=lnt>209
+</span><span class=lnt>210
+</span><span class=lnt>211
+</span><span class=lnt>212
+</span><span class=lnt>213
+</span><span class=lnt>214
+</span><span class=lnt>215
+</span><span class=lnt>216
+</span><span class=lnt>217
+</span><span class=lnt>218
+</span><span class=lnt>219
+</span><span class=lnt>220
+</span><span class=lnt>221
+</span><span class=lnt>222
+</span><span class=lnt>223
+</span><span class=lnt>224
+</span><span class=lnt>225
+</span><span class=lnt>226
+</span><span class=lnt>227
+</span><span class=lnt>228
+</span><span class=lnt>229
+</span><span class=lnt>230
+</span><span class=lnt>231
+</span><span class=lnt>232
+</span><span class=lnt>233
+</span><span class=lnt>234
+</span><span class=lnt>235
+</span><span class=lnt>236
+</span><span class=lnt>237
+</span><span class=lnt>238
+</span><span class=lnt>239
+</span><span class=lnt>240
+</span><span class=lnt>241
+</span><span class=lnt>242
+</span><span class=lnt>243
+</span><span class=lnt>244
+</span><span class=lnt>245
+</span><span class=lnt>246
+</span><span class=lnt>247
+</span><span class=lnt>248
+</span><span class=lnt>249
+</span><span class=lnt>250
+</span><span class=lnt>251
+</span><span class=lnt>252
+</span><span class=lnt>253
+</span><span class=lnt>254
+</span><span class=lnt>255
+</span><span class=lnt>256
+</span><span class=lnt>257
+</span><span class=lnt>258
+</span><span class=lnt>259
+</span><span class=lnt>260
+</span><span class=lnt>261
+</span><span class=lnt>262
+</span><span class=lnt>263
+</span><span class=lnt>264
+</span><span class=lnt>265
+</span><span class=lnt>266
+</span><span class=lnt>267
+</span><span class=lnt>268
+</span><span class=lnt>269
+</span><span class=lnt>270
+</span><span class=lnt>271
+</span><span class=lnt>272
+</span><span class=lnt>273
+</span><span class=lnt>274
+</span><span class=lnt>275
+</span><span class=lnt>276
+</span><span class=lnt>277
+</span><span class=lnt>278
+</span><span class=lnt>279
+</span><span class=lnt>280
+</span><span class=lnt>281
+</span><span class=lnt>282
+</span><span class=lnt>283
+</span><span class=lnt>284
+</span><span class=lnt>285
+</span><span class=lnt>286
+</span><span class=lnt>287
+</span><span class=lnt>288
+</span><span class=lnt>289
+</span><span class=lnt>290
+</span><span class=lnt>291
+</span><span class=lnt>292
+</span><span class=lnt>293
+</span><span class=lnt>294
+</span><span class=lnt>295
+</span><span class=lnt>296
+</span><span class=lnt>297
+</span><span class=lnt>298
+</span><span class=lnt>299
+</span><span class=lnt>300
+</span><span class=lnt>301
+</span><span class=lnt>302
+</span><span class=lnt>303
+</span><span class=lnt>304
+</span><span class=lnt>305
+</span><span class=lnt>306
+</span><span class=lnt>307
+</span><span class=lnt>308
+</span><span class=lnt>309
+</span><span class=lnt>310
+</span><span class=lnt>311
+</span><span class=lnt>312
+</span><span class=lnt>313
+</span><span class=lnt>314
+</span><span class=lnt>315
+</span><span class=lnt>316
+</span><span class=lnt>317
+</span><span class=lnt>318
+</span><span class=lnt>319
+</span><span class=lnt>320
+</span><span class=lnt>321
+</span><span class=lnt>322
+</span><span class=lnt>323
+</span><span class=lnt>324
+</span><span class=lnt>325
+</span><span class=lnt>326
+</span><span class=lnt>327
+</span><span class=lnt>328
+</span><span class=lnt>329
+</span><span class=lnt>330
+</span><span class=lnt>331
+</span><span class=lnt>332
+</span><span class=lnt>333
+</span><span class=lnt>334
+</span><span class=lnt>335
+</span><span class=lnt>336
+</span><span class=lnt>337
+</span><span class=lnt>338
+</span><span class=lnt>339
+</span><span class=lnt>340
+</span><span class=lnt>341
+</span><span class=lnt>342
+</span><span class=lnt>343
+</span><span class=lnt>344
+</span><span class=lnt>345
+</span><span class=lnt>346
+</span><span class=lnt>347
+</span><span class=lnt>348
+</span><span class=lnt>349
+</span><span class=lnt>350
+</span><span class=lnt>351
+</span><span class=lnt>352
+</span><span class=lnt>353
+</span><span class=lnt>354
+</span><span class=lnt>355
+</span><span class=lnt>356
+</span><span class=lnt>357
+</span><span class=lnt>358
+</span><span class=lnt>359
+</span><span class=lnt>360
+</span><span class=lnt>361
+</span><span class=lnt>362
+</span><span class=lnt>363
+</span><span class=lnt>364
+</span><span class=lnt>365
+</span><span class=lnt>366
+</span><span class=lnt>367
+</span><span class=lnt>368
+</span><span class=lnt>369
+</span><span class=lnt>370
+</span><span class=lnt>371
+</span><span class=lnt>372
+</span><span class=lnt>373
+</span><span class=lnt>374
+</span><span class=lnt>375
+</span><span class=lnt>376
+</span><span class=lnt>377
+</span><span class=lnt>378
+</span><span class=lnt>379
+</span><span class=lnt>380
+</span><span class=lnt>381
+</span><span class=lnt>382
+</span><span class=lnt>383
+</span><span class=lnt>384
+</span><span class=lnt>385
+</span><span class=lnt>386
+</span><span class=lnt>387
+</span><span class=lnt>388
+</span><span class=lnt>389
+</span><span class=lnt>390
+</span><span class=lnt>391
+</span><span class=lnt>392
+</span><span class=lnt>393
+</span><span class=lnt>394
+</span><span class=lnt>395
+</span><span class=lnt>396
+</span><span class=lnt>397
+</span><span class=lnt>398
+</span><span class=lnt>399
+</span><span class=lnt>400
+</span><span class=lnt>401
+</span><span class=lnt>402
+</span><span class=lnt>403
+</span><span class=lnt>404
+</span><span class=lnt>405
+</span><span class=lnt>406
+</span><span class=lnt>407
+</span><span class=lnt>408
+</span><span class=lnt>409
+</span><span class=lnt>410
+</span><span class=lnt>411
+</span><span class=lnt>412
+</span><span class=lnt>413
+</span><span class=lnt>414
+</span><span class=lnt>415
+</span><span class=lnt>416
+</span><span class=lnt>417
+</span><span class=lnt>418
+</span><span class=lnt>419
+</span><span class=lnt>420
+</span><span class=lnt>421
+</span><span class=lnt>422
+</span><span class=lnt>423
+</span><span class=lnt>424
+</span><span class=lnt>425
+</span><span class=lnt>426
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>version: <span class=s1>&#39;2&#39;</span>
+services:
+  orderer0.jicki.cn:
+    container_name: orderer0.jicki.cn
+    image: hyperledger/fabric-orderer:2.0
+    environment:
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>ORDERER_GENERAL_LOGLEVEL</span><span class=o>=</span>debug
+      - <span class=nv>ORDERER_GENERAL_LISTENADDRESS</span><span class=o>=</span>0.0.0.0
+      - <span class=nv>ORDERER_GENERAL_LISTENPORT</span><span class=o>=</span><span class=m>7050</span>
+      - <span class=nv>ORDERER_GENERAL_GENESISMETHOD</span><span class=o>=</span>file
+      - <span class=nv>ORDERER_GENERAL_GENESISFILE</span><span class=o>=</span>/var/hyperledger/orderer/orderer.genesis.block
+      - <span class=nv>ORDERER_GENERAL_LOCALMSPID</span><span class=o>=</span>OrdererMSP
+      - <span class=nv>ORDERER_GENERAL_LOCALMSPDIR</span><span class=o>=</span>/var/hyperledger/orderer/msp
+      <span class=c1># enabled TLS</span>
+      - <span class=nv>ORDERER_GENERAL_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>ORDERER_GENERAL_TLS_PRIVATEKEY</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.key
+      - <span class=nv>ORDERER_GENERAL_TLS_CERTIFICATE</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.crt
+      - <span class=nv>ORDERER_GENERAL_TLS_ROOTCAS</span><span class=o>=[</span>/var/hyperledger/orderer/tls/ca.crt, /etc/hyperledger/crypto/peerOrg1/tls/ca.crt, /etc/hyperledger/crypto/peer1rg1/tls/ca.crt, /etc/hyperledger/crypto/peerOrg2/tls/ca.crt, /etc/hyperledger/crypto/peer1rg2/tls/ca.crt<span class=o>]</span>
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.crt
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.key
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_ROOTCAS</span><span class=o>=[</span>/var/hyperledger/orderer/tls/ca.crt<span class=o>]</span>
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    <span class=c1># 数据持久化,以及存储</span>
+    - ./data/orderer0:/var/hyperledger/production
+    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ./crypto-config/ordererOrganizations/jicki.cn/orderers/orderer0.jicki.cn/msp:/var/hyperledger/orderer/msp
+    - ./crypto-config/ordererOrganizations/jicki.cn/orderers/orderer0.jicki.cn/tls/:/var/hyperledger/orderer/tls
+    - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/:/etc/hyperledger/crypto/peerOrg1
+    - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer1.org1.jicki.cn/:/etc/hyperledger/crypto/peer1rg1
+    - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/:/etc/hyperledger/crypto/peerOrg2
+    - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer1.org2.jicki.cn/:/etc/hyperledger/crypto/peer1rg2
+    networks:
+      default:
+        aliases:
+          - jicki
+    ports:
+      - 7050:7050
+  orderer1.jicki.cn:
+    container_name: orderer1.jicki.cn
+    image: hyperledger/fabric-orderer:2.0
+    environment:
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>ORDERER_GENERAL_LOGLEVEL</span><span class=o>=</span>debug
+      - <span class=nv>ORDERER_GENERAL_LISTENADDRESS</span><span class=o>=</span>0.0.0.0
+      - <span class=nv>ORDERER_GENERAL_LISTENPORT</span><span class=o>=</span><span class=m>7050</span>
+      - <span class=nv>ORDERER_GENERAL_GENESISMETHOD</span><span class=o>=</span>file
+      - <span class=nv>ORDERER_GENERAL_GENESISFILE</span><span class=o>=</span>/var/hyperledger/orderer/orderer.genesis.block
+      - <span class=nv>ORDERER_GENERAL_LOCALMSPID</span><span class=o>=</span>OrdererMSP
+      - <span class=nv>ORDERER_GENERAL_LOCALMSPDIR</span><span class=o>=</span>/var/hyperledger/orderer/msp
+      <span class=c1># enabled TLS</span>
+      - <span class=nv>ORDERER_GENERAL_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>ORDERER_GENERAL_TLS_PRIVATEKEY</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.key
+      - <span class=nv>ORDERER_GENERAL_TLS_CERTIFICATE</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.crt
+      - <span class=nv>ORDERER_GENERAL_TLS_ROOTCAS</span><span class=o>=[</span>/var/hyperledger/orderer/tls/ca.crt, /etc/hyperledger/crypto/peerOrg1/tls/ca.crt, /etc/hyperledger/crypto/peer1rg1/tls/ca.crt, /etc/hyperledger/crypto/peerOrg2/tls/ca.crt, /etc/hyperledger/crypto/peer1rg2/tls/ca.crt<span class=o>]</span>
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.crt
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.key
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_ROOTCAS</span><span class=o>=[</span>/var/hyperledger/orderer/tls/ca.crt<span class=o>]</span>
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    <span class=c1># 数据持久化,以及存储</span>
+    - ./data/orderer1:/var/hyperledger/production
+    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ./crypto-config/ordererOrganizations/jicki.cn/orderers/orderer1.jicki.cn/msp:/var/hyperledger/orderer/msp
+    - ./crypto-config/ordererOrganizations/jicki.cn/orderers/orderer1.jicki.cn/tls/:/var/hyperledger/orderer/tls
+    - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/:/etc/hyperledger/crypto/peerOrg1
+    - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer1.org1.jicki.cn/:/etc/hyperledger/crypto/peer1rg1
+    - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/:/etc/hyperledger/crypto/peerOrg2
+    - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer1.org2.jicki.cn/:/etc/hyperledger/crypto/peer1rg2
+    networks:
+      default:
+        aliases:
+          - jicki
+    ports:
+      - 8050:7050
+  orderer2.jicki.cn:
+    container_name: orderer2.jicki.cn
+    image: hyperledger/fabric-orderer:2.0
+    environment:
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>ORDERER_GENERAL_LOGLEVEL</span><span class=o>=</span>debug
+      - <span class=nv>ORDERER_GENERAL_LISTENADDRESS</span><span class=o>=</span>0.0.0.0
+      - <span class=nv>ORDERER_GENERAL_LISTENPORT</span><span class=o>=</span><span class=m>7050</span>
+      - <span class=nv>ORDERER_GENERAL_GENESISMETHOD</span><span class=o>=</span>file
+      - <span class=nv>ORDERER_GENERAL_GENESISFILE</span><span class=o>=</span>/var/hyperledger/orderer/orderer.genesis.block
+      - <span class=nv>ORDERER_GENERAL_LOCALMSPID</span><span class=o>=</span>OrdererMSP
+      - <span class=nv>ORDERER_GENERAL_LOCALMSPDIR</span><span class=o>=</span>/var/hyperledger/orderer/msp
+      <span class=c1># enabled TLS</span>
+      - <span class=nv>ORDERER_GENERAL_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>ORDERER_GENERAL_TLS_PRIVATEKEY</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.key
+      - <span class=nv>ORDERER_GENERAL_TLS_CERTIFICATE</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.crt
+      - <span class=nv>ORDERER_GENERAL_TLS_ROOTCAS</span><span class=o>=[</span>/var/hyperledger/orderer/tls/ca.crt, /etc/hyperledger/crypto/peerOrg1/tls/ca.crt, /etc/hyperledger/crypto/peer1rg1/tls/ca.crt, /etc/hyperledger/crypto/peerOrg2/tls/ca.crt, /etc/hyperledger/crypto/peer1rg2/tls/ca.crt<span class=o>]</span>
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.crt
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY</span><span class=o>=</span>/var/hyperledger/orderer/tls/server.key
+      - <span class=nv>ORDERER_GENERAL_CLUSTER_ROOTCAS</span><span class=o>=[</span>/var/hyperledger/orderer/tls/ca.crt<span class=o>]</span>
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    <span class=c1># 数据持久化,以及存储</span>
+    - ./data/orderer2:/var/hyperledger/production
+    - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ./crypto-config/ordererOrganizations/jicki.cn/orderers/orderer2.jicki.cn/msp:/var/hyperledger/orderer/msp
+    - ./crypto-config/ordererOrganizations/jicki.cn/orderers/orderer2.jicki.cn/tls/:/var/hyperledger/orderer/tls
+    - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/:/etc/hyperledger/crypto/peerOrg1
+    - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer1.org1.jicki.cn/:/etc/hyperledger/crypto/peer1rg1
+    - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/:/etc/hyperledger/crypto/peerOrg2
+    - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer1.org2.jicki.cn/:/etc/hyperledger/crypto/peer1rg2
+    networks:
+      default:
+        aliases:
+          - jicki
+    ports:
+      - 9050:7050
+
+  couchdb0:
+    container_name: couchdb0
+    image: hyperledger/fabric-couchdb:0.4.20
+    environment:
+      - <span class=nv>COUCHDB_USER</span><span class=o>=</span>
+      - <span class=nv>COUCHDB_PASSWORD</span><span class=o>=</span>
+    <span class=c1>#ports:</span>
+    <span class=c1>#  - &#34;5984:5984&#34;</span>
+    volumes:
+      <span class=c1># 数据持久化，用于存储链码值</span>
+      - ./data/couchdb0/data:/opt/couchdb/data
+    networks:
+      default:
+        aliases:
+          - jicki
+
+  couchdb1:
+    container_name: couchdb1
+    image: hyperledger/fabric-couchdb:0.4.20
+    environment:
+      - <span class=nv>COUCHDB_USER</span><span class=o>=</span>
+      - <span class=nv>COUCHDB_PASSWORD</span><span class=o>=</span>
+    volumes:
+      <span class=c1># 数据持久化，用于存储链码值</span>
+      - ./data/couchdb1/data:/opt/couchdb/data
+    networks:
+      default:
+        aliases:
+          - jicki
+
+  couchdb2:
+    container_name: couchdb2
+    image: hyperledger/fabric-couchdb:0.4.20
+    environment:
+      - <span class=nv>COUCHDB_USER</span><span class=o>=</span>
+      - <span class=nv>COUCHDB_PASSWORD</span><span class=o>=</span>
+    volumes:
+      <span class=c1># 数据持久化，用于存储链码值</span>
+      - ./data/couchdb2/data:/opt/couchdb/data
+    networks:
+      default:
+        aliases:
+          - jicki
+
+  couchdb3:
+    container_name: couchdb3
+    image: hyperledger/fabric-couchdb:0.4.20
+    environment:
+      - <span class=nv>COUCHDB_USER</span><span class=o>=</span>
+      - <span class=nv>COUCHDB_PASSWORD</span><span class=o>=</span>
+    volumes:
+      <span class=c1># 数据持久化，用于存储链码值</span>
+      - ./data/couchdb3/data:/opt/couchdb/data
+    networks:
+      default:
+        aliases:
+          - jicki
+
+  peer0.org1.jicki.cn:
+    container_name: peer0.org1.jicki.cn
+    image: hyperledger/fabric-peer:2.0
+    environment:
+      - <span class=nv>CORE_LEDGER_STATE_STATEDATABASE</span><span class=o>=</span>CouchDB
+      - <span class=nv>CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS</span><span class=o>=</span>couchdb0:5984
+      
+      - <span class=nv>CORE_PEER_ID</span><span class=o>=</span>peer0.org1.jicki.cn
+      - <span class=nv>CORE_PEER_NETWORKID</span><span class=o>=</span>jicki
+      - <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer0.org1.jicki.cn:7051
+      - <span class=nv>CORE_PEER_CHAINCODELISTENADDRESS</span><span class=o>=</span>peer0.org1.jicki.cn:7052
+      - <span class=nv>CORE_PEER_GOSSIP_EXTERNALENDPOINT</span><span class=o>=</span>peer0.org1.jicki.cn:7051
+      - <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span>Org1MSP
+
+      - <span class=nv>CORE_VM_ENDPOINT</span><span class=o>=</span>unix:///host/var/run/docker.sock
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki
+      <span class=c1># - CORE_LOGGING_LEVEL=ERROR</span>
+      - <span class=nv>CORE_LOGGING_LEVEL</span><span class=o>=</span>DEBUG
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>CORE_PEER_GOSSIP_SKIPHANDSHAKE</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_USELEADERELECTION</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_ORGLEADER</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_PROFILE_ENABLED</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_TLS_CERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.crt
+      - <span class=nv>CORE_PEER_TLS_KEY_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.key
+      - <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/ca.crt
+      - <span class=nv>CORE_CHAINCODE_EXECUTETIMEOUT</span><span class=o>=</span>300s
+      - <span class=nv>GODEBUG</span><span class=o>=</span><span class=nv>netdns</span><span class=o>=</span>go
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls:/etc/hyperledger/fabric/tls
+        <span class=c1># 数据持久化, 存储安装，以及实例化智能合约的数据</span>
+        - ./data/peer0org1:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7051:7051
+      - 7052:7052
+      - 7053:7053
+    networks:
+      default:
+        aliases:
+          - jicki
+    depends_on:
+      - couchdb0
+
+  peer1.org1.jicki.cn:
+    container_name: peer1.org1.jicki.cn
+    image: hyperledger/fabric-peer:2.0
+    environment:
+      - <span class=nv>CORE_LEDGER_STATE_STATEDATABASE</span><span class=o>=</span>CouchDB
+      - <span class=nv>CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS</span><span class=o>=</span>couchdb1:5984
+      
+      - <span class=nv>CORE_PEER_ID</span><span class=o>=</span>peer1.org1.jicki.cn
+      - <span class=nv>CORE_PEER_NETWORKID</span><span class=o>=</span>jicki
+      - <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer1.org1.jicki.cn:7051
+      - <span class=nv>CORE_PEER_CHAINCODELISTENADDRESS</span><span class=o>=</span>peer1.org1.jicki.cn:7052
+      - <span class=nv>CORE_PEER_GOSSIP_EXTERNALENDPOINT</span><span class=o>=</span>peer1.org1.jicki.cn:7051
+      - <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span>Org1MSP
+
+      - <span class=nv>CORE_VM_ENDPOINT</span><span class=o>=</span>unix:///host/var/run/docker.sock
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki
+      <span class=c1># - CORE_LOGGING_LEVEL=ERROR</span>
+      - <span class=nv>CORE_LOGGING_LEVEL</span><span class=o>=</span>DEBUG
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>CORE_PEER_GOSSIP_SKIPHANDSHAKE</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_USELEADERELECTION</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_ORGLEADER</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_PROFILE_ENABLED</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_TLS_CERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.crt
+      - <span class=nv>CORE_PEER_TLS_KEY_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.key
+      - <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/ca.crt
+      - <span class=nv>CORE_CHAINCODE_EXECUTETIMEOUT</span><span class=o>=</span>300s
+      - <span class=nv>GODEBUG</span><span class=o>=</span><span class=nv>netdns</span><span class=o>=</span>go
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer1.org1.jicki.cn/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org1.jicki.cn/peers/peer1.org1.jicki.cn/tls:/etc/hyperledger/fabric/tls
+        <span class=c1># 数据持久化, 存储安装，以及实例化智能合约的数据</span>
+        - ./data/peer1org1:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 8051:7051
+      - 8052:7052
+      - 8053:7053
+    networks:
+      default:
+        aliases:
+          - jicki
+    depends_on:
+      - couchdb1
+
+
+  peer0.org2.jicki.cn:
+    container_name: peer0.org2.jicki.cn
+    image: hyperledger/fabric-peer:2.0
+    environment:
+      - <span class=nv>CORE_LEDGER_STATE_STATEDATABASE</span><span class=o>=</span>CouchDB
+      - <span class=nv>CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS</span><span class=o>=</span>couchdb2:5984
+
+      - <span class=nv>CORE_PEER_ID</span><span class=o>=</span>peer0.org2.jicki.cn
+      - <span class=nv>CORE_PEER_NETWORKID</span><span class=o>=</span>jicki
+      - <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer0.org2.jicki.cn:7051
+      - <span class=nv>CORE_PEER_CHAINCODELISTENADDRESS</span><span class=o>=</span>peer0.org2.jicki.cn:7052
+      - <span class=nv>CORE_PEER_GOSSIP_EXTERNALENDPOINT</span><span class=o>=</span>peer0.org2.jicki.cn:7051
+      - <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span>Org2MSP
+
+      - <span class=nv>CORE_VM_ENDPOINT</span><span class=o>=</span>unix:///host/var/run/docker.sock
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki
+      <span class=c1># - CORE_LOGGING_LEVEL=ERROR</span>
+      - <span class=nv>CORE_LOGGING_LEVEL</span><span class=o>=</span>DEBUG
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>CORE_PEER_GOSSIP_SKIPHANDSHAKE</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_USELEADERELECTION</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_ORGLEADER</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_PROFILE_ENABLED</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_TLS_CERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.crt
+      - <span class=nv>CORE_PEER_TLS_KEY_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.key
+      - <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/ca.crt
+      - <span class=nv>CORE_CHAINCODE_EXECUTETIMEOUT</span><span class=o>=</span>300s
+      - <span class=nv>GODEBUG</span><span class=o>=</span><span class=nv>netdns</span><span class=o>=</span>go
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls:/etc/hyperledger/fabric/tls
+        <span class=c1># 数据持久化, 存储安装，以及实例化智能合约的数据</span>
+        - ./data/peer0org2:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 9051:7051
+      - 9052:7052
+      - 9053:7053
+    networks:
+      default:
+        aliases:
+          - jicki
+    depends_on:
+      - couchdb2
+
+  peer1.org2.jicki.cn:
+    container_name: peer1.org2.jicki.cn
+    image: hyperledger/fabric-peer:2.0
+    environment:
+      - <span class=nv>CORE_LEDGER_STATE_STATEDATABASE</span><span class=o>=</span>CouchDB
+      - <span class=nv>CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS</span><span class=o>=</span>couchdb3:5984
+
+      - <span class=nv>CORE_PEER_ID</span><span class=o>=</span>peer1.org2.jicki.cn
+      - <span class=nv>CORE_PEER_NETWORKID</span><span class=o>=</span>jicki
+      - <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer1.org2.jicki.cn:7051
+      - <span class=nv>CORE_PEER_CHAINCODELISTENADDRESS</span><span class=o>=</span>peer1.org2.jicki.cn:7052
+      - <span class=nv>CORE_PEER_GOSSIP_EXTERNALENDPOINT</span><span class=o>=</span>peer1.org2.jicki.cn:7051
+      - <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span>Org2MSP
+
+      - <span class=nv>CORE_VM_ENDPOINT</span><span class=o>=</span>unix:///host/var/run/docker.sock
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki
+      <span class=c1># - CORE_LOGGING_LEVEL=ERROR</span>
+      - <span class=nv>CORE_LOGGING_LEVEL</span><span class=o>=</span>DEBUG
+      - <span class=nv>CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE</span><span class=o>=</span>jicki_default
+      - <span class=nv>CORE_PEER_GOSSIP_SKIPHANDSHAKE</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_USELEADERELECTION</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_GOSSIP_ORGLEADER</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_PROFILE_ENABLED</span><span class=o>=</span><span class=nb>false</span>
+      - <span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_TLS_CERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.crt
+      - <span class=nv>CORE_PEER_TLS_KEY_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/server.key
+      - <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/etc/hyperledger/fabric/tls/ca.crt
+      - <span class=nv>CORE_CHAINCODE_EXECUTETIMEOUT</span><span class=o>=</span>300s
+      - <span class=nv>GODEBUG</span><span class=o>=</span><span class=nv>netdns</span><span class=o>=</span>go
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer1.org2.jicki.cn/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/org2.jicki.cn/peers/peer1.org2.jicki.cn/tls:/etc/hyperledger/fabric/tls
+        <span class=c1># 数据持久化, 存储安装，以及实例化智能合约的数据</span>
+        - ./data/peer1org2:/var/hyperledger/production
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 10051:7051
+      - 10052:7052
+      - 10053:7053
+    networks:
+      default:
+        aliases:
+          - jicki
+    depends_on:
+      - couchdb3
+  org1.cli:
+    container_name: org1.cli
+    image: hyperledger/fabric-tools:2.0
+    tty: <span class=nb>true</span>
+    environment:
+      - <span class=nv>GOPATH</span><span class=o>=</span>/opt/gopath
+      - <span class=nv>GODEBUG</span><span class=o>=</span><span class=nv>netdns</span><span class=o>=</span>go
+      - <span class=nv>CORE_VM_ENDPOINT</span><span class=o>=</span>unix:///host/var/run/docker.sock
+      <span class=c1># - CORE_LOGGING_LEVEL=ERROR</span>
+      - <span class=nv>CORE_LOGGING_LEVEL</span><span class=o>=</span>DEBUG
+      - <span class=nv>CORE_PEER_ID</span><span class=o>=</span>org1.cli
+      - <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer0.org1.jicki.cn:7051
+      - <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span>Org1MSP
+      - <span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_TLS_CERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls/server.crt
+      - <span class=nv>CORE_PEER_TLS_KEY_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls/server.key
+      - <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls/ca.crt
+      - <span class=nv>CORE_PEER_MSPCONFIGPATH</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/users/Admin@org1.jicki.cn/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./data/cli/peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
+        - ./data/cli/chaincode/go/:/opt/gopath/src/github.com/hyperledger/fabric/jicki/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      default:
+        aliases:
+          - jicki
+
+  org2.cli:
+    container_name: org2.cli
+    image: hyperledger/fabric-tools:2.0
+    tty: <span class=nb>true</span>
+    environment:
+      - <span class=nv>GOPATH</span><span class=o>=</span>/opt/gopath
+      - <span class=nv>GODEBUG</span><span class=o>=</span><span class=nv>netdns</span><span class=o>=</span>go
+      - <span class=nv>CORE_VM_ENDPOINT</span><span class=o>=</span>unix:///host/var/run/docker.sock
+      <span class=c1># - CORE_LOGGING_LEVEL=ERROR</span>
+      - <span class=nv>CORE_LOGGING_LEVEL</span><span class=o>=</span>DEBUG
+      - <span class=nv>CORE_PEER_ID</span><span class=o>=</span>org2.cli
+      - <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer0.org2.jicki.cn:7051
+      - <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span>Org2MSP
+      - <span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+      - <span class=nv>CORE_PEER_TLS_CERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls/server.crt
+      - <span class=nv>CORE_PEER_TLS_KEY_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls/server.key
+      - <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls/ca.crt
+      - <span class=nv>CORE_PEER_MSPCONFIGPATH</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/users/Admin@org2.jicki.cn/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./data/cli/peer:/opt/gopath/src/github.com/hyperledger/fabric/peer
+        - ./data/cli/chaincode/go/:/opt/gopath/src/github.com/hyperledger/fabric/jicki/chaincode/go
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      default:
+        aliases:
+          - jicki
+</code></pre></td></tr></table></div></div><h3 id=创建-channel>创建 Channel</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nv>CLI_NAME</span><span class=o>=</span>cli
+
+<span class=nv>ORDERER</span><span class=o>=</span>orderer0.jicki.cn:7050
+
+<span class=nv>CORE_PEER_TLS_ENABLED</span><span class=o>=</span><span class=nb>true</span>
+
+<span class=nv>CAFILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/jicki.cn/orderers/orderer0.jicki.cn/msp/tlscacerts/tlsca.jicki.cn-cert.pem
+
+<span class=c1># Channel 通道ID 不能与 之前 Orderer 之前创建的通道相同,否则报错</span>
+<span class=c1># config update for existing channel did not pass initial checks: implicit policy evaluation failed - 0 sub-policies were satisfied, but this policy requires 1 of the &#39;Writers&#39; sub-policies to be satisfied: permission denied</span>
+
+<span class=nv>CHANNEL</span><span class=o>=</span>mychannel
+
+docker <span class=nb>exec</span> -it -e <span class=s2>&#34;ORDERER=</span><span class=nv>$ORDERER</span><span class=s2>&#34;</span> -e <span class=s2>&#34;CORE_PEER_TLS_ENABLED=</span><span class=nv>$CORE_PEER_TLS_ENABLED</span><span class=s2>&#34;</span> -e <span class=s2>&#34;CAFILE=</span><span class=nv>$CAFILE</span><span class=s2>&#34;</span> -e <span class=s2>&#34;CHANNEL=</span><span class=nv>$CHANNEL</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=k>$(</span>docker ps -q -f <span class=nv>status</span><span class=o>=</span>running --filter <span class=nv>name</span><span class=o>=</span><span class=nv>$CLI_NAME</span><span class=k>)</span><span class=s2>&#34;</span> sh -c <span class=s1>&#39;peer channel create -o $ORDERER -c $CHANNEL -f ./channel-artifacts/channel.tx --tls $CORE_PEER_TLS_ENABLED --cafile $CAFILE&#39;</span>
+
+</code></pre></td></tr></table></div></div><h3 id=加入-channel-join>加入 Channel (Join)</h3><ul><li><p>每个 peer 节点都需要单独加入到 Channel 中，这里有4个peer节点。</p></li><li><p>首先是 org1 组织</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># org1 下的 peer0 节点</span>
+
+<span class=o>[</span>root@localhost jicki<span class=o>]</span><span class=c1># docker exec -it org1.cli bash</span>
+
+
+<span class=nb>export</span> <span class=nv>CORE_PEER_MSPCONFIGPATH</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/users/Admin@org1.jicki.cn/msp
+<span class=nb>export</span> <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer0.org1.jicki.cn:7051
+<span class=nb>export</span> <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span><span class=s2>&#34;Org1MSP&#34;</span>
+<span class=nb>export</span> <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls/ca.crt
+
+
+peer channel join <span class=se>\
+</span><span class=se></span>    -b mychannel.block <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># org1 下的 peer1 节点</span>
+
+<span class=nb>export</span> <span class=nv>CORE_PEER_MSPCONFIGPATH</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/users/Admin@org1.jicki.cn/msp
+<span class=nb>export</span> <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer1.org1.jicki.cn:7051
+<span class=nb>export</span> <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span><span class=s2>&#34;Org1MSP&#34;</span>
+<span class=nb>export</span> <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer1.org1.jicki.cn/tls/ca.crt
+
+
+
+peer channel join <span class=se>\
+</span><span class=se></span>    -b mychannel.block <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><ul><li>接下来是 org2 组织</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># org2 组织下的 peer0 节点</span>
+
+
+<span class=nb>export</span> <span class=nv>CORE_PEER_MSPCONFIGPATH</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/users/Admin@org2.jicki.cn/msp
+<span class=nb>export</span> <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer0.org2.jicki.cn:7051
+<span class=nb>export</span> <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span><span class=s2>&#34;Org2MSP&#34;</span>
+<span class=nb>export</span> <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls/ca.crt
+
+
+peer channel join <span class=se>\
+</span><span class=se></span>    -b mychannel.block <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># org2 组织下的 peer1 节点</span>
+
+
+<span class=nb>export</span> <span class=nv>CORE_PEER_MSPCONFIGPATH</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/users/Admin@org2.jicki.cn/msp
+<span class=nb>export</span> <span class=nv>CORE_PEER_ADDRESS</span><span class=o>=</span>peer1.org2.jicki.cn:7051
+<span class=nb>export</span> <span class=nv>CORE_PEER_LOCALMSPID</span><span class=o>=</span><span class=s2>&#34;Org2MSP&#34;</span>
+<span class=nb>export</span> <span class=nv>CORE_PEER_TLS_ROOTCERT_FILE</span><span class=o>=</span>/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer1.org2.jicki.cn/tls/ca.crt
+
+
+peer channel join <span class=se>\
+</span><span class=se></span>    -b mychannel.block <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><ul><li>输出日志</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 加入成功都会输出如下信息
+
+2020-03-24 04:14:54.947 UTC [main] InitCmd -&gt; WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2020-03-24 04:14:54.950 UTC [main] SetOrdererEnv -&gt; WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2020-03-24 04:14:54.954 UTC [channelCmd] InitCmdFactory -&gt; INFO 003 Endorser and orderer connections initialized
+2020-03-24 04:14:55.092 UTC [channelCmd] executeJoin -&gt; INFO 004 Successfully submitted proposal to join channel
+
+</code></pre></td></tr></table></div></div><h3 id=更新组织的-anchor-peer>更新组织的 anchor peer</h3><ul><li>org1 组织</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+docker <span class=nb>exec</span> -it org1.cli bash
+
+
+peer channel update <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    -c mychannel <span class=se>\
+</span><span class=se></span>    -f ./channel-artifacts/Org1MSPanchors.tx <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+
+</code></pre></td></tr></table></div></div><ul><li>org2 组织</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+docker <span class=nb>exec</span> -it org2.cli bash
+
+
+peer channel update <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    -c mychannel <span class=se>\
+</span><span class=se></span>    -f ./channel-artifacts/Org2MSPanchors.tx <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><ul><li>输出如下信息</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>2020-03-24 04:19:46.008 UTC <span class=o>[</span>main<span class=o>]</span> InitCmd -&gt; WARN <span class=m>001</span> CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2020-03-24 04:19:46.011 UTC <span class=o>[</span>main<span class=o>]</span> SetOrdererEnv -&gt; WARN <span class=m>002</span> CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2020-03-24 04:19:46.011 UTC <span class=o>[</span>channelCmd<span class=o>]</span> InitCmdFactory -&gt; INFO <span class=m>003</span> Endorser and orderer connections initialized
+2020-03-24 04:19:46.027 UTC <span class=o>[</span>channelCmd<span class=o>]</span> update -&gt; INFO <span class=m>004</span> Successfully submitted channel update
+</code></pre></td></tr></table></div></div><h3 id=安装-chaincode>安装 ChainCode</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># git clone 下载一个 fabric-samples</span>
+
+
+git clone https://github.com/hyperledger/fabric-samples
+
+Cloning into <span class=s1>&#39;fabric-samples&#39;</span>...
+remote: Enumerating objects: 4891, <span class=k>done</span>.
+remote: Total <span class=m>4891</span> <span class=o>(</span>delta 0<span class=o>)</span>, reused <span class=m>0</span> <span class=o>(</span>delta 0<span class=o>)</span>, pack-reused <span class=m>4891</span>
+Receiving objects: 100% <span class=o>(</span>4891/4891<span class=o>)</span>, 1.72 MiB <span class=p>|</span> 369.00 KiB/s, <span class=k>done</span>.
+Resolving deltas: 100% <span class=o>(</span>2478/2478<span class=o>)</span>, <span class=k>done</span>.
+
+</code></pre></td></tr></table></div></div><ul><li>拷贝 chaincode 到 cli 的目录下</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 创建一个目录</span>
+mkdir -p ./data/cli/chaincode/go/mycc
+
+
+<span class=c1># 拷贝到目录下</span>
+cp fabric-samples/chaincode/abstore/go/* ./data/cli/chaincode/go/mycc/ 
+
+</code></pre></td></tr></table></div></div><ul><li>打包 chaincode</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 打包 chaincode</span>
+
+docker <span class=nb>exec</span> -it org1.cli bash
+
+peer lifecycle chaincode package mycc.tar.gz <span class=se>\
+</span><span class=se></span>    --path /opt/gopath/src/github.com/hyperledger/fabric/jicki/chaincode/go/mycc <span class=se>\
+</span><span class=se></span>    --lang golang <span class=se>\
+</span><span class=se></span>    --label mycc
+
+
+
+<span class=c1># 打包完以后会在当前目录生成 mycc.tar.gz 文件</span>
+
+</code></pre></td></tr></table></div></div><ul><li><p>安装 chaincode 每个组织在任意peer节点安装一次既可。</p></li><li><p>在 peer0.org1 上安装 chaincode</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>docker <span class=nb>exec</span> -it org1.cli bash
+
+
+<span class=c1># 安装</span>
+peer lifecycle chaincode install mycc.tar.gz
+
+
+<span class=c1># 查看安装情况</span>
+peer lifecycle chaincode queryinstalled
+
+</code></pre></td></tr></table></div></div><ul><li>在 peer0.org2 上安装 chaincode</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>docker <span class=nb>exec</span> -it org2.cli bash
+
+
+<span class=c1># 安装</span>
+peer lifecycle chaincode install mycc.tar.gz
+
+
+<span class=c1># 查看安装情况</span>
+peer lifecycle chaincode queryinstalled
+
+</code></pre></td></tr></table></div></div><h3 id=chaincode-投票>chaincode 投票</h3><ul><li><p>每次安装新的 chaincode 组织都需要对其进行投票。</p></li><li><p>org1 投票</p><ul><li><code>peer lifecycle chaincode queryinstalled</code> 查看 Package ID: 部分为 <code>CC_PACKAGE_ID</code></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>docker <span class=nb>exec</span> -it org1.cli bash
+
+
+<span class=c1># 获取 CC_PACKAGE_ID</span> 
+bash-5.0# peer lifecycle chaincode queryinstalled
+Installed chaincodes on peer:
+Package ID: mycc:14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be, Label: mycc
+
+
+<span class=c1># 设置变量</span>
+<span class=nb>export</span> <span class=nv>CC_PACKAGE_ID</span><span class=o>=</span>mycc:14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be
+
+
+<span class=c1># 进行投票</span>
+
+peer lifecycle chaincode approveformyorg <span class=se>\
+</span><span class=se></span>    --channelID mychannel <span class=se>\
+</span><span class=se></span>    --name mycc <span class=se>\
+</span><span class=se></span>    --version <span class=m>1</span> <span class=se>\
+</span><span class=se></span>    --init-required <span class=se>\
+</span><span class=se></span>    --package-id <span class=nv>$CC_PACKAGE_ID</span> <span class=se>\
+</span><span class=se></span>    --sequence <span class=m>1</span> <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+
+2020-03-24 06:24:19.615 UTC <span class=o>[</span>main<span class=o>]</span> InitCmd -&gt; WARN <span class=m>001</span> CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2020-03-24 06:24:19.619 UTC <span class=o>[</span>main<span class=o>]</span> SetOrdererEnv -&gt; WARN <span class=m>002</span> CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2020-03-24 06:24:19.634 UTC <span class=o>[</span>cli.lifecycle.chaincode<span class=o>]</span> setOrdererClient -&gt; INFO <span class=m>003</span> Retrieved channel <span class=o>(</span>mychannel<span class=o>)</span> orderer endpoint: orderer0.jicki.cn:7050
+2020-03-24 06:24:21.880 UTC <span class=o>[</span>chaincodeCmd<span class=o>]</span> ClientWait -&gt; INFO <span class=m>004</span> txid <span class=o>[</span>fb01bb2497d00ea1b4e63ef1f9afad125f892dd84717c0712e649716f3092493<span class=o>]</span> committed with status <span class=o>(</span>VALID<span class=o>)</span> at 
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 查看投票情况</span>
+
+peer lifecycle chaincode checkcommitreadiness <span class=se>\
+</span><span class=se></span>  --channelID mychannel <span class=se>\
+</span><span class=se></span>  --name mycc <span class=se>\
+</span><span class=se></span>  --version <span class=m>1</span> <span class=se>\
+</span><span class=se></span>  --init-required <span class=se>\
+</span><span class=se></span>  --sequence <span class=m>1</span> <span class=se>\
+</span><span class=se></span>  --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>  --cafile <span class=nv>$ORDERER_CA</span> <span class=se>\
+</span><span class=se></span>  --output json
+</code></pre></td></tr></table></div></div><ul><li>org2 投票</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>docker <span class=nb>exec</span> -it org2.cli bash
+
+
+<span class=c1># 获取 CC_PACKAGE_ID</span>
+bash-5.0# peer lifecycle chaincode queryinstalled
+Installed chaincodes on peer:
+Package ID: mycc:14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be, Label: mycc
+
+
+<span class=c1># 设置变量</span>
+<span class=nb>export</span> <span class=nv>CC_PACKAGE_ID</span><span class=o>=</span>mycc:14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be
+
+
+<span class=c1># 进行投票</span>
+
+peer lifecycle chaincode approveformyorg <span class=se>\
+</span><span class=se></span>    --channelID mychannel <span class=se>\
+</span><span class=se></span>    --name mycc <span class=se>\
+</span><span class=se></span>    --version <span class=m>1</span> <span class=se>\
+</span><span class=se></span>    --init-required <span class=se>\
+</span><span class=se></span>    --package-id <span class=nv>$CC_PACKAGE_ID</span> <span class=se>\
+</span><span class=se></span>    --sequence <span class=m>1</span> <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+
+2020-03-24 06:26:25.523 UTC <span class=o>[</span>cli.lifecycle.chaincode<span class=o>]</span> setOrdererClient -&gt; INFO <span class=m>003</span> Retrieved channel <span class=o>(</span>mychannel<span class=o>)</span> orderer endpoint: orderer0.jicki.cn:7050
+2020-03-24 06:26:27.675 UTC <span class=o>[</span>chaincodeCmd<span class=o>]</span> ClientWait -&gt; INFO <span class=m>004</span> txid <span class=o>[</span>067cce8f1c3ca9fa8f9239ad78542e30fee5b83d68ae054a8e9b76a01393bb08<span class=o>]</span> committed with status <span class=o>(</span>VALID<span class=o>)</span> at
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 查看投票情况</span>
+
+peer lifecycle chaincode checkcommitreadiness <span class=se>\
+</span><span class=se></span>  --channelID mychannel <span class=se>\
+</span><span class=se></span>  --name mycc <span class=se>\
+</span><span class=se></span>  --version <span class=m>1</span> <span class=se>\
+</span><span class=se></span>  --init-required <span class=se>\
+</span><span class=se></span>  --sequence <span class=m>1</span> <span class=se>\
+</span><span class=se></span>  --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>  --cafile <span class=nv>$ORDERER_CA</span> <span class=se>\
+</span><span class=se></span>  --output json
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 投票情况</span>
+
+<span class=o>{</span>
+        <span class=s2>&#34;approvals&#34;</span>: <span class=o>{</span>
+                <span class=s2>&#34;Org1MSP&#34;</span>: true,
+                <span class=s2>&#34;Org2MSP&#34;</span>: <span class=nb>true</span>
+        <span class=o>}</span>
+<span class=o>}</span>
+
+</code></pre></td></tr></table></div></div><h3 id=提交确认--submit->提交确认 ( submit )</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>docker <span class=nb>exec</span> -it org1.cli bash
+
+
+<span class=c1># 提交 commit</span>
+peer lifecycle chaincode commit <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    --channelID mychannel <span class=se>\
+</span><span class=se></span>    --name mycc <span class=se>\
+</span><span class=se></span>    --version <span class=m>1</span> <span class=se>\
+</span><span class=se></span>    --sequence <span class=m>1</span> <span class=se>\
+</span><span class=se></span>    --init-required <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span> <span class=se>\
+</span><span class=se></span>    --peerAddresses peer0.org1.jicki.cn:7051 <span class=se>\
+</span><span class=se></span>    --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls/ca.crt <span class=se>\
+</span><span class=se></span>    --peerAddresses peer0.org2.jicki.cn:7051 <span class=se>\
+</span><span class=se></span>    --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls/ca.crt
+
+</code></pre></td></tr></table></div></div><ul><li>输出如下信息</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+2020-03-24 07:14:12.187 UTC <span class=o>[</span>chaincodeCmd<span class=o>]</span> ClientWait -&gt; INFO <span class=m>003</span> txid <span class=o>[</span>131d247fb9035ccb832b15ab34b64fd03fa74d1d5db762388a837b31c4c29e93<span class=o>]</span> committed with status <span class=o>(</span>VALID<span class=o>)</span> at peer0.org1.jicki.cn:7051
+2020-03-24 07:14:12.199 UTC <span class=o>[</span>chaincodeCmd<span class=o>]</span> ClientWait -&gt; INFO <span class=m>004</span> txid <span class=o>[</span>131d247fb9035ccb832b15ab34b64fd03fa74d1d5db762388a837b31c4c29e93<span class=o>]</span> committed with status <span class=o>(</span>VALID<span class=o>)</span> at peer0.org2.jicki.cn:7051
+
+</code></pre></td></tr></table></div></div><ul><li><p>分别检查是否成功提交 (commit)</p></li><li><p>org1</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># org1</span>
+
+docker <span class=nb>exec</span> -it org1.cli bash
+
+
+peer lifecycle chaincode querycommitted <span class=se>\
+</span><span class=se></span>    --channelID mychannel <span class=se>\
+</span><span class=se></span>    --name mycc
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+
+Committed chaincode definition <span class=k>for</span> chaincode <span class=s1>&#39;mycc&#39;</span> on channel <span class=s1>&#39;mychannel&#39;</span>:
+Version: 1, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: <span class=o>[</span>Org1MSP: true, Org2MSP: true<span class=o>]</span>
+
+</code></pre></td></tr></table></div></div><ul><li>org2</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># org2</span>
+
+docker <span class=nb>exec</span> -it org2.cli bash
+
+
+peer lifecycle chaincode querycommitted <span class=se>\
+</span><span class=se></span>    --channelID mychannel <span class=se>\
+</span><span class=se></span>    --name mycc
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出如下:</span>
+Committed chaincode definition <span class=k>for</span> chaincode <span class=s1>&#39;mycc&#39;</span> on channel <span class=s1>&#39;mychannel&#39;</span>:
+Version: 1, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: <span class=o>[</span>Org1MSP: true, Org2MSP: true<span class=o>]</span>
+
+</code></pre></td></tr></table></div></div><h3 id=操作-chaincode>操作 chaincode</h3><ul><li>Invoke 操作</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>docker <span class=nb>exec</span> -it org1.cli bash
+
+
+<span class=c1># Invoke 操作 ( 初始化 a, b 的值为100 )</span>
+
+peer chaincode invoke <span class=se>\
+</span><span class=se></span>    -o orderer0.jicki.cn:7050 <span class=se>\
+</span><span class=se></span>    --tls <span class=nv>$CORE_PEER_TLS_ENABLED</span> <span class=se>\
+</span><span class=se></span>    --cafile <span class=nv>$ORDERER_CA</span> <span class=se>\
+</span><span class=se></span>    -C mychannel <span class=se>\
+</span><span class=se></span>    -n mycc <span class=se>\
+</span><span class=se></span>    --peerAddresses peer0.org1.jicki.cn:7051 <span class=se>\
+</span><span class=se></span>    --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.jicki.cn/peers/peer0.org1.jicki.cn/tls/ca.crt <span class=se>\
+</span><span class=se></span>    --peerAddresses peer0.org2.jicki.cn:7051 <span class=se>\
+</span><span class=se></span>    --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.jicki.cn/peers/peer0.org2.jicki.cn/tls/ca.crt <span class=se>\
+</span><span class=se></span>    --isInit <span class=se>\
+</span><span class=se></span>    -c <span class=s1>&#39;{&#34;Args&#34;:[&#34;Init&#34;,&#34;a&#34;,&#34;100&#34;,&#34;b&#34;,&#34;100&#34;]}&#39;</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出:</span>
+2020-03-24 07:20:59.683 UTC <span class=o>[</span>chaincodeCmd<span class=o>]</span> chaincodeInvokeOrQuery -&gt; INFO <span class=m>003</span> Chaincode invoke successful. result: status:200 
+</code></pre></td></tr></table></div></div><ul><li>Query 操作</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+peer chaincode query <span class=se>\
+</span><span class=se></span>    -C mychannel <span class=se>\
+</span><span class=se></span>    -n mycc <span class=se>\
+</span><span class=se></span>    -c <span class=s1>&#39;{&#34;Args&#34;:[&#34;query&#34;,&#34;a&#34;]}&#39;</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出:</span>
+
+<span class=m>100</span>
+
+</code></pre></td></tr></table></div></div><h3 id=查看-docker-container>查看 docker container</h3><ul><li>如下为安装 chaincode 以后,生成的容器</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+<span class=o>[</span>root@localhost jicki<span class=o>]</span><span class=c1># docker ps -a</span>
+CONTAINER ID        IMAGE                                                                                                                                                              COMMAND                  CREATED             STATUS              PORTS                                                                       NAMES
+439369210b83        jicki-peer0.org2.jicki.cn-mycc-14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be-4b4600a44f861b0308c82385aacc3c53c711443e78b5bbfda58137dc13822a5a   <span class=s2>&#34;chaincode -peer.add…&#34;</span>   <span class=m>9</span> minutes ago       Up <span class=m>9</span> minutes                                                                                    jicki-peer0.org2.jicki.cn-mycc-14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be
+471657d67a7a        jicki-peer0.org1.jicki.cn-mycc-14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be-80a4542fb02360e50a162b4d72841d190b64ed34b9b4a06234a09ed2a8c4d392   <span class=s2>&#34;chaincode -peer.add…&#34;</span>   <span class=m>9</span> minutes ago       Up <span class=m>9</span> minutes                                                                                    jicki-peer0.org1.jicki.cn-mycc-14332eb253d2983dce11dc45734ea312538a70db1b61d79439fe8a42fb7572be
+
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2020-03-23</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/hyperledger-fabric-2.0/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0" data-via=jicki234 data-hashtags=fabric,docker><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-hashtag=fabric><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0" data-description="hyperledger-fabric v2.0"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0" data-description="hyperledger-fabric v2.0"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/hyperledger-fabric-2.0/ data-title="hyperledger-fabric v2.0"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/fabric/>fabric</a>,&nbsp;<a href=/tags/docker/>docker</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/kubernetes-flannel/ class=prev rel=prev title="Flannel 网络模型"><i class="fas fa-angle-left fa-fw"></i>Flannel 网络模型</a>
+<a href=/rancher-2.x-kubernetes/ class=next rel=next title="Rancher 2.x to kubernetes">Rancher 2.x to kubernetes<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

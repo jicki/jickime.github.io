@@ -1,0 +1,807 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>kubernetes jenkins - 小炒肉</title><meta name=Description content="kubernetes jenkins"><meta property="og:title" content="kubernetes jenkins"><meta property="og:description" content="kubernetes jenkins"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/kubernetes-jenkins/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2018-02-08T00:00:00+00:00"><meta property="article:modified_time" content="2018-02-08T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="kubernetes jenkins"><meta name=twitter:description content="kubernetes jenkins"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/kubernetes-jenkins/><link rel=prev href=https://jicki.cn/prometheus-monitoring/><link rel=next href=https://jicki.cn/jenkins-android-build/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"kubernetes jenkins","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/kubernetes-jenkins\/"},"genre":"posts","wordcount":1692,"url":"https:\/\/jicki.cn\/kubernetes-jenkins\/","datePublished":"2018-02-08T00:00:00+00:00","dateModified":"2018-02-08T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"kubernetes jenkins"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">kubernetes jenkins</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2018-02-08>2018-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1692 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/kubernetes-jenkins/ class=leancloud_visitors data-flag-title="kubernetes jenkins">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#环境说明>环境说明</a></li><li><a href=#先决条件>先决条件</a></li><li><a href=#创建-jenkins-master>创建 jenkins master</a></li><li><a href=#配置-jenkins>配置 jenkins</a></li><li><a href=#配置-kubernetes-云>配置 kubernetes 云</a><ul><li><a href=#基于-pipeline-模式>基于 pipeline 模式</a></li><li><a href=#基于-自由风格模式>基于 自由风格模式</a></li></ul></li><li><a href=#制作-slave-镜像>制作 slave 镜像</a></li></ul></nav></div></div><div class=content id=content><blockquote><p>jenkins 所有的资源全部在 kubernetes 中进行，并配置 kubernetes 云
+针对 jenkins slave 做动态资源伸缩，构建时申请 pod, 操作完毕后自动删除 pod</p></blockquote><h1 id=基于-kubernetes-jenkins-slave-动态资源伸缩-pod>基于 Kubernetes Jenkins slave 动态资源伸缩 pod</h1><h2 id=环境说明>环境说明</h2><blockquote><p>请自行配置 kubernetes 集群, kubernetes 版本为 1.9.1</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>172.16.1.64 - kubernetes master
+172.16.1.65 - kubernetes master or node
+172.16.1.66 - kubernetes node
+</code></pre></td></tr></table></div></div><h2 id=先决条件>先决条件</h2><blockquote><p>后端存储, 用于存放 jenkins home 目录，以及 slave 构建依赖包目录</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 配置jenkins 后端存储, 如 nfs, gfs, cephfs 等， 请自行配置，或者参考 之前的文章。
+
+# 基于单独的 nfs 最为后端 文档在这里 https://jicki.cn/2017/01/01/kubernetes-nfs/ 
+
+</code></pre></td></tr></table></div></div><h2 id=创建-jenkins-master>创建 jenkins master</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 首先创建一个 namespace
+
+vi jenkins-namespace.yaml
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jenkins
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 导入文件
+
+kubectl apply -f jenkins-namespace.yaml 
+namespace &#34;jenkins&#34; created
+
+
+# 查看
+
+[root@kubernetes-64 jenkins]# kubectl get namespace
+NAME            STATUS    AGE
+default         Active    26d
+ingress-nginx   Active    15d
+jenkins         Active    23s
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 创建 jenkins 的 rbac , jenkins 与 api-service 通讯必须要 rabc 认证
+
+
+vi jenkins-rbac.yaml
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: jenkins
+  name: jenkins-admin
+  namespace: jenkins
+
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins-admin
+  namespace: jenkins
+  labels:
+    k8s-app: jenkins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: jenkins-admin
+  namespace: jenkins
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 导入文件
+
+[root@kubernetes-64 jenkins]# kubectl apply -f jenkins-rbac.yaml 
+serviceaccount &#34;jenkins-admin&#34; created
+clusterrolebinding &#34;jenkins-admin&#34; created
+
+# 查看
+[root@kubernetes-64 jenkins]# kubectl get serviceaccount -n jenkins
+NAME            SECRETS   AGE
+default         1         3h
+jenkins-admin   1         1m
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>vi jenkins-deployment.yaml
+
+
+apiVersion: apps/v1beta1
+kind: Deployment  
+metadata:  
+  name: jenkins
+  namespace: jenkins
+spec:  
+  replicas: 1  
+  strategy:  
+    type: RollingUpdate  
+    rollingUpdate:  
+      maxSurge: 2  
+      maxUnavailable: 0  
+  template:  
+    metadata:  
+      labels:  
+        app: jenkins  
+    spec:
+      securityContext:
+        fsGroup: 1000
+      serviceAccount: &#34;jenkins-admin&#34;
+      containers:  
+      - name: jenkins
+        image: jenkins/jenkins
+        imagePullPolicy: IfNotPresent  
+        ports:  
+        - containerPort: 8080  
+          name: web  
+          protocol: TCP  
+        - containerPort: 50000  
+          name: agent  
+          protocol: TCP  
+        volumeMounts:  
+        - name: jenkinshome
+          mountPath: /var/jenkins_home
+        env:  
+        - name: JAVA_OPTS  
+          value: &#34;-Xms512m -Xmx1024m -XX:PermSize=512m -XX:MaxPermSize=1024m -Duser.timezone=Asia/Shanghai&#34;
+        - name: TRY_UPGRADE_IF_NO_MARKER
+          value: &#34;true&#34;
+      volumes:  
+      - name: jenkinshome
+        nfs:  
+          server: 172.16.1.66
+          path: &#34;/opt/data/jenkins&#34;
+
+
+---
+kind: Service  
+apiVersion: v1  
+metadata:  
+  labels:  
+      app: jenkins  
+  name: jenkins
+  namespace: jenkins
+spec:  
+  ports:  
+  - port: 8080  
+    targetPort: 8080  
+    name: web  
+  - port: 50000  
+    targetPort: 50000  
+    name: agent  
+  selector:
+    app: jenkins
+    
+    
+---
+apiVersion: extensions/v1beta1  
+kind: Ingress  
+metadata:  
+  name: jenkins
+  namespace: jenkins
+spec:  
+  rules:  
+  - host: jenkins.jicki.cn
+    http:  
+      paths:  
+      - path: /  
+        backend:  
+          serviceName: jenkins  
+          servicePort: 8080
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 导入 文件
+
+[root@kubernetes-64 jenkins]# kubectl apply -f jenkins-deployment.yaml 
+deployment &#34;jenkins&#34; created
+service &#34;jenkins&#34; created
+ingress &#34;jenkins&#34; created
+
+
+
+# 查看 服务
+
+[root@kubernetes-64 jenkins]# kubectl get pods -n jenkins
+NAME                     READY     STATUS    RESTARTS   AGE
+jenkins-c5f45c84-8vlcp   1/1       Running   0          6m
+[root@kubernetes-64 jenkins]# 
+[root@kubernetes-64 jenkins]# kubectl get svc -n jenkins
+NAME      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)              AGE
+jenkins   ClusterIP   10.254.47.35   &lt;none&gt;        8080/TCP,50000/TCP   6m
+[root@kubernetes-64 jenkins]# 
+[root@kubernetes-64 jenkins]# kubectl get ingress -n jenkins   
+NAME      HOSTS              ADDRESS   PORTS     AGE
+jenkins   jenkins.jicki.cn             80        6m
+
+
+
+# 查看 jenkins 初始密码
+
+[root@kubernetes-64 jenkins]# kubectl logs pods/jenkins-c5f45c84-8vlcp -n jenkins
+
+
+*************************************************************
+*************************************************************
+*************************************************************
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+b2458cfb46724268a4db025c54f172ab
+
+This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+
+*************************************************************
+*************************************************************
+*************************************************************
+</code></pre></td></tr></table></div></div><h2 id=配置-jenkins>配置 jenkins</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 登录 web ui
+
+http://jenkins.jicki.cn
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins1.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins1.png, https://jicki.cn/img/posts/jenkins/jenkins1.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins1.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins1.png title=jenkins1>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins2.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins2.png, https://jicki.cn/img/posts/jenkins/jenkins2.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins2.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins2.png title=jenkins2></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># Master 需要安装的插件
+
+1. Pipeline
+2. kubernetes plugin 
+3. Build WIth Parameters    (构建 输入参数的插件)
+4. Git Parameter Plug-In  ( git 分支 构建选择)
+
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins3.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins3.png, https://jicki.cn/img/posts/jenkins/jenkins3.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins3.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins3.png title=jenkins3></p><h2 id=配置-kubernetes-云>配置 kubernetes 云</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 点击【系统管理】-【系统设置】-【新增一个云】-【Kubernetes】
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins4.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins4.png, https://jicki.cn/img/posts/jenkins/jenkins4.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins4.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins4.png title=jenkins4></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins5.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins5.png, https://jicki.cn/img/posts/jenkins/jenkins5.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins5.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins5.png title=jenkins5></p><h3 id=基于-pipeline-模式>基于 pipeline 模式</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 创建一个基于 pipeline 的配置  cloud 字段配置为 kubernetes 云的 name .
+
+
+podTemplate(label: &#39;jenkins-pod&#39;, cloud: &#39;Jenkins-Cloud&#39;) {
+    node(&#39;jenkins-pod&#39;) {
+        stage(&#39;Run shell&#39;) {
+            sh &#39;echo hello world&#39;
+        }
+    }
+}
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 点击立即构建, 控制台输出如下:
+
+
+Started by user 小炒肉
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] podTemplate
+[Pipeline] {
+[Pipeline] node
+Still waiting to schedule task
+jenkins-slave-bkcfk-vpzz0 is offline
+Running on jenkins-slave-bkcfk-vpzz0 in /home/jenkins/workspace/test-k8s
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Run shell)
+[Pipeline] sh
+[test-k8s] Running shell script
++ echo hello world
+hello world
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // podTemplate
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
+</code></pre></td></tr></table></div></div><h3 id=基于-自由风格模式>基于 自由风格模式</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+# 点击【系统管理】-【系统设置】-【新增一个云】-【Kubernetes】- 【 Kubernetes Pod Template 】
+  - 【 Container Template 】
+
+具体参数 如下：
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins6.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins6.png, https://jicki.cn/img/posts/jenkins/jenkins6.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins6.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins6.png title=jenkins6>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins7.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins7.png, https://jicki.cn/img/posts/jenkins/jenkins7.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins7.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins7.png title=jenkins7></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 添加一个 自动风格的 pj
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins8.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins8.png, https://jicki.cn/img/posts/jenkins/jenkins8.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins8.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins8.png title=jenkins8>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins9.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins9.png, https://jicki.cn/img/posts/jenkins/jenkins9.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins9.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins9.png title=jenkins9>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins10.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins10.png, https://jicki.cn/img/posts/jenkins/jenkins10.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins10.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins10.png title=jenkins10>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins11.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins11.png, https://jicki.cn/img/posts/jenkins/jenkins11.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins11.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins11.png title=jenkins11>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/jenkins/jenkins12.png data-srcset="https://jicki.cn/img/posts/jenkins/jenkins12.png, https://jicki.cn/img/posts/jenkins/jenkins12.png 1.5x, https://jicki.cn/img/posts/jenkins/jenkins12.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/jenkins/jenkins12.png title=jenkins12></p><h2 id=制作-slave-镜像>制作 slave 镜像</h2><blockquote><p>官方默认的 jenkins-slave 里面不存在任何的工具，依赖，项目环境等，我们需要制作一个属于自己项目的 jenkins-slave 镜像。</p></blockquote><blockquote><p>官方 jenkins-slave dockerfile 地址 <a href=https://github.com/jenkinsci/docker-jnlp-slave>https://github.com/jenkinsci/docker-jnlp-slave</a>
+官方 slave <a href=https://github.com/jenkinsci/docker-slave>https://github.com/jenkinsci/docker-slave</a></p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 个人的 oracle-jdk-8 镜像 java -version = 1.8.0_161
+
+docker pull jicki/oracle-jdk:8
+
+# 个人的 gradle 镜像 
+
+docker pull jicki/gradle:4.5
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 基于 jicki/gradle:4.5 的一个 jenkins slave
+
+
+docker pull jicki/slave:3.16
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+# 获取官方的git，主要是 jenkins-slave 脚本文件
+
+git clone https://github.com/jenkinsci/docker-jnlp-slave
+
+
+
+# 重新编辑 dockerfile 官方默认使用 openjdk-1.8
+
+vi  dockerfile
+
+FROM jicki/slave:3.16
+
+COPY jenkins-slave /usr/local/bin/jenkins-slave
+
+USER root
+RUN chmod +x /usr/local/bin/jenkins-slave
+
+USER jenkins
+ENTRYPOINT [&#34;jenkins-slave&#34;]
+    
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker build -t=&#34;jicki/jenkins-jnlp&#34; .
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 测试自己的镜像
+
+
+podTemplate(label: &#39;jicki-jenkins&#39;, cloud: &#39;Jenkins-Cloud&#39;, containers: [
+    containerTemplate(
+        name: &#39;jnlp&#39;, 
+        image: &#39;jicki/jenkins-jnlp&#39;, 
+        alwaysPullImage: true, 
+        args: &#39;${computer.jnlpmac} ${computer.name}&#39;),
+
+  ],
+  volumes: [
+    hostPathVolume(mountPath: &#39;/var/run/docker.sock&#39;, hostPath: &#39;/var/run/docker.sock&#39;),
+],) 
+{
+    node(&#39;jicki-jenkins&#39;) {
+        stage(&#39;Task-1&#39;) {
+            stage(&#39;show java version&#39;) {
+                sh &#39;java -version&#39;
+            }
+        }
+    }
+    node(&#39;jicki-jenkins&#39;) {
+        stage(&#39;Task-2&#39;) {
+            stage(&#39;show gradle version&#39;) {
+                sh &#39;gradle -version&#39;
+            }
+        }
+    }
+}
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+Started by user 小炒肉
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] podTemplate
+[Pipeline] {
+[Pipeline] node
+Still waiting to schedule task
+Waiting for next available executor on jenkins-slave-9v0g5-73tng
+Running on jenkins-slave-9v0g5-73tng in /home/jenkins/workspace/test-2
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Task-1)
+[Pipeline] stage
+[Pipeline] { (show java version)
+[Pipeline] sh
+[test-2] Running shell script
++ java -version
+java version &#34;1.8.0_161&#34;
+Java(TM) SE Runtime Environment (build 1.8.0_161-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] node
+Still waiting to schedule task
+jenkins-slave-9v0g5-nxdf8 is offline
+Running on jenkins-slave-9v0g5-nxdf8 in /home/jenkins/workspace/test-2
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Task-2)
+[Pipeline] stage
+[Pipeline] { (show gradle version)
+[Pipeline] sh
+[test-2] Running shell script
++ gradle -version
+
+------------------------------------------------------------
+Gradle 4.5
+------------------------------------------------------------
+
+Build time:   2018-01-24 17:04:52 UTC
+Revision:     77d0ec90636f43669dc794ca17ef80dd65457bec
+
+Groovy:       2.4.12
+Ant:          Apache Ant(TM) version 1.9.9 compiled on February 2 2017
+JVM:          1.8.0_161 (Oracle Corporation 25.161-b12)
+OS:           Linux 4.4.111-1.el7.elrepo.x86_64 amd64
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // podTemplate
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
+
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2018-02-08</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/kubernetes-jenkins/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins" data-via=jicki234><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/kubernetes-jenkins/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins" data-description="kubernetes jenkins"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins" data-description="kubernetes jenkins"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/kubernetes-jenkins/ data-title="kubernetes jenkins"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/prometheus-monitoring/ class=prev rel=prev title="prometheus monitoring"><i class="fas fa-angle-left fa-fw"></i>prometheus monitoring</a>
+<a href=/jenkins-android-build/ class=next rel=next title="jenkins build android">jenkins build android<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

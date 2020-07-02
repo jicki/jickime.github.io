@@ -1,0 +1,292 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>MooseFS 部署 - 小炒肉</title><meta name=Description content="MooseFS 部署"><meta property="og:title" content="MooseFS 部署"><meta property="og:description" content="MooseFS 部署"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/mfs/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2016-09-10T00:00:00+00:00"><meta property="article:modified_time" content="2016-09-10T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="MooseFS 部署"><meta name=twitter:description content="MooseFS 部署"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/mfs/><link rel=prev href=https://jicki.cn/mysql-5.7/><link rel=next href=https://jicki.cn/docker-overlay-network/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"MooseFS 部署","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/mfs\/"},"genre":"posts","wordcount":2138,"url":"https:\/\/jicki.cn\/mfs\/","datePublished":"2016-09-10T00:00:00+00:00","dateModified":"2016-09-10T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"MooseFS 部署"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">MooseFS 部署</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2016-09-10>2016-09-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2138 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=/mfs/ class=leancloud_visitors data-flag-title="MooseFS 部署">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#环境说明>环境说明</a></li><li><a href=#mfs-说明>MFS 说明</a></li></ul><ul><li><a href=#初始化环境>初始化环境</a></li><li><a href=#master安装配置>Master安装配置</a></li><li><a href=#编译参数说明>编译参数说明</a></li><li><a href=#修改系统参数>修改系统参数</a></li><li><a href=#配置-mfsmastercfg>配置 mfsmaster.cfg</a></li><li><a href=#配置mfsexportscfg>配置mfsexports.cfg</a></li><li><a href=#mfs-cgi-服务>MFS CGI 服务</a></li><li><a href=#metalogger安装配置>metalogger安装配置</a></li><li><a href=#配置mfsmetaloggercfg>配置mfsmetalogger.cfg</a></li><li><a href=#chunkserver-安装配置>ChunkServer 安装配置</a></li><li><a href=#配置-mfschunkservercfg>配置 mfschunkserver.cfg</a></li><li><a href=#配置-mfshddcfg>配置 mfshdd.cfg</a></li><li><a href=#client安装配置>Client安装配置</a></li><li><a href=#配置mfsmountcfg>配置mfsmount.cfg</a></li><li><a href=#fuseconf设置>fuse.conf设置</a></li><li><a href=#挂载>挂载</a></li><li><a href=#master-的-mfsexportscfg>master 的 mfsexports.cfg</a></li></ul></nav></div></div><div class=content id=content><h1 id=moosefs-分布式文件系统>MooseFS 分布式文件系统</h1><h2 id=环境说明>环境说明</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>172.16.32.85 MFS-Controller(master)
+
+172.16.32.86 MFS-Controller(metalogger)
+
+172.16.32.57 Chunk Server1 
+
+172.16.32.58 Chunk Server2
+
+172.16.32.59 Chunk Server3
+</code></pre></td></tr></table></div></div><h2 id=mfs-说明>MFS 说明</h2><p>MFS优势</p><pre><code>1. 数据高可用性（数据可以存储在多个机器上的多个副本）
+2. 在线动态扩展存储
+3. 垃圾回收站
+4. 文件快照(本文不研究)
+</code></pre><p>MFS问题</p><pre><code>1. 单点故障：即使V1.6增加了Metalogger，但不能达到故障自动切换
+2. 数据校验：为了提高存储效率，MFS的数据块不创建校验值(checksum)，降低了一定的数据安全性
+3. 规模试用：适用于小规模的分布式文件系统，除非进行相关的二次开发
+</code></pre><h1 id=mfs-安装与配置>MFS 安装与配置</h1><h2 id=初始化环境>初始化环境</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	# 同步系统时间
+	
+	# 创建用户
+	
+	groupadd -g 1010 mfs &amp;&amp; useradd -u 1010 -g 1010 mfs
+	groupadd -g 1001 upload &amp;&amp; useradd -u 1001 -g 1001 upload
+	
+	# 安装依赖
+	yum install -y zlib-devel gcc gcc-c++
+	
+	#创建目录
+	mkdir /opt/{software,local} cd /opt/software
+	
+	# 下载软件
+	cd /opt/software
+	wget http://ppa.moosefs.com/src/moosefs-2.0.89-1.tar.gz  
+</code></pre></td></tr></table></div></div><h2 id=master安装配置>Master安装配置</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	tar -xzvf moosefs-2.0.89-1.tar.gz
+	cd moosefs-2.0.89
+	./configure --prefix=/opt/local/mfs-2.0.89 --with-default-user=mfs --with-default-group=mfs --disable-mfsmount --disable-mfschunkserver
+	make &amp;&amp; make install
+	cd /opt/local/
+	ln -s mfs-2.0.89 mfs
+	cd mfs/etc/mfs/
+	cp mfsmaster.cfg.dist mfsmaster.cfg
+	cp mfsexports.cfg.dist mfsexports.cfg
+	cd /opt/local/mfs/var/mfs &amp;&amp; cp metadata.mfs.empty metadata.mfs
+	chown -R mfs:mfs /opt/local/mfs*
+</code></pre></td></tr></table></div></div><h2 id=编译参数说明>编译参数说明</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	--disable-mfsmaster                  # 不创建master
+	--disable-mfschunkserver             # 不创建chunkserver
+	--disable-mfsmount                   # 不创建mfs客户端(mfsmount和mfstools)   
+	--disable-mfsmetalogger              # 不创建mfsmetalogger(master和metalogger可能会故障切换，安装时master和metalogger都必须安装master和logger功能)
+</code></pre></td></tr></table></div></div><h2 id=修改系统参数>修改系统参数</h2><p>修改/etc/security/limits.conf</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	* - nofile 655350
+</code></pre></td></tr></table></div></div><h2 id=配置-mfsmastercfg>配置 mfsmaster.cfg</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	WORKING_USER = mfs     					                    # mfs服务的运行用户，单进程
+	WORKING_GROUP = mfs    					                    # mfs服务的运行组
+	SYSLOG_IDENT = mfsmaste					                    # master server在syslog中的标识，日志记录在/var/log/messages
+	LOCK_MEMORY = 0        					                    # 是否执行mlockall()以避免mfsmaster 进程溢出（默认为0）
+	NICE_LEVEL = -19       					                    # 运行的优先级(由于服务器上的应用进程只有mfs，此处无需额外设定)
+	DATA_PATH = /opt/local/mfs/var/mfs                          # 元数据存放目录：changelog，sessions和stats等；
+	EXPORTS_FILENAME = /opt/local/mfs/etc/mfs/mfsexports.cfg    # 被挂接目录及其权限控制文件
+	BACK_LOGS = 10                       					    # metadata 的改变log 文件数目(默认是50);
+	METADATA_SAVE_FREQ = 1										# 单位Hour，flush内存汇总metadata的频率
+	BACK_META_KEEP_PREVIOUS = 1									# 本地历史metadata文件的保存数量
+	MATOML_LISTEN_HOST = master-ip    							# metalogger连接的IP
+	MATOML_LISTEN_PORT = 9419 									# metalogger连接的端口
+	MATOCS_LISTEN_ HOST = master-ip  							# chunkserver连接的IP
+	MATOCS_LISTEN_PORT = 9420 									# chunkserver连接的端口
+	MATOCU_LISTEN_HOST = master-ip    							# Client连接的IP
+	MATOCU_LISTEN_PORT = 9421 									# Client连接的端口地址
+	REJECT_OLD_CLIENTS = 1 										# 弹出低于1.6.0的客户端挂接
+
+</code></pre></td></tr></table></div></div><h2 id=配置mfsexportscfg>配置mfsexports.cfg</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>   192.168.0.0/24     /            rw,alldirs,maproot=0    		# /... = path in mfs structure
+   192.168.0.0/24     .            rw                      		# .标识MFSMETA 文件系统
+	[IP]        * | A.B.C.D | A.B.C.D/XX | A.B.C.D - A.B.C.G
+	[path]      / | /dir | .
+	[privil]
+	   ro/rw/readonly/readwrite
+	   alldirs = any subdirectory can be mounted
+	   mapall=1000:1000     All users are mapped as users with uid:gid = 1000:1000 
+	   maproot=nobody       Local roots are mapped as &#39;nobody&#39; users
+	   password=TEXT
+</code></pre></td></tr></table></div></div><h2 id=mfs-cgi-服务>MFS CGI 服务</h2><p>CGI服务操作：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>/opt/local/mfs/sbin/mfscgiserv start|stop
+
+#说明：最好在master的hosts中加入mfsmaster的解析，因为http访问CGI时，会自动通过主机名去定位master
+</code></pre></td></tr></table></div></div><h2 id=metalogger安装配置>metalogger安装配置</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	yum install fuse-devel fuse 
+	modprobe fuse
+	tar -xzvf moosefs-2.0.89-1.tar.gz
+	cd moosefs-2.0.89
+	./configure --prefix=/opt/local/mfs-2.0.89  --with-default-user=mfs --with-default-group=mfs --disable-mfschunkserver --disable-mfsmount &amp;&amp; make &amp;&amp; make install
+	cd /opt/local/
+	ln -s mfs-2.0.89 mfs
+	chown -R mfs:mfs /opt/local/mfs*
+
+</code></pre></td></tr></table></div></div><h2 id=配置mfsmetaloggercfg>配置mfsmetalogger.cfg</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	WORKING_USER = mfs     					                   
+	WORKING_GROUP = mfs    					                   
+	SYSLOG_IDENT = mfslogger					               
+	LOCK_MEMORY = 0        					                   
+	NICE_LEVEL = -19       					                   
+	DATA_PATH = /opt/local/mfs/var/mfs                          
+	BACK_LOGS = 10                       					    # 与master保持一致
+	META_DOWNLOAD_FREQ = 1										# 单位Hour，多久同步一次master的metadata.mfs.back; 默认24H
+	BACK_META_KEEP_PREVIOUS = 3                                 # 保留3份历史metadata_ml.mfs.back
+	MASTER_HOST = 10.6.0.233
+	MASTER_PORT = 9419
+	MASTER_TIMEOUT = 10
+	MASTER_RECONNECTION_DELAY = 5
+# 拷贝master的mfsmaster.cfg和mfsexports.cfg，以备metalogger切换为master
+</code></pre></td></tr></table></div></div><h2 id=chunkserver-安装配置>ChunkServer 安装配置</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	tar -xzvf moosefs-2.0.89-1.tar.gz
+	cd moosefs-2.0.89
+	./configure --prefix=/opt/local/mfs-2.0.89  --with-default-user=mfs --with-default-group=mfs --disable-mfsmaster --disable-mfsmount &amp;&amp; make &amp;&amp; make install
+	cd /opt/local/
+	ln -s mfs-2.0.89 mfs
+	chown -R mfs:mfs /opt/local/mfs*
+</code></pre></td></tr></table></div></div><h2 id=配置-mfschunkservercfg>配置 mfschunkserver.cfg</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	WORKING_USER = mfs
+	WORKING_GROUP = mfs
+	SYSLOG_IDENT = mfschunkserver
+	LOCK_MEMORY = 0
+	NICE_LEVEL = -19
+	DATA_PATH = /opt/local/mfs-2.0.89/var/mfs
+	HDD_CONF_FILENAME = /opt/local/mfs-2.0.89/etc/mfs/mfshdd.cfg
+	BIND_HOST = chunkserver-ip
+	MASTER_HOST = master-ip
+	MASTER_PORT = master-port
+	MASTER_TIMEOUT = 10
+	CSSERV_LISTEN_HOST = chunkserver-ip		 # IP address to listen for client (mount) connections
+	CSSERV_LISTEN_PORT = 9422                # port to listen for client (mount) connections 
+</code></pre></td></tr></table></div></div><h2 id=配置-mfshddcfg>配置 mfshdd.cfg</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	/opt/mfsdata                  # 建议划分单独的空间给 MooseFS 使用，chunkserver进程需要有权限操作该存储目录
+</code></pre></td></tr></table></div></div><h2 id=client安装配置>Client安装配置</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	yum install fuse-devel fuse -y
+	modprobe fuse
+	tar -xzvf moosefs-2.0.89-1.tar.gz
+	cd moosefs-2.0.89
+	./configure --prefix=/opt/local/mfs-2.0.89  --with-default-user=mfs --with-default-group=mfs --enable-mfsmount --disable-mfsmaster --disable-mfschunkserver &amp;&amp; make &amp;&amp; make install
+	cd /opt/local/
+	ln -s mfs-2.0.89 mfs
+	chown -R mfs:mfs /opt/local/mfs*
+</code></pre></td></tr></table></div></div><h2 id=配置mfsmountcfg>配置mfsmount.cfg</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	mfsmaster=10.6.0.233
+	mfspassword=secret
+</code></pre></td></tr></table></div></div><h2 id=fuseconf设置>fuse.conf设置</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	mount_max = NNN     # Set the maximum number of FUSE mounts allowed to non-root users. The default is 1000.
+	user_allow_other    # Allow non-root users to mount
+</code></pre></td></tr></table></div></div><h2 id=挂载>挂载</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	mfsmount -m /mfsdata -H 10.6.0.233 				 # 挂载metadata
+	mfsmount /mfsdata -H 10.6.0.233    				 # 挂载mfs文件系统
+	mfsmount /mfsdata -H 10.6.0.233 -S imagesdata	 # 挂载mfs文件系统的指定目录，挂载imagesdata后，/mfsdata对应10.6.0.233:/imagesdata
+</code></pre></td></tr></table></div></div><pre><code>1. fuse无需modprobe fuse，执行mfsmount时会自动加载
+2. 暂时没有找到办法进行自动挂载(rc.local没有测试)
+3. Client不管chunks断没断掉，都是可以挂载的而且有目录信息，目录信息存在Master的内存中。
+</code></pre><h2 id=master-的-mfsexportscfg>master 的 mfsexports.cfg</h2><p>用户权限控制</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	# Admin (only 10.6.0.192 can operate the / and metadata )
+	10.6.0.192            .              rw
+	10.6.0.192            /              rw,alldirs,mapall=upload:upload
+	# users (Users operate the share sites)
+	10.6.0.0/24           /imagesdata     rw,alldirs,mapall=upload:upload
+</code></pre></td></tr></table></div></div><pre><code>1. mapall=uid:gid      # mfs client上的所有用户，均以uid:gid 挂载mfs
+2. maproot=uid:gid     # mfs client上的root用户以uid:gid挂载mfs, 其他用户以当前系统用户和用户组挂载
+3. master更改map用户后，客户端必须remount才会生效，因为挂载用户身份的确认发生在mfsmount:&quot;#mfsmount --&gt; mfsmaster accepted connection with parameters: read-write,restricted_ip,map_all ; root mapped to mfs:mfs ; users mapped to mfs:mfs&quot;
+</code></pre></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2016-09-10</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/mfs/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署" data-via=jicki234><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/mfs/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署" data-description="MooseFS 部署"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署" data-description="MooseFS 部署"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/mfs/ data-title="MooseFS 部署"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/mysql-5.7/ class=prev rel=prev title="centos 7 源码安装 mysql 5.7"><i class="fas fa-angle-left fa-fw"></i>centos 7 源码安装 mysql 5.7</a>
+<a href=/docker-overlay-network/ class=next rel=next title="Docker overlay 网络">Docker overlay 网络<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

@@ -1,0 +1,1336 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Jenkins Kubernetes Pipeline - 小炒肉</title><meta name=Description content="Jenkins Kubernetes Pipeline"><meta property="og:title" content="Jenkins Kubernetes Pipeline"><meta property="og:description" content="Jenkins Kubernetes Pipeline"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/kubernetes-jenkins-pipeline/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2019-06-26T00:00:00+00:00"><meta property="article:modified_time" content="2019-06-26T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Jenkins Kubernetes Pipeline"><meta name=twitter:description content="Jenkins Kubernetes Pipeline"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/kubernetes-jenkins-pipeline/><link rel=prev href=https://jicki.cn/gitlab-ci/><link rel=next href=https://jicki.cn/kuebrnetes-new-elk/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Jenkins Kubernetes Pipeline","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/kubernetes-jenkins-pipeline\/"},"genre":"posts","keywords":"kubernetes, docker","wordcount":3765,"url":"https:\/\/jicki.cn\/kubernetes-jenkins-pipeline\/","datePublished":"2019-06-26T00:00:00+00:00","dateModified":"2019-06-26T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Jenkins Kubernetes Pipeline"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Jenkins Kubernetes Pipeline</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/docker/><i class="far fa-folder fa-fw"></i>docker</a>&nbsp;<a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2019-06-26>2019-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3765 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id=/kubernetes-jenkins-pipeline/ class=leancloud_visitors data-flag-title="Jenkins Kubernetes Pipeline">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#21-环境说明>2.1 环境说明</a></li><li><a href=#22-配置-nfs-共享存储>2.2 配置 NFS 共享存储</a><ul><li><a href=#221-安装nfs软件>2.2.1 安装NFS软件</a></li><li><a href=#222-配置-nfs>2.2.2 配置 NFS</a></li><li><a href=#223-配置-nfs-client-provisioner>2.2.3 配置 NFS Client Provisioner</a></li></ul></li><li><a href=#23-部署jenkins>2.3 部署Jenkins</a></li><li><a href=#24-配置-jenkins>2.4 配置 Jenkins</a><ul><li><a href=#241-安装kubernetes-插件>2.4.1 安装kubernetes 插件</a></li><li><a href=#242-配置-kubernetes-插件>2.4.2 配置 kubernetes 插件</a></li></ul></li><li><a href=#25-pipeline>2.5 Pipeline</a></li><li><a href=#251-创建-pipeline>2.5.1 创建 Pipeline</a><ul><li><a href=#252-基于自己的-slave-镜像构建>2.5.2 基于自己的 slave 镜像构建</a></li><li><a href=#253-完整的-java-项目>2.5.3 完整的 java 项目</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=1-jenkins-kubernetes>1. Jenkins Kubernetes</h1><blockquote><p>Jenkins作为最为流行的持续集成工具，有着丰富的用户群、强大的扩展能力、丰富的插件，是目前最为常见的CI/CD工具。在Jenkins 加强其Pipeline功能后，更是可以通过丰富的step库，实现各种复杂的流程。同时随着Docker的流行，Jenkins内也增加了对Docker的支持，可以实现容器内流程的执行, 随着 kubernetes 集群的流行，Jenkins 也有对于 Kubernetes 的插件，实现 pods 动态资源伸缩，构建时创建 pods, 完成时删除 pods, 既用既销。</p></blockquote><h1 id=2-jenkins>2. Jenkins</h1><blockquote><p>这里 默认是已经部署好了 kubernetes 集群.</p></blockquote><h2 id=21-环境说明>2.1 环境说明</h2><table><thead><tr><th>节点标识</th><th>hostname</th><th>系统</th><th>IP</th></tr></thead><tbody><tr><td>K8S-Master-1</td><td>kubernetes-1</td><td>CentOS 7x64</td><td>192.168.168.11</td></tr><tr><td>K8S-Master-2</td><td>kubernetes-2</td><td>CentOS 7x64</td><td>192.168.168.12</td></tr><tr><td>K8S-Master-3</td><td>kubernetes-3</td><td>CentOS 7x64</td><td>192.168.168.13</td></tr><tr><td>K8S-Node-1</td><td>kubernetes-4</td><td>CentOS 7x64</td><td>192.168.168.14</td></tr><tr><td>K8S-Node-2</td><td>kubernetes-5</td><td>CentOS 7x64</td><td>192.168.168.15</td></tr></tbody></table><h2 id=22-配置-nfs-共享存储>2.2 配置 NFS 共享存储</h2><blockquote><p>在部署 Jenkins 之前，我们需要先创建一个 共享存储，用于存放 Jenkins 生成的数据文件，以及配置文件。</p><p>这里面我们选择 K8S-Node-2 这台服务器部署 NFS 服务。</p></blockquote><h3 id=221-安装nfs软件>2.2.1 安装NFS软件</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>#  安装 NFS 服务的软件
+
+[root@kubernetes-5 ~]# yum -y install nfs-utils rpcbind
+
+已安装:
+  nfs-utils.x86_64 1:1.3.0-0.61.el7                                                                  rpcbind.x86_64 0:0.2.0-47.el7                                                                 
+
+作为依赖被安装:
+  gssproxy.x86_64 0:0.7.0-21.el7            keyutils.x86_64 0:1.5.8-3.el7       libbasicobjects.x86_64 0:0.1.1-32.el7    libcollection.x86_64 0:0.7.0-32.el7    libevent.x86_64 0:2.0.21-4.el7     
+  libini_config.x86_64 0:1.3.1-32.el7       libnfsidmap.x86_64 0:0.25-19.el7    libpath_utils.x86_64 0:0.2.1-32.el7      libref_array.x86_64 0:0.1.5-32.el7     libtirpc.x86_64 0:0.2.4-0.15.el7   
+  libverto-libevent.x86_64 0:0.2.5-4.el7    quota.x86_64 1:4.01-17.el7          quota-nls.noarch 1:4.01-17.el7           tcp_wrappers.x86_64 0:7.6-77.el7      
+
+完毕！
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 其他所有 k8s 用于调度的服务器都必须安装 nfs 客户端
+
+[root@kubernetes-1 ~]# yum -y install nfs-utils
+[root@kubernetes-2 ~]# yum -y install nfs-utils
+[root@kubernetes-3 ~]# yum -y install nfs-utils
+[root@kubernetes-4 ~]# yum -y install nfs-utils
+
+</code></pre></td></tr></table></div></div><h3 id=222-配置-nfs>2.2.2 配置 NFS</h3><blockquote><p>在 NFS 服务器（K8S-Node-2）中创建 目录
+/opt/nfs/jenkins</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@kubernetes-5 ~]# mkdir -p /opt/nfs/jenkins
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 修改配置文件
+[root@kubernetes-5 ~]# vi /etc/exports
+
+增加
+
+/opt/nfs/jenkins       192.168.168.0/24(rw,sync,no_root_squash)
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 启动 NFS 服务
+
+[root@kubernetes-5 ~]# systemctl enable rpcbind.service    
+[root@kubernetes-5 ~]# systemctl enable nfs-server.service
+
+[root@kubernetes-5 ~]# systemctl start rpcbind.service    
+[root@kubernetes-5 ~]# systemctl start nfs-server.service
+
+[root@kubernetes-5 ~]# systemctl status rpcbind.service    
+[root@kubernetes-5 ~]# systemctl status nfs-server.service
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 查看服务
+[root@kubernetes-5 ~]# showmount -e 192.168.168.15
+Export list for 192.168.168.15:
+/opt/nfs/jenkins 192.168.168.0/24
+
+</code></pre></td></tr></table></div></div><h3 id=223-配置-nfs-client-provisioner>2.2.3 配置 NFS Client Provisioner</h3><blockquote><p>NFS Client Provisioner 是一个自动配置NFS的服务, 它使现有和已经配置的NFS服务器，通过持久卷声明支持Kubernetes持久卷的动态配置。</p><p>持久卷命名规则是 ${namespace}-${pvcName}-${pvName}</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 下载官方 yaml 文件
+
+wget https://raw.githubusercontent.com/kubernetes-incubator/external-storage/master/nfs-client/deploy/rbac.yaml
+
+wget https://raw.githubusercontent.com/kubernetes-incubator/external-storage/master/nfs-client/deploy/deployment.yaml
+
+wget https://raw.githubusercontent.com/kubernetes-incubator/external-storage/master/nfs-client/deploy/class.yaml
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 修改 deployment.yaml 文件，配置对应 NFS IP 与 path
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: nfs-client-provisioner
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: nfs-client-provisioner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nfs-client-provisioner
+    spec:
+      serviceAccountName: nfs-client-provisioner
+      containers:
+        - name: nfs-client-provisioner
+          image: quay.io/external_storage/nfs-client-provisioner:latest
+          volumeMounts:
+            - name: nfs-client-root
+              mountPath: /persistentvolumes
+          env:
+            - name: PROVISIONER_NAME
+              value: fuseim.pri/ifs
+            - name: NFS_SERVER
+              value: 192.168.168.15
+            - name: NFS_PATH
+              value: /opt/nfs/jenkins
+      volumes:
+        - name: nfs-client-root
+          nfs:
+            server: 192.168.168.15
+            path: /opt/nfs/jenkins
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 导入 服务 文件
+
+[root@kubernetes-1 nfs-client]# kubectl apply -f .
+storageclass.storage.k8s.io/managed-nfs-storage created
+serviceaccount/nfs-client-provisioner created
+deployment.extensions/nfs-client-provisioner created
+serviceaccount/nfs-client-provisioner unchanged
+clusterrole.rbac.authorization.k8s.io/nfs-client-provisioner-runner created
+clusterrolebinding.rbac.authorization.k8s.io/run-nfs-client-provisioner created
+role.rbac.authorization.k8s.io/leader-locking-nfs-client-provisioner created
+rolebinding.rbac.authorization.k8s.io/leader-locking-nfs-client-provisioner created
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 查看 storageclass
+
+[root@kubernetes-1 nfs-client]# kubectl get storageclass
+NAME                  PROVISIONER      AGE
+managed-nfs-storage   fuseim.pri/ifs   39s
+
+
+# 查看 pods
+[root@kubernetes-1 nfs-client]# kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+nfs-client-provisioner-cc5f6f9f6-d8njv   1/1     Running   0          53s
+
+</code></pre></td></tr></table></div></div><h2 id=23-部署jenkins>2.3 部署Jenkins</h2><blockquote><p>官方 github <a href=https://github.com/jenkinsci/kubernetes-plugin>https://github.com/jenkinsci/kubernetes-plugin</a></p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 下载 Jenkins 官方的 yml 文件
+
+
+wget https://raw.githubusercontent.com/jenkinsci/kubernetes-plugin/master/src/main/kubernetes/jenkins.yml
+
+
+wget https://raw.githubusercontent.com/jenkinsci/kubernetes-plugin/master/src/main/kubernetes/service-account.yml
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 修改 jenkins.yml 文件, 修改后文件如下:
+# 主要是修改  volumeClaimTemplates: 
+# Ingress 部分的域名
+
+
+
+# jenkins
+
+---
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: jenkins
+  labels:
+    name: jenkins
+spec:
+  serviceName: jenkins
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      name: jenkins
+      labels:
+        name: jenkins
+    spec:
+      terminationGracePeriodSeconds: 10
+      serviceAccountName: jenkins
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts-alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+            - containerPort: 50000
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 0.5
+              memory: 500Mi
+          env:
+            - name: LIMITS_MEMORY
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.memory
+                  divisor: 1Mi
+            - name: JAVA_OPTS
+              # value: -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85
+              value: -Xmx$(LIMITS_MEMORY)m -XshowSettings:vm -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Dorg.csanchez.jenkins.plugins.kubernetes.clients.cacheExpiration=60
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+          livenessProbe:
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 12 # ~2 minutes
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: 8080
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 12 # ~2 minutes
+      securityContext:
+        fsGroup: 1000
+  volumeClaimTemplates:
+  - metadata:
+      name: jenkins-home
+      annotations:
+        volume.beta.kubernetes.io/storage-class: &#34;managed-nfs-storage&#34;
+    spec:
+      accessModes: [ &#34;ReadWriteOnce&#34; ]
+      resources:
+        requests:
+          storage: 10Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+spec:
+  # type: LoadBalancer
+  selector:
+    name: jenkins
+  # ensure the client ip is propagated to avoid the invalid crumb issue when using LoadBalancer (k8s &gt;=1.7)
+  #externalTrafficPolicy: Local
+  ports:
+    -
+      name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+    -
+      name: agent
+      port: 50000
+      protocol: TCP
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: &#34;true&#34;
+    kubernetes.io/tls-acme: &#34;true&#34;
+    # &#34;413 Request Entity Too Large&#34; uploading plugins, increase client_max_body_size
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/proxy-request-buffering: &#34;off&#34;
+    # For nginx-ingress controller &lt; 0.9.0.beta-18
+    ingress.kubernetes.io/ssl-redirect: &#34;true&#34;
+    # &#34;413 Request Entity Too Large&#34; uploading plugins, increase client_max_body_size
+    ingress.kubernetes.io/proxy-body-size: 50m
+    ingress.kubernetes.io/proxy-request-buffering: &#34;off&#34;
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: jenkins
+          servicePort: 80
+    host: jenkins.jicki.cn
+  tls:
+  - hosts:
+    - jenkins.jicki.cn
+    secretName: tls-jenkins
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 导入文件
+
+[root@kubernetes-1 jenkins]# kubectl apply -f .
+statefulset.apps/jenkins created
+service/jenkins created
+ingress.extensions/jenkins created
+serviceaccount/jenkins created
+role.rbac.authorization.k8s.io/jenkins created
+rolebinding.rbac.authorization.k8s.io/jenkins created
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 查看 pods , svc, ingress
+
+[root@kubernetes-1 jenkins]# kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+jenkins-0                                1/1     Running   0          2m42s
+
+
+
+[root@kubernetes-1 jenkins]# kubectl get svc
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)            AGE
+jenkins      ClusterIP   10.254.28.67   &lt;none&gt;        80/TCP,50000/TCP   2m52s
+
+
+[root@kubernetes-1 jenkins]# kubectl get ingress
+NAME            HOSTS              ADDRESS   PORTS     AGE
+jenkins         jenkins.jicki.cn             80, 443   3m2s
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 测试访问 https://jenkins.jicki.cn
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/1.png data-srcset="https://jicki.cn/img/posts/pipeline/1.png, https://jicki.cn/img/posts/pipeline/1.png 1.5x, https://jicki.cn/img/posts/pipeline/1.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/1.png title=图1></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 查询密码 
+
+[root@kubernetes-1 jenkins]# kubectl logs pods/jenkins-0 
+
+
+.....
+
+*************************************************************
+*************************************************************
+*************************************************************
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+ecaf26a8ca154e359b2fecd519aa753e
+
+This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+
+*************************************************************
+*************************************************************
+*************************************************************
+
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/2.png data-srcset="https://jicki.cn/img/posts/pipeline/2.png, https://jicki.cn/img/posts/pipeline/2.png 1.5x, https://jicki.cn/img/posts/pipeline/2.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/2.png title=图2></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/3.png data-srcset="https://jicki.cn/img/posts/pipeline/3.png, https://jicki.cn/img/posts/pipeline/3.png 1.5x, https://jicki.cn/img/posts/pipeline/3.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/3.png title=图3></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 至此 jenkins 安装部署完成
+</code></pre></td></tr></table></div></div><h2 id=24-配置-jenkins>2.4 配置 Jenkins</h2><blockquote><p>Jenkins 支持 kubernetes 需要 安装 kubernetes plugin 这个插件</p></blockquote><h3 id=241-安装kubernetes-插件>2.4.1 安装kubernetes 插件</h3><blockquote><p>系统管理 &ndash;> 插件管理 &ndash;> 可选插件 &ndash;> kubernetes plugin</p></blockquote><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/4.png data-srcset="https://jicki.cn/img/posts/pipeline/4.png, https://jicki.cn/img/posts/pipeline/4.png 1.5x, https://jicki.cn/img/posts/pipeline/4.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/4.png title=图4></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/5.png data-srcset="https://jicki.cn/img/posts/pipeline/5.png, https://jicki.cn/img/posts/pipeline/5.png 1.5x, https://jicki.cn/img/posts/pipeline/5.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/5.png title=图5></p><h3 id=242-配置-kubernetes-插件>2.4.2 配置 kubernetes 插件</h3><blockquote><p>系统管理 &ndash;> 系统设置 &ndash;> 云 &ndash;> 新增一个云 &ndash;> kubernetes</p></blockquote><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/6.png data-srcset="https://jicki.cn/img/posts/pipeline/6.png, https://jicki.cn/img/posts/pipeline/6.png 1.5x, https://jicki.cn/img/posts/pipeline/6.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/6.png title=图6></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/7.png data-srcset="https://jicki.cn/img/posts/pipeline/7.png, https://jicki.cn/img/posts/pipeline/7.png 1.5x, https://jicki.cn/img/posts/pipeline/7.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/7.png title=图7></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/8.png data-srcset="https://jicki.cn/img/posts/pipeline/8.png, https://jicki.cn/img/posts/pipeline/8.png 1.5x, https://jicki.cn/img/posts/pipeline/8.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/8.png title=图8></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 配置说明: 
+
+1. Name 处默认为 kubernetes，也可以修改为其他名称，如果这里修改了，下边在执行 Job 时指定 podTemplate() 参数 cloud 为其对应名称，否则会找不到，cloud 默认值取：kubernetes
+
+
+2. Kubernetes URL 处我填写了 https://kubernetes.default 这里我填写了 Kubernetes Service 对应的 DNS 记录，通过该 DNS 记录可以解析成该 Service 的 Cluster IP，注意：也可以填写 https://kubernetes.default.svc.cluster.local , 或者直接填写外部 Kubernetes 的地址 https://&lt;ClusterIP&gt;:&lt;Ports&gt;。
+
+
+3. Jenkins URL 处我填写了 http://jenkins.default，跟上边类似，也是使用 Jenkins Service 对应的 DNS 记录.
+
+</code></pre></td></tr></table></div></div><blockquote><p>连接测试</p></blockquote><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/9.png data-srcset="https://jicki.cn/img/posts/pipeline/9.png, https://jicki.cn/img/posts/pipeline/9.png 1.5x, https://jicki.cn/img/posts/pipeline/9.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/9.png title=图9></p><h2 id=25-pipeline>2.5 Pipeline</h2><blockquote><p>pipeline 是一套jenkins官方提供的插件，它可以用来在jenkins 中实现和集成连续交付。</p></blockquote><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/10.png data-srcset="https://jicki.cn/img/posts/pipeline/10.png, https://jicki.cn/img/posts/pipeline/10.png 1.5x, https://jicki.cn/img/posts/pipeline/10.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/10.png title=图10></p><blockquote><p>如上图所示 pipeline 定义了一个流程，流程中完成过一个 CI/CD 流程的步骤.</p></blockquote><ul><li>Pipeline 我们可以分为 step , node , stage</li><li>node: 是 pipleline里groovy的一个概念，node可以给定参数用来选择 agent，node里的steps将会运行在node选择的agent上, job里可以有多个node，将job的steps按照需求运行在不同的 agent 中.</li><li>stage: 是 pipeline里groovy里引入的一个虚拟的概念，是一些step的集合，通过stage我们可以将job的所有steps划分为不同的stage，使得整个job像管道一样更容易维护.</li><li>step: 理解为 job, 是 pipeline 的一个任务,是最小的单位.</li></ul><h2 id=251-创建-pipeline>2.5.1 创建 Pipeline</h2><blockquote><p>Pipeline 也是 Jenkins 的一个插件，需要先安装 pipeline 插件, 安装 jenkins 的时候选择默认插件安装，会默认安装这个插件.</p><p>新建任务 &ndash;> 输入任务名称 &ndash;> 选择 流水线(pipeline)</p></blockquote><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/11.png data-srcset="https://jicki.cn/img/posts/pipeline/11.png, https://jicki.cn/img/posts/pipeline/11.png 1.5x, https://jicki.cn/img/posts/pipeline/11.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/11.png title=图11></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 在 流水线 中选择 Pipeline script
+
+
+def label = &#34;mypod-${UUID.randomUUID().toString()}&#34;
+podTemplate(label: &#39;label&#39;, cloud: &#39;kubernetes&#39;) {
+    node(&#39;label&#39;) {
+        stage(&#39;Run shell&#39;) {
+            sh &#39;echo hello world&#39;
+        }
+    }
+}
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/12.png data-srcset="https://jicki.cn/img/posts/pipeline/12.png, https://jicki.cn/img/posts/pipeline/12.png 1.5x, https://jicki.cn/img/posts/pipeline/12.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/12.png title=图12></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/13.png data-srcset="https://jicki.cn/img/posts/pipeline/13.png, https://jicki.cn/img/posts/pipeline/13.png 1.5x, https://jicki.cn/img/posts/pipeline/13.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/13.png title=图13></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 添加多个 stage 
+
+def label = &#34;mypod-${UUID.randomUUID().toString()}&#34;
+podTemplate(label: &#39;label&#39;, cloud: &#39;kubernetes&#39;) {
+    node(&#39;label&#39;) {
+        stage(&#39;Git Pull&#39;) {
+            sh &#39;echo Git Pull Job&#39;
+        }
+        stage(&#39;Build Job&#39;) {
+            sh &#39;echo Gradle Job Build&#39;
+        }
+        stage(&#39;Docker Build&#39;) {
+            sh &#39;echo Dokcer Build Image&#39;
+        }   
+        stage(&#39;Push Docker Imges&#39;) {
+            sh &#39;echo Docker Push Imges To Registry&#39;
+        } 
+        stage(&#39;Update Deployment&#39;) {
+            sh &#39;echo Update Deployment Image&#39;
+        }
+        stage(&#39;Send Message&#39;) {
+            sh &#39;echo Send Message to Wechat&#39;
+        }       
+    }
+}
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/14.png data-srcset="https://jicki.cn/img/posts/pipeline/14.png, https://jicki.cn/img/posts/pipeline/14.png 1.5x, https://jicki.cn/img/posts/pipeline/14.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/14.png title=图14></p><h3 id=252-基于自己的-slave-镜像构建>2.5.2 基于自己的 slave 镜像构建</h3><blockquote><p>在使用 pipeline 的时候默认会启动 官方的 image</p><p>jenkins/jnlp-slave:alpine 去运行我们的流程</p><p>当然我们也可以构建自己的 slave 镜像，指定运行.</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 首先需要下载官方的 jenkins-slave 文件
+
+wget https://raw.githubusercontent.com/jenkinsci/docker-jnlp-slave/master/jenkins-slave
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 这里使用我个人的镜像
+# 镜像基于 alpine  软件包含  oracle 1.8 与 gradle 4.5 构建
+# 镜像名称为 jicki/slave:3.16
+
+# 创建 dockerfile
+
+
+vi dockerfile
+
+
+
+FROM jicki/slave:3.16
+
+COPY jenkins-slave /usr/local/bin/jenkins-slave
+
+USER root
+RUN chmod +x /usr/local/bin/jenkins-slave
+
+USER jenkins
+ENTRYPOINT [&#34;jenkins-slave&#34;]
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 构建镜像
+docker build -t=&#34;jicki/jenkins-jnlp&#34; .
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 配置 Pipeline 
+
+
+def label = &#34;mypod-${UUID.randomUUID().toString()}&#34;
+podTemplate(label: &#39;label&#39;, cloud: &#39;kubernetes&#39;, containers: [
+    containerTemplate(
+        name: &#39;jnlp&#39;, 
+        image: &#39;jicki/jenkins-jnlp&#39;, 
+        alwaysPullImage: true,
+        args: &#39;${computer.jnlpmac} ${computer.name}&#39;),
+],
+  volumes: [
+    hostPathVolume(mountPath: &#39;/var/run/docker.sock&#39;, hostPath: &#39;/var/run/docker.sock&#39;),
+],)
+{
+    node(&#39;label&#39;) {
+        stage(&#39;Task-1&#39;) {
+            stage(&#39;show Java version&#39;) {
+                sh &#39;java -version&#39;
+            }
+            stage(&#39;show Gradle version&#39;) {
+                sh &#39;gradle -version&#39;
+            }            
+        }
+    }
+}
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/15.png data-srcset="https://jicki.cn/img/posts/pipeline/15.png, https://jicki.cn/img/posts/pipeline/15.png 1.5x, https://jicki.cn/img/posts/pipeline/15.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/15.png title=图15></p><h3 id=253-完整的-java-项目>2.5.3 完整的 java 项目</h3><blockquote><p>通过 Pipeline Scm 插件， CheckOut git 代码，然后执行 Gradle 打包</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 以下为配置的 Pipeline
+
+
+def label = &#34;mypod-${UUID.randomUUID().toString()}&#34;
+podTemplate(label: &#39;label&#39;, cloud: &#39;kubernetes&#39;, containers: [
+    containerTemplate(
+        name: &#39;jnlp&#39;, 
+        image: &#39;jicki/jenkins-jnlp&#39;, 
+        alwaysPullImage: true,
+        args: &#39;${computer.jnlpmac} ${computer.name}&#39;),
+],
+  volumes: [
+    hostPathVolume(mountPath: &#39;/var/run/docker.sock&#39;, hostPath: &#39;/var/run/docker.sock&#39;),
+],)
+{
+    node(&#39;label&#39;) {
+        stage(&#39;Task-1&#39;) {
+            stage(&#39;Git CheckOut&#39;) {
+                checkout([$class: &#39;GitSCM&#39;, branches: [[name: &#39;*/master&#39;]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: &#39;CleanBeforeCheckout&#39;]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: &#39;4f419afa-8f63-45d8-85af-66381f17b924&#39;, url: &#39;http://192.168.168.14:3000/jicki/demo.git&#39;]]])
+                echo &#39;Checkout&#39;
+            }
+            stage(&#39;show Java version&#39;) {
+                sh &#39;java -version&#39;
+            }
+            stage(&#39;show Gradle version&#39;) {
+                sh &#39;gradle -version&#39;
+            }  
+            stage(&#39;Gradle Build&#39;) {
+                echo &#39;Gradle Building&#39;
+                sh &#39;gradle clean build jar --stacktrace --debug&#39;
+                echo &#39;Show Build jar&#39;
+                sh &#39;ls -lt /home/jenkins/workspace/${JOB_NAME}/build/libs/*.jar&#39;
+            }
+        }
+    }
+}
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 这里面备注一下 Pipeline SCM 插件
+
+checkout([$class: &#39;GitSCM&#39;, branches: [[name: &#39;*/master&#39;]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: &#39;CleanBeforeCheckout&#39;]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: &#39;4f419afa-8f63-45d8-85af-66381f17b924&#39;, url: &#39;http://192.168.168.14:3000/jicki/demo.git&#39;]]])
+
+# credentialsId 标签 这里是 Jenkins 里创建的一个 凭据, 这个凭据 的用户名密码为 Git 代码库的用户密码.
+# 创建完毕以后, 编辑里可以查看到 Id
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/16.png data-srcset="https://jicki.cn/img/posts/pipeline/16.png, https://jicki.cn/img/posts/pipeline/16.png 1.5x, https://jicki.cn/img/posts/pipeline/16.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/16.png title=图16></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/17.png data-srcset="https://jicki.cn/img/posts/pipeline/17.png, https://jicki.cn/img/posts/pipeline/17.png 1.5x, https://jicki.cn/img/posts/pipeline/17.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/17.png title=图17></p><blockquote><p>下面增加一个 docker build 流程</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 编辑以上 jicki/jenkins-jnlp 镜像, 增加 docker
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span><span class=lnt>94
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># dockerfile
+
+FROM frolvlad/alpine-java
+
+ENV GRADLE_VERSION=5.4.1 \
+    GRADLE_HOME=/opt/gradle \
+    GRADLE_FOLDER=/root/.gradle \
+    DOCKER_CHANNEL=stable \
+    DOCKER_VERSION=18.09.6 \
+    HOME=/home/jenkins
+
+USER root
+
+# Change to tmp folder
+WORKDIR /tmp
+
+# Download and extract gradle to opt folder
+RUN wget https://downloads.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
+    &amp;&amp; unzip gradle-${GRADLE_VERSION}-bin.zip -d /opt \
+    &amp;&amp; ln -s /opt/gradle-${GRADLE_VERSION} /opt/gradle \
+    &amp;&amp; rm -f gradle-${GRADLE_VERSION}-bin.zip \
+    &amp;&amp; ln -s /opt/gradle/bin/gradle /usr/bin/gradle \
+    &amp;&amp; apk add --no-cache libstdc++ git libltdl wget \
+    ca-certificates \
+    &amp;&amp; echo &#39;hosts: files dns&#39; &gt; /etc/nsswitch.conf \
+    &amp;&amp; mkdir -p $GRADLE_FOLDER \
+    &amp;&amp; addgroup -S -g 10000 jenkins \
+    &amp;&amp; adduser -D -S -G jenkins -u 10000 jenkins
+
+LABEL Description=&#34;This is a base image, which provides the Jenkins agent executable (slave.jar)&#34; Vendor=&#34;Jenkins project&#34; Version=&#34;3.19&#34;
+ARG VERSION=3.19
+ARG AGENT_WORKDIR=/home/jenkins/agent
+
+RUN apk add --no-cache --virtual .build-deps \
+    curl
+
+RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${VERSION}/remoting-${VERSION}.jar \
+  &amp;&amp; chmod 755 /usr/share/jenkins \
+  &amp;&amp; chmod 644 /usr/share/jenkins/slave.jar \
+  &amp;&amp; apk del .build-deps
+
+ENV AGENT_WORKDIR=${AGENT_WORKDIR}
+RUN mkdir /home/jenkins/.jenkins &amp;&amp; mkdir -p ${AGENT_WORKDIR}
+
+# Mark as volume
+VOLUME  $GRADLE_FOLDER
+VOLUME /home/jenkins/.jenkins
+VOLUME ${AGENT_WORKDIR}
+
+RUN set -eux; \
+        \
+# this &#34;case&#34; statement is generated via &#34;update.sh&#34;
+        apkArch=&#34;$(apk --print-arch)&#34;; \
+        case &#34;$apkArch&#34; in \
+# amd64
+                x86_64) dockerArch=&#39;x86_64&#39; ;; \
+# arm32v6
+                armhf) dockerArch=&#39;armel&#39; ;; \
+# arm32v7
+                armv7) dockerArch=&#39;armhf&#39; ;; \
+# arm64v8
+                aarch64) dockerArch=&#39;aarch64&#39; ;; \
+                *) echo &gt;&amp;2 &#34;error: unsupported architecture ($apkArch)&#34;; exit 1 ;;\
+        esac; \
+        \
+        if ! wget -O docker.tgz &#34;https://download.docker.com/linux/static/${DOCKER_CHANNEL}/${dockerArch}/docker-${DOCKER_VERSION}.tgz&#34;; then \
+                echo &gt;&amp;2 &#34;error: failed to download &#39;docker-${DOCKER_VERSION}&#39; from &#39;${DOCKER_CHANNEL}&#39; for &#39;${dockerArch}&#39;&#34;; \
+                exit 1; \
+        fi; \
+        \
+        tar --extract \
+                --file docker.tgz \
+                --strip-components 1 \
+                --directory /usr/local/bin/ \
+        ; \
+        rm docker.tgz; \
+        \
+        dockerd --version; \
+        docker --version
+
+# Down Docker File
+RUN wget https://raw.githubusercontent.com/docker-library/docker/cdcff675cecbae122cbae49ed6e17fa78bb6116a/18.09/modprobe.sh  -O /usr/local/bin/modprobe
+RUN wget https://raw.githubusercontent.com/docker-library/docker/cdcff675cecbae122cbae49ed6e17fa78bb6116a/18.09/docker-entrypoint.sh -O /usr/local/bin/docker-entrypoint.sh
+
+# Down jenkins-slave file
+RUN wget https://raw.githubusercontent.com/jenkinsci/docker-jnlp-slave/master/jenkins-slave -O /usr/local/bin/jenkins-slave
+
+# Chomd
+RUN chmod +x /usr/local/bin/jenkins-slave \
+    &amp;&amp; chmod +x /usr/local/bin/modprobe \
+    &amp;&amp; chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT [&#34;jenkins-slave&#34;]
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># build
+
+docker build -t=&#34;jicki/jenkins-jnlp:docker&#34;
+
+
+</code></pre></td></tr></table></div></div><blockquote><p>这里 gradle 项目 需要增加一点 变量, 修改 build.gradle 文件</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=err>#</span> <span class=nx>完整的</span> <span class=nx>build</span><span class=p>.</span><span class=nx>gradle</span> <span class=nx>文件如下</span>
+
+<span class=nx>buildscript</span> <span class=p>{</span>
+    <span class=nx>repositories</span> <span class=p>{</span>
+        <span class=nx>maven</span> <span class=p>{</span> <span class=nx>url</span> <span class=err>&#39;</span><span class=nx>http</span><span class=p>:</span><span class=c1>//maven.aliyun.com/nexus/content/groups/public/&#39; } // aliyun
+</span><span class=c1></span>        <span class=nf>mavenLocal</span><span class=p>()</span> 
+    <span class=p>}</span>
+    <span class=nx>dependencies</span> <span class=p>{</span>
+        <span class=nf>classpath</span><span class=p>(</span><span class=s>&#34;org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE&#34;</span><span class=p>)</span>
+        <span class=nx>classpath</span> <span class=s>&#34;io.spring.gradle:dependency-management-plugin:1.0.5.RELEASE&#34;</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+<span class=nx>plugins</span> <span class=p>{</span>
+    <span class=nx>id</span> <span class=err>&#39;</span><span class=nx>java</span><span class=err>&#39;</span>
+    <span class=nx>id</span> <span class=err>&#39;</span><span class=nx>idea</span><span class=err>&#39;</span>
+    <span class=nx>id</span> <span class=err>&#39;</span><span class=nx>eclipse</span><span class=err>&#39;</span>
+    <span class=nx>id</span> <span class=err>&#39;</span><span class=nx>net</span><span class=p>.</span><span class=nx>researchgate</span><span class=p>.</span><span class=nx>release</span><span class=err>&#39;</span> <span class=nx>version</span> <span class=err>&#39;</span><span class=mf>2.5.0</span><span class=err>&#39;</span>
+    <span class=nx>id</span> <span class=err>&#39;</span><span class=nx>com</span><span class=p>.</span><span class=nx>github</span><span class=p>.</span><span class=nx>ben</span><span class=o>-</span><span class=nx>manes</span><span class=p>.</span><span class=nx>versions</span><span class=err>&#39;</span> <span class=nx>version</span> <span class=err>&#39;</span><span class=mf>0.14.0</span><span class=err>&#39;</span>
+<span class=p>}</span>
+
+<span class=nx>apply</span> <span class=nx>plugin</span><span class=p>:</span> <span class=err>&#39;</span><span class=nx>project</span><span class=o>-</span><span class=nx>report</span><span class=err>&#39;</span>
+<span class=nx>apply</span> <span class=nx>plugin</span><span class=p>:</span> <span class=err>&#39;</span><span class=nx>maven</span><span class=o>-</span><span class=nx>publish</span><span class=err>&#39;</span>
+<span class=nx>apply</span> <span class=nx>plugin</span><span class=p>:</span> <span class=err>&#39;</span><span class=nx>org</span><span class=p>.</span><span class=nx>springframework</span><span class=p>.</span><span class=nx>boot</span><span class=err>&#39;</span>
+<span class=nx>apply</span> <span class=nx>plugin</span><span class=p>:</span> <span class=s>&#34;io.spring.dependency-management&#34;</span>
+
+<span class=nx>group</span> <span class=p>=</span> <span class=err>&#39;</span><span class=nx>com</span><span class=p>.</span><span class=nx>example</span><span class=err>&#39;</span>
+<span class=nx>version</span> <span class=p>=</span> <span class=err>&#39;</span><span class=mf>0.0.1</span><span class=o>-</span><span class=nx>SNAPSHOT</span><span class=err>&#39;</span>
+<span class=nx>sourceCompatibility</span> <span class=p>=</span> <span class=err>&#39;</span><span class=mf>1.8</span><span class=err>&#39;</span>
+
+<span class=nx>jar</span> <span class=p>{</span>
+    <span class=nx>baseName</span> <span class=p>=</span> <span class=err>&#39;</span><span class=nx>demo</span><span class=err>&#39;</span>
+    <span class=nx>version</span> <span class=p>=</span> <span class=err>&#39;&#39;</span>
+<span class=p>}</span>
+
+<span class=nx>repositories</span> <span class=p>{</span>
+        <span class=nf>mavenCentral</span><span class=p>()</span>
+<span class=p>}</span>
+
+<span class=nx>dependencies</span> <span class=p>{</span>
+        <span class=nx>implementation</span> <span class=err>&#39;</span><span class=nx>org</span><span class=p>.</span><span class=nx>springframework</span><span class=p>.</span><span class=nx>boot</span><span class=p>:</span><span class=nx>spring</span><span class=o>-</span><span class=nx>boot</span><span class=o>-</span><span class=nx>starter</span><span class=o>-</span><span class=nx>web</span><span class=err>&#39;</span>
+        <span class=nx>testImplementation</span> <span class=err>&#39;</span><span class=nx>org</span><span class=p>.</span><span class=nx>springframework</span><span class=p>.</span><span class=nx>boot</span><span class=p>:</span><span class=nx>spring</span><span class=o>-</span><span class=nx>boot</span><span class=o>-</span><span class=nx>starter</span><span class=o>-</span><span class=nx>test</span><span class=err>&#39;</span>
+<span class=p>}</span>
+
+<span class=nx>bootRepackage</span> <span class=p>{</span>
+    <span class=nx>doLast</span> <span class=p>{</span>
+        <span class=nx>File</span> <span class=nx>envFile</span> <span class=p>=</span> <span class=nx>new</span> <span class=nf>File</span><span class=p>(</span><span class=s>&#34;build/tmp/PROJECT_ENV&#34;</span><span class=p>)</span>
+        <span class=nb>println</span><span class=p>(</span><span class=s>&#34;Create ${archivesBaseName} ENV File ===&gt; &#34;</span> <span class=o>+</span> <span class=nx>envFile</span><span class=p>.</span><span class=nf>createNewFile</span><span class=p>())</span>
+        <span class=nx>envFile</span><span class=p>.</span><span class=nf>write</span><span class=p>(</span><span class=s>&#34;export PROJECT_BUILD_FINALNAME=${archivesBaseName}\n&#34;</span><span class=p>)</span>
+        <span class=nb>println</span><span class=p>(</span><span class=s>&#34;Generate Docker image tag...&#34;</span><span class=p>)</span>
+        <span class=nx>envFile</span><span class=p>.</span><span class=nb>append</span><span class=p>(</span><span class=s>&#34;export BUILD_DATE=`date +%Y%m%d%H%M%S`\n&#34;</span><span class=p>)</span>
+        <span class=nx>envFile</span><span class=p>.</span><span class=nb>append</span><span class=p>(</span><span class=s>&#34;export IMAGE_NAME=jicki/demo:`echo \${CI_BUILD_REF_NAME} | cut -c1-8`\${BUILD_DATE}\n&#34;</span><span class=p>)</span>
+        <span class=nx>envFile</span><span class=p>.</span><span class=nb>append</span><span class=p>(</span><span class=s>&#34;export LATEST_IMAGE_NAME=jicki/demo:latest\n&#34;</span><span class=p>)</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div><blockquote><p>Pipeline 流程 , git pull, gradle build, docker build</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+def label = &#34;mypod-${UUID.randomUUID().toString()}&#34;
+podTemplate(label: &#39;label&#39;, cloud: &#39;kubernetes&#39;, containers: [
+    containerTemplate(
+        name: &#39;jnlp&#39;, 
+        image: &#39;jicki/jenkins-jnlp:docker&#39;, 
+        alwaysPullImage: true,
+        args: &#39;${computer.jnlpmac} ${computer.name}&#39;),
+],
+  volumes: [
+    hostPathVolume(mountPath: &#39;/var/run/docker.sock&#39;, hostPath: &#39;/var/run/docker.sock&#39;),
+    hostPathVolume(mountPath: &#39;/root/.gradle&#39;, hostPath: &#39;/opt/data/gradle&#39;),
+],)
+{
+    node(&#39;label&#39;) {
+        stage(&#39;Task-1&#39;) {
+            stage(&#39;Git CheckOut&#39;) {
+                checkout([$class: &#39;GitSCM&#39;, branches: [[name: &#39;*/master&#39;]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: &#39;CleanBeforeCheckout&#39;]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: &#39;4f419afa-8f63-45d8-85af-66381f17b924&#39;, url: &#39;http://192.168.168.14:3000/jicki/demo.git&#39;]]])
+                echo &#39;Checkout&#39;
+            }
+            stage(&#39;Gradle Build&#39;) {
+                echo &#39;Gradle Building&#39;
+                sh &#39;gradle clean build jar --stacktrace --debug&#39;
+            }
+            stage(&#39;Docker Build&#39;) {
+                sh &#39;&#39;&#39;
+                echo ----------------
+                cat dockerfile
+                echo ----------------
+                source build/tmp/PROJECT_ENV
+                docker build -t ${IMAGE_NAME} --build-arg PROJECT_BUILD_FINALNAME=${PROJECT_BUILD_FINALNAME} .
+                docker images
+                &#39;&#39;&#39;
+            }
+        }
+    }
+}
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># git 项目底下的 dockerfile  , 以下为 dockerfile
+
+
+FROM jicki/openjdk:1.8-alpine
+
+ARG PROJECT_BUILD_FINALNAME
+
+ENV TZ &#39;Asia/Shanghai&#39;
+ENV PROJECT_BUILD_FINALNAME ${PROJECT_BUILD_FINALNAME}
+
+
+COPY build/libs/${PROJECT_BUILD_FINALNAME}.jar /${PROJECT_BUILD_FINALNAME}.jar
+
+CMD [&#34;sh&#34;,&#34;-c&#34;,&#34;java -jar /${PROJECT_BUILD_FINALNAME}.jar&#34;]
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/18.png data-srcset="https://jicki.cn/img/posts/pipeline/18.png, https://jicki.cn/img/posts/pipeline/18.png 1.5x, https://jicki.cn/img/posts/pipeline/18.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/18.png title=图18></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/pipeline/19.png data-srcset="https://jicki.cn/img/posts/pipeline/19.png, https://jicki.cn/img/posts/pipeline/19.png 1.5x, https://jicki.cn/img/posts/pipeline/19.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/pipeline/19.png title=图19></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2019-06-26</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/kubernetes-jenkins-pipeline/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline" data-via=jicki234 data-hashtags=kubernetes,docker><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-hashtag=kubernetes><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline" data-description="Jenkins Kubernetes Pipeline"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline" data-description="Jenkins Kubernetes Pipeline"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/kubernetes-jenkins-pipeline/ data-title="Jenkins Kubernetes Pipeline"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/kubernetes/>kubernetes</a>,&nbsp;<a href=/tags/docker/>docker</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/gitlab-ci/ class=prev rel=prev title="GitLab CI/CD Docker"><i class="fas fa-angle-left fa-fw"></i>GitLab CI/CD Docker</a>
+<a href=/kuebrnetes-new-elk/ class=next rel=next title="Elasticsearch Log-pilot Kibana">Elasticsearch Log-pilot Kibana<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

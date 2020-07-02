@@ -1,0 +1,1073 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Go学习笔记 - 小炒肉</title><meta name=Description content="Go学习笔记"><meta property="og:title" content="Go学习笔记"><meta property="og:description" content="Go学习笔记"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/golang-study-note-4/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2000-01-01T00:00:00+00:00"><meta property="article:modified_time" content="2000-01-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Go学习笔记"><meta name=twitter:description content="Go学习笔记"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/golang-study-note-4/><link rel=prev href=https://jicki.cn/golang-study-note-5/><link rel=next href=https://jicki.cn/golang-study-note-4-4/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Go学习笔记","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/golang-study-note-4\/"},"genre":"posts","keywords":"golang","wordcount":6217,"url":"https:\/\/jicki.cn\/golang-study-note-4\/","datePublished":"2000-01-01T00:00:00+00:00","dateModified":"2000-01-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Go学习笔记"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Go学习笔记</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/golang/><i class="far fa-folder fa-fw"></i>golang</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2000-01-01>2000-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6217 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 13 分钟&nbsp;<span id=/golang-study-note-4/ class=leancloud_visitors data-flag-title=Go学习笔记>
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#函数>函数</a><ul><li><a href=#函数定义>函数定义</a></li><li><a href=#函数参数>函数参数</a></li><li><a href=#函数可变参数>函数可变参数</a></li><li><a href=#函数返回值>函数返回值</a></li><li><a href=#defer语句>defer语句</a></li><li><a href=#defer-题目分析>defer 题目分析</a></li><li><a href=#函数-变量作用域>函数 变量作用域</a></li><li><a href=#函数类型与变量>函数类型与变量</a></li><li><a href=#高阶函数>高阶函数</a></li><li><a href=#匿名函数和闭包>匿名函数和闭包</a></li><li><a href=#闭包>闭包</a></li><li><a href=#内置函数>内置函数</a></li><li><a href=#函数练习题>函数练习题</a></li></ul></li><li><a href=#指针>指针</a><ul><li><a href=#指针地址和指针类型>指针地址和指针类型</a></li><li><a href=#指针取值>指针取值</a></li><li><a href=#指针传值>指针传值</a></li><li><a href=#new和make>new和make</a></li><li><a href=#new-与-make-的区别>new 与 make 的区别</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=go语言基础>Go语言基础</h1><h2 id=函数>函数</h2><ul><li><code>函数</code> 是组织好的、可重复使用的、用于执行指定任务的代码块。</li><li>Go语言中支持<code>函数</code>、<code>匿名函数</code>和<code>闭包</code>, 并且函数在Go语言中属于 &ldquo;一等公民&rdquo; 。</li></ul><h3 id=函数定义>函数定义</h3><ul><li>Go语言中定义函数使用<code>func</code>关键字.</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>// 函数定义 <span class=o>(</span>参数 与 返回值 可以是多个<span class=o>)</span>
+func 函数名<span class=o>(</span>参数<span class=o>)(</span>返回值<span class=o>){</span>
+    函数体
+<span class=o>}</span>
+
+</code></pre></td></tr></table></div></div><ul><li>名词解析:<ol><li>函数名: 由字母、数字、下划线组成。但函数名的第一个字母不能是数字。在同一个包内, 函数名也称不能重名。</li><li>参数: 参数由<code>参数变量</code>和<code>参数变量类型</code>组成, 多个参数之间使用<code>,</code>分隔。</li><li>返回值: 返回值由<code>返回值变</code>量和其<code>变量类型</code>组成, 也可以只写返回值的类型, 多个返回值必须用<code>()</code>包裹, 并用<code>,</code>分隔。</li><li>函数体: 实现指定功能的代码块。</li></ol></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 不包含参数与返回值的函数
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>sayHello</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Hello ~&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 函数的调用
+</span><span class=c1></span>	<span class=nf>sayHello</span><span class=p>()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>Hello</span> <span class=err>~</span>
+</code></pre></td></tr></table></div></div><h3 id=函数参数>函数参数</h3><ul><li>函数参数由<code>参数变量</code>和<code>参数变量类型</code>组成, 如果相邻变量的类型相同, 则可以省略类型。</li><li>函数参数类型相同时可以简写, 如: <code>func sum(x, y int)</code></li><li>Go语言是没有 默认参数的</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 带参数的函数
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>sayHi</span><span class=p>(</span><span class=nx>name</span> <span class=kt>string</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Hi &#34;</span><span class=p>,</span> <span class=nx>name</span><span class=p>)</span>
+<span class=p>}</span>
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 带参数的函数调用
+</span><span class=c1></span>	<span class=nf>sayHi</span><span class=p>(</span><span class=s>&#34;康师傅&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>Hi</span>  <span class=nx>康师傅</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 带多个参数和返回值的函数
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>intSum</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+    <span class=nx>sum</span> <span class=o>:=</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span>
+    <span class=c1>// 使用 return 关键字 返回这个值
+</span><span class=c1></span>	<span class=k>return</span> <span class=nx>sum</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=c1>// 多个参数和返回值函数调用
+</span><span class=c1></span>	<span class=nx>ret</span> <span class=o>:=</span> <span class=nf>intSum</span><span class=p>(</span><span class=mi>10</span><span class=p>,</span> <span class=mi>11</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>ret</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=mi>21</span>
+</code></pre></td></tr></table></div></div><h3 id=函数可变参数>函数可变参数</h3><ul><li><code>可变参数</code> 是指函数的参数数量不固定, Go语言中的可变参数通过在参数名后加<code>...</code>来标识。</li><li><code>可变参数</code> 要放在参数最后面, 如: <code>func a(x int, y...int)</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 带可变参数的函数
+</span><span class=c1>// 可变参数的类型为 切片
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>allSum</span><span class=p>(</span><span class=nx>a</span> <span class=o>...</span><span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=nx>sum</span> <span class=o>:=</span> <span class=mi>0</span>
+	<span class=c1>// 遍历 a 切片中的元素
+</span><span class=c1></span>	<span class=k>for</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>arg</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>a</span> <span class=p>{</span>
+		<span class=c1>// 将所有传入的参数相加
+</span><span class=c1></span>		<span class=nx>sum</span> <span class=p>=</span> <span class=nx>sum</span> <span class=o>+</span> <span class=nx>arg</span>
+	<span class=p>}</span>
+	<span class=k>return</span> <span class=nx>sum</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 可变参数的函数调用
+</span><span class=c1></span>	<span class=nx>r1</span> <span class=o>:=</span> <span class=nf>allSum</span><span class=p>()</span>
+	<span class=nx>r2</span> <span class=o>:=</span> <span class=nf>allSum</span><span class=p>(</span><span class=mi>10</span><span class=p>,</span> <span class=mi>20</span><span class=p>)</span>
+	<span class=nx>r3</span> <span class=o>:=</span> <span class=nf>allSum</span><span class=p>(</span><span class=mi>20</span><span class=p>,</span> <span class=mi>30</span><span class=p>,</span> <span class=mi>40</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r1</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r2</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r3</span><span class=p>)</span>
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=mi>0</span>
+<span class=mi>30</span>
+<span class=mi>90</span>
+</code></pre></td></tr></table></div></div><h3 id=函数返回值>函数返回值</h3><ul><li>Go语言中通过<code>return</code>关键字向外输出返回值。</li><li>Go语言中函数支持多返回值, 函数如果有多个返回值时必须用<code>()</code>将所有返回值包裹起来。</li><li>函数定义时可以给返回值命名, 并在函数体中直接使用这些变量, 最后通过<code>return</code>关键字返回。</li><li>多返回值也支持类型简写</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 带多个返回值的函数
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>calc</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=p>(</span><span class=nx>sub</span><span class=p>,</span> <span class=nx>sum</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+	<span class=nx>sum</span> <span class=p>=</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span>
+	<span class=nx>sub</span> <span class=p>=</span> <span class=nx>x</span> <span class=o>-</span> <span class=nx>y</span>
+	<span class=k>return</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 多返回值的函数调用 (有多少个返回值就必须用多少个参数去接收)
+</span><span class=c1></span>	<span class=nx>sub</span><span class=p>,</span> <span class=nx>sum</span> <span class=o>:=</span> <span class=nf>calc</span><span class=p>(</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>sub</span><span class=p>,</span> <span class=nx>sum</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=o>-</span><span class=mi>100</span> <span class=mi>300</span>
+</code></pre></td></tr></table></div></div><h3 id=defer语句>defer语句</h3><ul><li><p>Go语言中的<code>defer</code>语句会将其后面跟随的语句进行延迟处理。在<code>defer</code>归属的函数即将返回时, 将延迟处理的语句按<code>defer</code>定义的逆序进行执行, 也就是说, 先被<code>defer</code>的语句最后被执行, 最后被<code>defer</code>的语句，最先被执行。</p></li><li><p>由于<code>defer</code>语句延迟调用的特性，所以<code>defer</code>语句能非常方便的处理资源释放问题。比如: 资源清理、文件关闭、解锁及记录时间等。</p></li><li><p>在Go语言的函数中<code>return</code>语句在底层并不是原子操作, 它分为给返回值赋值和RET指令两步。而<code>defer</code>语句执行的时机就在返回值赋值操作后, RET指令执行前。</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>
+// 函数 <span class=k>return</span> 语句 底层实现
+
+                <span class=o>[</span><span class=nv>返回值</span> <span class=o>=</span> x<span class=o>]</span>
+<span class=o>[</span><span class=k>return</span> x<span class=o>]</span> -&gt;       ⇊
+                <span class=o>[</span>RET 指令<span class=o>]</span>
+
+// defer 语句执行
+                <span class=o>[</span><span class=nv>返回值</span> <span class=o>=</span> x<span class=o>]</span>
+                    ⇊
+<span class=o>[</span><span class=k>return</span> x<span class=o>]</span> -&gt;   <span class=o>[</span>运行 defer<span class=o>]</span>
+                    ⇊
+                <span class=o>[</span>RET 指令<span class=o>]</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// defer 延迟执行
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 多个 defer 是遵循 先入后出 的顺序
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;Start --&#34;</span><span class=p>)</span>
+	<span class=k>defer</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;第一条&#34;</span><span class=p>)</span>
+	<span class=k>defer</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;第二条&#34;</span><span class=p>)</span>
+	<span class=k>defer</span> <span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;第三条&#34;</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;End --&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>Start</span> <span class=o>--</span>
+<span class=nx>End</span> <span class=o>--</span>
+<span class=nx>第三条</span>
+<span class=nx>第二条</span>
+<span class=nx>第一条</span>
+</code></pre></td></tr></table></div></div><h3 id=defer-题目分析>defer 题目分析</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// defer 的题目
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>calc</span><span class=p>(</span><span class=nx>index</span> <span class=kt>string</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=nx>b</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=nx>ret</span> <span class=o>:=</span> <span class=nx>a</span> <span class=o>+</span> <span class=nx>b</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>index</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=nx>ret</span><span class=p>)</span>
+	<span class=k>return</span> <span class=nx>ret</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+    <span class=c1>// defer 题目
+</span><span class=c1></span>    <span class=c1>// defer 先入后出 的顺序
+</span><span class=c1></span>	<span class=nx>x</span> <span class=o>:=</span> <span class=mi>1</span>
+	<span class=nx>y</span> <span class=o>:=</span> <span class=mi>2</span>
+	<span class=c1>// 第一个参数为 &#34;AA&#34; , 第二个参数为 x = 1
+</span><span class=c1></span>	<span class=c1>// 第三个参数为 calc(&#34;A&#34;, 1, 2) 的返回值 = 3
+</span><span class=c1></span>	<span class=c1>// 最后整体的返回值是 1 + 3 = 4
+</span><span class=c1></span>	<span class=c1>// 输出 AA 1 3 4
+</span><span class=c1></span>    <span class=c1>// calc(&#34;A&#34;, x, y) 这里的输出为 A 1 2 3
+</span><span class=c1></span>	<span class=k>defer</span> <span class=nf>calc</span><span class=p>(</span><span class=s>&#34;AA&#34;</span><span class=p>,</span> <span class=nx>x</span><span class=p>,</span> <span class=nf>calc</span><span class=p>(</span><span class=s>&#34;A&#34;</span><span class=p>,</span> <span class=nx>x</span><span class=p>,</span> <span class=nx>y</span><span class=p>))</span>
+	<span class=nx>x</span> <span class=p>=</span> <span class=mi>10</span>
+	<span class=c1>// 第一个参数为 &#34;BB&#34;, 第二个参数为 x = 10
+</span><span class=c1></span>	<span class=c1>// 第三个参数为 calc(&#34;B&#34;, 10, 2) 的返回值 = 12
+</span><span class=c1></span>	<span class=c1>// 最后整体的返回值是 10 + 12 = 22
+</span><span class=c1></span>	<span class=c1>// 输出 BB 10 12 22
+</span><span class=c1></span>	<span class=c1>// calc(&#34;B&#34;, x, y) 这里输出为 B 10 2 12
+</span><span class=c1></span>	<span class=k>defer</span> <span class=nf>calc</span><span class=p>(</span><span class=s>&#34;BB&#34;</span><span class=p>,</span> <span class=nx>x</span><span class=p>,</span> <span class=nf>calc</span><span class=p>(</span><span class=s>&#34;B&#34;</span><span class=p>,</span> <span class=nx>x</span><span class=p>,</span> <span class=nx>y</span><span class=p>))</span>
+	<span class=nx>y</span> <span class=p>=</span> <span class=mi>20</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>A</span> <span class=mi>1</span> <span class=mi>2</span> <span class=mi>3</span>
+<span class=nx>B</span> <span class=mi>10</span> <span class=mi>2</span> <span class=mi>12</span>
+<span class=nx>BB</span> <span class=mi>10</span> <span class=mi>12</span> <span class=mi>22</span>
+<span class=nx>AA</span> <span class=mi>1</span> <span class=mi>3</span> <span class=mi>4</span>
+</code></pre></td></tr></table></div></div><h3 id=函数-变量作用域>函数 变量作用域</h3><ul><li>函数 <code>全局变量</code>与<code>局部变量</code>同时存在时, 优先使用 函数内定义的<code>局部变量</code>, 然后在使用<code>全局变量</code>。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 定义全局变量
+</span><span class=c1></span><span class=kd>var</span> <span class=nx>intG</span> <span class=p>=</span> <span class=mi>10</span>
+
+<span class=kd>func</span> <span class=nf>testFunc</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 定义一个局部变量
+</span><span class=c1></span>	<span class=nx>intG</span> <span class=o>:=</span> <span class=mi>100</span>
+	<span class=c1>// 输出这个变量 (函数会优先使用 局部变量)
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>intG</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 调用函数
+</span><span class=c1></span>	<span class=nf>testFunc</span><span class=p>()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=mi>100</span>
+</code></pre></td></tr></table></div></div><h3 id=函数类型与变量>函数类型与变量</h3><ul><li>函数类型变量</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go>
+<span class=kd>func</span> <span class=nf>testFunc</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 定义一个局部变量
+</span><span class=c1></span>	<span class=nx>intG</span> <span class=o>:=</span> <span class=mi>100</span>
+	<span class=c1>// 输出这个变量
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>intG</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 调用函数
+</span><span class=c1></span>	<span class=nf>testFunc</span><span class=p>()</span>
+	<span class=c1>// 函数可以作为一个变量来赋值
+</span><span class=c1></span>	<span class=nx>abc</span> <span class=o>:=</span> <span class=nx>testFunc</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;%T \n&#34;</span><span class=p>,</span> <span class=nx>abc</span><span class=p>)</span>
+	<span class=nf>abc</span><span class=p>()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span><span class=p>()</span>
+<span class=mi>100</span>
+</code></pre></td></tr></table></div></div><h3 id=高阶函数>高阶函数</h3><ul><li><p>高阶函数分为<code>函数作为参数</code>和<code>函数作为返回值</code>两部分。</p></li><li><p>函数作为参数</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>sum</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>sub</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=nx>x</span> <span class=o>-</span> <span class=nx>y</span>
+<span class=p>}</span>
+
+<span class=c1>// 函数变量也可以是 函数类型
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>calc</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>,</span> <span class=nx>op</span> <span class=kd>func</span><span class=p>(</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=nf>op</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 将 sum 这个函数当成 calc 的变量传入
+</span><span class=c1></span>	<span class=nx>r1</span> <span class=o>:=</span> <span class=nf>calc</span><span class=p>(</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>,</span> <span class=nx>sum</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r1</span><span class=p>)</span>
+	<span class=c1>// 将 sub 这个函数当成 calc 的变量传入
+</span><span class=c1></span>	<span class=nx>r2</span> <span class=o>:=</span> <span class=nf>calc</span><span class=p>(</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>,</span> <span class=nx>sub</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r2</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=mi>300</span>
+<span class=o>-</span><span class=mi>100</span>
+</code></pre></td></tr></table></div></div><ul><li>函数作为返回值</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>sum</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=nx>x</span> <span class=o>+</span> <span class=nx>y</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>sub</span><span class=p>(</span><span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=nx>x</span> <span class=o>-</span> <span class=nx>y</span>
+<span class=p>}</span>
+
+<span class=c1>// 函数作为函数的返回值传入函数中
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>do</span><span class=p>(</span><span class=nx>s</span> <span class=kt>string</span><span class=p>)</span> <span class=p>(</span><span class=kd>func</span><span class=p>(</span><span class=kt>int</span><span class=p>,</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span><span class=p>,</span> <span class=kt>error</span><span class=p>)</span> <span class=p>{</span>
+	<span class=k>switch</span> <span class=nx>s</span> <span class=p>{</span>
+	<span class=k>case</span> <span class=s>&#34;+&#34;</span><span class=p>:</span>
+		<span class=k>return</span> <span class=nx>sum</span><span class=p>,</span> <span class=kc>nil</span>
+	<span class=k>case</span> <span class=s>&#34;-&#34;</span><span class=p>:</span>
+		<span class=k>return</span> <span class=nx>sub</span><span class=p>,</span> <span class=kc>nil</span>
+	<span class=k>default</span><span class=p>:</span>
+		<span class=nx>err</span> <span class=o>:=</span> <span class=nx>errors</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=s>&#34;无法识别的操作符&#34;</span><span class=p>)</span>
+		<span class=k>return</span> <span class=kc>nil</span><span class=p>,</span> <span class=nx>err</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>r2</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nf>do</span><span class=p>(</span><span class=s>&#34;+&#34;</span><span class=p>)</span>
+	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+	<span class=p>}</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nf>r2</span><span class=p>(</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>))</span>
+	<span class=nx>r3</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nf>do</span><span class=p>(</span><span class=s>&#34;-&#34;</span><span class=p>)</span>
+	<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+	<span class=p>}</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nf>r3</span><span class=p>(</span><span class=mi>400</span><span class=p>,</span> <span class=mi>200</span><span class=p>))</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=mi>300</span>
+<span class=mi>200</span>
+</code></pre></td></tr></table></div></div><h3 id=匿名函数和闭包>匿名函数和闭包</h3><ul><li>匿名函数 - 匿名函数就是没有函数名的函数。</li><li>匿名函数多用于实现回调函数和闭包。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span><span class=p>(</span><span class=nx>参数</span><span class=p>)(</span><span class=nx>返回值</span><span class=p>){</span>
+    <span class=nx>函数体</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 匿名函数
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 定义匿名函数与调用
+</span><span class=c1></span>	<span class=c1>// 1. 匿名函数调用,赋值给变量
+</span><span class=c1></span>	<span class=nx>r1</span> <span class=o>:=</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;匿名函数1&#34;</span><span class=p>)</span>
+	<span class=p>}</span>
+	<span class=nf>r1</span><span class=p>()</span>
+	<span class=c1>// 2. 匿名函数定义的时候就直接调用
+</span><span class=c1></span>	<span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;匿名函数2&#34;</span><span class=p>)</span>
+	<span class=p>}()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>匿名函数1</span>
+<span class=nx>匿名函数2</span>
+</code></pre></td></tr></table></div></div><h3 id=闭包>闭包</h3><ul><li>闭包指的是一个函数和与其相关的引用环境组合而成的实体。简单来说: <code>闭包=函数+引用环境(外层变量的引用)</code>。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 函数闭包
+</span><span class=c1>// 定义一个函数,它的返回值是一个函数类型
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>a</span><span class=p>()</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>name</span> <span class=o>:=</span> <span class=s>&#34;闭包&#34;</span>
+	<span class=c1>//把函数作为返回值,并传入一个变量
+</span><span class=c1></span>	<span class=k>return</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;func a:&#34;</span><span class=p>,</span> <span class=nx>name</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 将a()这个函数赋值给 变量r1
+</span><span class=c1></span>	<span class=c1>// 闭包 = &#34;函数 + 外层变量的引用&#34; 所以 r1 就是一个闭包
+</span><span class=c1></span>	<span class=nx>r1</span> <span class=o>:=</span> <span class=nf>a</span><span class=p>()</span>
+	<span class=c1>// 此时调用r1 这个变量 相当于调用 a()函数内的匿名函数
+</span><span class=c1></span>	<span class=nf>r1</span><span class=p>()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nx>a</span><span class=p>:</span> <span class=nx>闭包</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 定义一个函数并且包含一个变量name,返回值是一个函数类型
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>b</span><span class=p>(</span><span class=nx>name</span> <span class=kt>string</span><span class=p>)</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+	<span class=k>return</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;func b:&#34;</span><span class=p>,</span> <span class=nx>name</span><span class=p>)</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 此时调用 r2 这个变量 加上参数
+</span><span class=c1></span>	<span class=nx>r2</span> <span class=o>:=</span> <span class=nf>b</span><span class=p>(</span><span class=s>&#34;闭包b&#34;</span><span class=p>)</span>
+	<span class=nf>r2</span><span class=p>()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nx>b</span><span class=p>:</span> <span class=nx>闭包b</span>
+</code></pre></td></tr></table></div></div><ul><li>闭包的应用一</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 定义一个函数 返回值是一个匿名函数
+</span><span class=c1>// 匿名函数包含一个参数和一个返回值
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>suffixFunc</span><span class=p>(</span><span class=nx>suffix</span> <span class=kt>string</span><span class=p>)</span> <span class=kd>func</span><span class=p>(</span><span class=kt>string</span><span class=p>)</span> <span class=kt>string</span> <span class=p>{</span>
+	<span class=c1>// 返回 这个匿名函数
+</span><span class=c1></span>	<span class=k>return</span> <span class=kd>func</span><span class=p>(</span><span class=nx>name</span> <span class=kt>string</span><span class=p>)</span> <span class=kt>string</span> <span class=p>{</span>
+		<span class=c1>// 如果 name 参数 不包含 suffix 这个上层参数
+</span><span class=c1></span>		<span class=k>if</span> <span class=p>!</span><span class=nx>strings</span><span class=p>.</span><span class=nf>HasSuffix</span><span class=p>(</span><span class=nx>name</span><span class=p>,</span> <span class=nx>suffix</span><span class=p>)</span> <span class=p>{</span>
+			<span class=c1>// 返回 name 参数 + suffix 参数
+</span><span class=c1></span>			<span class=k>return</span> <span class=nx>name</span> <span class=o>+</span> <span class=nx>suffix</span>
+		<span class=p>}</span>
+		<span class=c1>// 如果包含就直接返回这个 name 参数
+</span><span class=c1></span>		<span class=k>return</span> <span class=nx>name</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>//suffixFunc 赋值给 变量 ret, suffixFunc 传入一个参数
+</span><span class=c1></span>	<span class=nx>ret</span> <span class=o>:=</span> <span class=nf>suffixFunc</span><span class=p>(</span><span class=s>&#34;.txt&#34;</span><span class=p>)</span>
+
+	<span class=c1>// 调用 suffixFunc 内部的匿名函数
+</span><span class=c1></span>	<span class=nx>r1</span> <span class=o>:=</span> <span class=nf>ret</span><span class=p>(</span><span class=s>&#34;小说&#34;</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r1</span><span class=p>)</span>
+
+	<span class=nx>ret</span> <span class=p>=</span> <span class=nf>suffixFunc</span><span class=p>(</span><span class=s>&#34;.avi&#34;</span><span class=p>)</span>
+	<span class=nx>r2</span> <span class=o>:=</span> <span class=nf>ret</span><span class=p>(</span><span class=s>&#34;视频&#34;</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>r2</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>小说</span><span class=p>.</span><span class=nx>txt</span>
+<span class=nx>视频</span><span class=p>.</span><span class=nx>avi</span>
+</code></pre></td></tr></table></div></div><ul><li>闭包的应用二</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 闭包的应用 2
+</span><span class=c1></span>
+<span class=c1>// 定义一个函数,有一个变量和两个函数返回值
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>calc</span><span class=p>(</span><span class=nx>base</span> <span class=kt>int</span><span class=p>)</span> <span class=p>(</span><span class=kd>func</span><span class=p>(</span><span class=kt>int</span><span class=p>)</span> <span class=kt>int</span><span class=p>,</span> <span class=kd>func</span><span class=p>(</span><span class=kt>int</span><span class=p>)</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+	<span class=c1>// 定义个匿名函数有一个参数和一个返回值
+</span><span class=c1></span>	<span class=nx>sum</span> <span class=o>:=</span> <span class=kd>func</span><span class=p>(</span><span class=nx>i</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+		<span class=c1>// 闭包: 引用外层变量 base
+</span><span class=c1></span>		<span class=c1>// base = base + i
+</span><span class=c1></span>		<span class=nx>base</span> <span class=o>+=</span> <span class=nx>i</span>
+		<span class=c1>// 返回 base
+</span><span class=c1></span>		<span class=k>return</span> <span class=nx>base</span>
+	<span class=p>}</span>
+	<span class=c1>// 定义个匿名函数有一个参数和一个返回值
+</span><span class=c1></span>	<span class=nx>sub</span> <span class=o>:=</span> <span class=kd>func</span><span class=p>(</span><span class=nx>i</span> <span class=kt>int</span><span class=p>)</span> <span class=kt>int</span> <span class=p>{</span>
+		<span class=c1>// 闭包: 引用外层变量 base
+</span><span class=c1></span>		<span class=c1>// base = sum 函数的返回值 base - i
+</span><span class=c1></span>		<span class=nx>base</span> <span class=o>-=</span> <span class=nx>i</span>
+		<span class=c1>// 返回 base
+</span><span class=c1></span>		<span class=k>return</span> <span class=nx>base</span>
+	<span class=p>}</span>
+	<span class=c1>// 返回如上两个匿名函数的变量
+</span><span class=c1></span>	<span class=k>return</span> <span class=nx>sum</span><span class=p>,</span> <span class=nx>sub</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>//调用函数 有两个返回值x,y 并传入calc参数 base = 200
+</span><span class=c1></span>	<span class=c1>// x = sum 这个匿名函数
+</span><span class=c1></span>	<span class=c1>// y = sub 这个匿名函数
+</span><span class=c1></span>	<span class=nx>x</span><span class=p>,</span> <span class=nx>y</span> <span class=o>:=</span> <span class=nf>calc</span><span class=p>(</span><span class=mi>200</span><span class=p>)</span>
+	<span class=c1>// 调用 x 这个匿名函数,传入一个参数100
+</span><span class=c1></span>	<span class=nx>ret1</span> <span class=o>:=</span> <span class=nf>x</span><span class=p>(</span><span class=mi>100</span><span class=p>)</span>
+	<span class=c1>// 调用 y 这个匿名函数,传入一个参数200
+</span><span class=c1></span>	<span class=nx>ret2</span> <span class=o>:=</span> <span class=nf>y</span><span class=p>(</span><span class=mi>200</span><span class=p>)</span>
+	<span class=c1>// 分别打印
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;x:sum = %d  y:sub = %d \n&#34;</span><span class=p>,</span> <span class=nx>ret1</span><span class=p>,</span> <span class=nx>ret2</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>x</span><span class=p>:</span><span class=nx>sum</span> <span class=p>=</span> <span class=mi>300</span>  <span class=nx>y</span><span class=p>:</span><span class=nx>sub</span> <span class=p>=</span> <span class=mi>100</span>
+</code></pre></td></tr></table></div></div><h3 id=内置函数>内置函数</h3><table><thead><tr><th>内置函数</th><th>说明</th></tr></thead><tbody><tr><td>close</td><td>主要用来关闭channel</td></tr><tr><td>len</td><td>用来求长度，比如string、array、slice、map、channel</td></tr><tr><td>new</td><td>用来分配内存，主要用来分配值类型，比如int、struct。返回的是指针</td></tr><tr><td>make</td><td>用来分配内存，主要用来分配引用类型，比如chan、map、slice</td></tr><tr><td>append</td><td>用来追加元素到数组、slice中</td></tr><tr><td>panic和recover</td><td>用来做错误处理</td></tr></tbody></table><ul><li><p>panic/recover</p><ul><li>Go语言中 版本小于等于 <code>1.12</code> 是没有异常机制, 但是使用<code>panic/recover</code>模式来处理错误。<code>panic</code>可以在任何地方引发。</li><li><code>recover()</code>必须搭配<code>defer</code>使用。</li><li><code>defer</code>一定要在可能引发<code>panic</code>的语句之前定义。</li></ul></li><li><p>引发 panic</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>a</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;func in a&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>b</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nb>panic</span><span class=p>(</span><span class=s>&#34;panic in b&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>c</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;func in c&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=c1>// panic &amp;&amp; recover
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 分别调用 a b c 函数
+</span><span class=c1></span>	<span class=nf>a</span><span class=p>()</span>
+	<span class=nf>b</span><span class=p>()</span>
+	<span class=nf>c</span><span class=p>()</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nx>in</span> <span class=nx>a</span>
+<span class=nx>panic</span><span class=p>:</span> <span class=nx>panic</span> <span class=nx>in</span> <span class=nx>b</span>
+
+<span class=nx>goroutine</span> <span class=mi>1</span> <span class=p>[</span><span class=nx>running</span><span class=p>]:</span>
+<span class=nx>main</span><span class=p>.</span><span class=nf>b</span><span class=p>(</span><span class=o>...</span><span class=p>)</span>
+        <span class=o>/</span><span class=nx>Users</span><span class=o>/</span><span class=nx>jicki</span><span class=o>/</span><span class=k>go</span><span class=o>/</span><span class=nx>src</span><span class=o>/</span><span class=nx>github</span><span class=p>.</span><span class=nx>com</span><span class=o>/</span><span class=nx>jicki</span><span class=o>/</span><span class=nx>panic_recover</span><span class=o>/</span><span class=nx>panic</span><span class=p>.</span><span class=k>go</span><span class=p>:</span><span class=mi>10</span>
+<span class=nx>main</span><span class=p>.</span><span class=nf>main</span><span class=p>()</span>
+        <span class=o>/</span><span class=nx>Users</span><span class=o>/</span><span class=nx>jicki</span><span class=o>/</span><span class=k>go</span><span class=o>/</span><span class=nx>src</span><span class=o>/</span><span class=nx>github</span><span class=p>.</span><span class=nx>com</span><span class=o>/</span><span class=nx>jicki</span><span class=o>/</span><span class=nx>panic_recover</span><span class=o>/</span><span class=nx>panic</span><span class=p>.</span><span class=k>go</span><span class=p>:</span><span class=mi>21</span> <span class=o>+</span><span class=mh>0x96</span>
+<span class=nx>exit</span> <span class=nx>status</span> <span class=mi>2</span>
+</code></pre></td></tr></table></div></div><ul><li>使用 recover 恢复错误</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>a</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;func in a&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>b</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// recover 必须跟 defer 配合使用
+</span><span class=c1></span>	<span class=c1>// 定义一个匿名函数,使用 recover 尝试恢复错误
+</span><span class=c1></span>	<span class=k>defer</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+		<span class=nx>err</span> <span class=o>:=</span> <span class=nb>recover</span><span class=p>()</span>
+		<span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+			<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;recover error in b&#34;</span><span class=p>)</span>
+		<span class=p>}</span>
+	<span class=p>}()</span>
+	<span class=c1>// recover 必须要在可能引发 panic 之前执行
+</span><span class=c1></span>	<span class=nb>panic</span><span class=p>(</span><span class=s>&#34;panic in b&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>c</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;func in c&#34;</span><span class=p>)</span>
+<span class=p>}</span>
+
+<span class=c1>// panic &amp;&amp; recover
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 分别调用 a b c 函数
+</span><span class=c1></span>	<span class=nf>a</span><span class=p>()</span>
+	<span class=nf>b</span><span class=p>()</span>
+	<span class=nf>c</span><span class=p>()</span>
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nx>in</span> <span class=nx>a</span>
+<span class=nx>recover</span> <span class=kt>error</span> <span class=nx>in</span> <span class=nx>b</span>
+<span class=kd>func</span> <span class=nx>in</span> <span class=nx>c</span>
+</code></pre></td></tr></table></div></div><h3 id=函数练习题>函数练习题</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=cm>/*
+</span><span class=cm>你有50枚金币，需要分配给以下几个人：Matthew,Sarah,Augustus,Heidi,Emilie,Peter,Giana,Adriano,Aaron,Elizabeth。
+</span><span class=cm>分配规则如下：
+</span><span class=cm>a. 名字中每包含1个&#39;e&#39;或&#39;E&#39;分1枚金币
+</span><span class=cm>b. 名字中每包含1个&#39;i&#39;或&#39;I&#39;分2枚金币
+</span><span class=cm>c. 名字中每包含1个&#39;o&#39;或&#39;O&#39;分3枚金币
+</span><span class=cm>d: 名字中每包含1个&#39;u&#39;或&#39;U&#39;分4枚金币
+</span><span class=cm>写一个程序，计算每个用户分到多少金币，以及最后剩余多少金币？
+</span><span class=cm>程序结构如下，请实现 ‘dispatchCoin’ 函数
+</span><span class=cm>*/</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>var</span> <span class=p>(</span>
+	<span class=nx>coins</span>        <span class=p>=</span> <span class=mi>50</span>
+	<span class=nx>users</span>        <span class=p>=</span> <span class=p>[]</span><span class=kt>string</span><span class=p>{</span><span class=s>&#34;Matthew&#34;</span><span class=p>,</span> <span class=s>&#34;Sarah&#34;</span><span class=p>,</span> <span class=s>&#34;Augustus&#34;</span><span class=p>,</span> <span class=s>&#34;Heidi&#34;</span><span class=p>,</span> <span class=s>&#34;Emilie&#34;</span><span class=p>,</span> <span class=s>&#34;Peter&#34;</span><span class=p>,</span> <span class=s>&#34;Giana&#34;</span><span class=p>,</span> <span class=s>&#34;Adriano&#34;</span><span class=p>,</span> <span class=s>&#34;Aaron&#34;</span><span class=p>,</span> <span class=s>&#34;Elizabeth&#34;</span><span class=p>}</span>
+	<span class=nx>distribution</span> <span class=p>=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span><span class=p>,</span> <span class=nb>len</span><span class=p>(</span><span class=nx>users</span><span class=p>))</span>
+<span class=p>)</span>
+
+<span class=kd>func</span> <span class=nf>dispatchCoin</span><span class=p>()</span> <span class=kt>int</span> <span class=p>{</span>
+	<span class=c1>// 遍历 users 切片,获取每个名字的元素
+</span><span class=c1></span>	<span class=k>for</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>name</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>users</span> <span class=p>{</span>
+		<span class=nx>nameCoin</span> <span class=o>:=</span> <span class=mi>0</span>
+		<span class=c1>// 遍历切片中的元素,获取到每个元素的字母的 byte
+</span><span class=c1></span>		<span class=k>for</span> <span class=nx>_</span><span class=p>,</span> <span class=nx>str</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>name</span> <span class=p>{</span>
+			<span class=c1>// 循环判断 str 中的 byte
+</span><span class=c1></span>			<span class=k>switch</span> <span class=nx>str</span> <span class=p>{</span>
+			<span class=k>case</span> <span class=sc>&#39;e&#39;</span><span class=p>,</span> <span class=sc>&#39;E&#39;</span><span class=p>:</span>
+				<span class=nx>nameCoin</span> <span class=o>+=</span> <span class=mi>1</span>
+			<span class=k>case</span> <span class=sc>&#39;i&#39;</span><span class=p>,</span> <span class=sc>&#39;I&#39;</span><span class=p>:</span>
+				<span class=nx>nameCoin</span> <span class=o>+=</span> <span class=mi>2</span>
+			<span class=k>case</span> <span class=sc>&#39;o&#39;</span><span class=p>,</span> <span class=sc>&#39;O&#39;</span><span class=p>:</span>
+				<span class=nx>nameCoin</span> <span class=o>+=</span> <span class=mi>3</span>
+			<span class=k>case</span> <span class=sc>&#39;u&#39;</span><span class=p>,</span> <span class=sc>&#39;U&#39;</span><span class=p>:</span>
+				<span class=nx>nameCoin</span> <span class=o>+=</span> <span class=mi>4</span>
+			<span class=p>}</span>
+		<span class=p>}</span>
+		<span class=c1>// 将判断后的金币数量 赋值到 map 字典中
+</span><span class=c1></span>		<span class=nx>distribution</span><span class=p>[</span><span class=nx>name</span><span class=p>]</span> <span class=p>=</span> <span class=nx>nameCoin</span>
+		<span class=c1>// 金币总数 = 金币总数 - 每个元素的 nameCoin
+</span><span class=c1></span>		<span class=nx>coins</span> <span class=o>-=</span> <span class=nx>nameCoin</span>
+	<span class=p>}</span>
+	<span class=c1>// 最后返回这个 金币 coins 总数
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>distribution</span><span class=p>)</span>
+	<span class=k>return</span> <span class=nx>coins</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>left</span> <span class=o>:=</span> <span class=nf>dispatchCoin</span><span class=p>()</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;剩下:&#34;</span><span class=p>,</span> <span class=nx>left</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>map</span><span class=p>[</span><span class=nx>Aaron</span><span class=p>:</span><span class=mi>3</span> <span class=nx>Adriano</span><span class=p>:</span><span class=mi>5</span> <span class=nx>Augustus</span><span class=p>:</span><span class=mi>12</span> <span class=nx>Elizabeth</span><span class=p>:</span><span class=mi>4</span> <span class=nx>Emilie</span><span class=p>:</span><span class=mi>6</span> <span class=nx>Giana</span><span class=p>:</span><span class=mi>2</span> <span class=nx>Heidi</span><span class=p>:</span><span class=mi>5</span> <span class=nx>Matthew</span><span class=p>:</span><span class=mi>1</span> <span class=nx>Peter</span><span class=p>:</span><span class=mi>2</span> <span class=nx>Sarah</span><span class=p>:</span><span class=mi>0</span><span class=p>]</span>
+<span class=nx>剩下</span><span class=p>:</span> <span class=mi>10</span>
+</code></pre></td></tr></table></div></div><h2 id=指针>指针</h2><ul><li>Go语言中的指针区别于C/C++中的指针, 不能进行偏移和运算, 是安全指针。</li><li>Go语言中的指针需要先知道3个概念: 指针地址、指针类型和指针取值。</li><li>Go语言中的函数传参都是值拷贝, 当我们想要修改某个变量的时候, 我们可以创建一个指向该<code>变量地址</code>的<code>指针变量</code>。传递数据使用指针, 而无须拷贝数据。<code>类型指针</code>不能进行偏移和运算。Go语言中的指针操作非常简单, 只需要记住两个符号: <code>&（取地址）</code> 和 <code>*（根据地址取值）</code>。</li><li>取地址操作符<code>&</code>和取值操作符 <code>*</code>是一对互补操作符, <code>&</code>取出地址, <code>*</code>根据地址取出地址指向的值。</li><li>变量、指针地址、指针变量、取地址、取值的相互关系和特性如下:<ol><li>对变量进行取地址 <code>&</code> 操作, 可以获得这个变量的指针变量。</li><li>指针变量的值是指针地址。</li><li>对指针变量进行取值<code>*</code>操作, 可以获得指针变量指向的原变量的值。</li></ol></li></ul><h3 id=指针地址和指针类型>指针地址和指针类型</h3><ul><li><p>每个变量在运行时都拥有一个地址, 这个地址代表变量在内存中的位置。Go语言中使用<code>&</code>字符放在变量前面对变量进行"取地址"操作。 Go语言中的值类型（int、float、bool、string、array、struct）都有对应的指针类型, 如: <code>*int</code>、<code>*int64</code>、<code>*string</code> 等。</p></li><li><p>取变量指针的语法: <code>ptr := &v</code></p><ul><li>v: 代表被取地址的变量, 类型为T</li><li>ptr: 用于接收地址的变量, ptr的类型就为*T, 称做T的指针类型。*代表指针。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 指针
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// a int类型
+</span><span class=c1></span>	<span class=nx>a</span> <span class=o>:=</span> <span class=mi>100</span>
+	<span class=c1>// &amp; 取地址 b *int类型 (int类型的指针)
+</span><span class=c1></span>	<span class=nx>b</span> <span class=o>:=</span> <span class=o>&amp;</span><span class=nx>a</span>
+	<span class=c1>// a 的值是 10 , a 的指针是 a 自己的指针
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;a 的值: [%v] a 的指针: [%p]\n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>a</span><span class=p>)</span>
+	<span class=c1>// b 的值是 a 的指针, b 的指针是 b 自己的地址
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;b 的值: [%v] b 的指针: [%p]\n&#34;</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>b</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>a</span> <span class=nx>的值</span><span class=p>:</span> <span class=p>[</span><span class=mi>100</span><span class=p>]</span> <span class=nx>a</span> <span class=nx>的指针</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000aa008</span><span class=p>]</span>
+<span class=nx>b</span> <span class=nx>的值</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000aa008</span><span class=p>]</span> <span class=nx>b</span> <span class=nx>的指针</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000a6018</span><span class=p>]</span>
+</code></pre></td></tr></table></div></div><h3 id=指针取值>指针取值</h3><ul><li>在对普通变量使用<code>&</code>操作符取地址后会获得这个变量的指针, 然后可以对指针使用<code>*</code>操作，也就是指针取值。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// a int类型
+</span><span class=c1></span>	<span class=nx>a</span> <span class=o>:=</span> <span class=mi>100</span>
+	<span class=c1>// &amp; 取地址 b *int类型 (int类型的指针)
+</span><span class=c1></span>	<span class=nx>b</span> <span class=o>:=</span> <span class=o>&amp;</span><span class=nx>a</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;a 的值: [%v] a 的指针: [%p]\n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>a</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;b 的值: [%v] b 的指针: [%p]\n&#34;</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>b</span><span class=p>)</span>
+	<span class=c1>// 指针取值  c 的值 等于 b 指针的值
+</span><span class=c1></span>	<span class=nx>c</span> <span class=o>:=</span> <span class=o>*</span><span class=nx>b</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;c 的值: [%v] c 的指针: [%p]\n&#34;</span><span class=p>,</span> <span class=nx>c</span><span class=p>,</span> <span class=o>&amp;</span><span class=nx>c</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>a</span> <span class=nx>的值</span><span class=p>:</span> <span class=p>[</span><span class=mi>100</span><span class=p>]</span> <span class=nx>a</span> <span class=nx>的指针</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000aa008</span><span class=p>]</span>
+<span class=nx>b</span> <span class=nx>的值</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000aa008</span><span class=p>]</span> <span class=nx>b</span> <span class=nx>的指针</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000a6018</span><span class=p>]</span>
+<span class=nx>c</span> <span class=nx>的值</span><span class=p>:</span> <span class=p>[</span><span class=mi>100</span><span class=p>]</span> <span class=nx>c</span> <span class=nx>的指针</span><span class=p>:</span> <span class=p>[</span><span class=mh>0xc0000aa018</span><span class=p>]</span>
+</code></pre></td></tr></table></div></div><h3 id=指针传值>指针传值</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=c1>// 定义一个函数包含一个int类型的参数 x
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>modify1</span><span class=p>(</span><span class=nx>x</span> <span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+	<span class=c1>// 将 x 修改为 100
+</span><span class=c1></span>	<span class=nx>x</span> <span class=p>=</span> <span class=mi>100</span>
+<span class=p>}</span>
+
+<span class=c1>// 定义一个函数包含一个*int (指针类型)类型的参数 y
+</span><span class=c1></span><span class=kd>func</span> <span class=nf>modify2</span><span class=p>(</span><span class=nx>y</span> <span class=o>*</span><span class=kt>int</span><span class=p>)</span> <span class=p>{</span>
+	<span class=c1>// 将 指针地址的值 修改为 100
+</span><span class=c1></span>	<span class=o>*</span><span class=nx>y</span> <span class=p>=</span> <span class=mi>100</span>
+<span class=p>}</span>
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// a int类型
+</span><span class=c1></span>	<span class=nx>a</span> <span class=o>:=</span> <span class=mi>10</span>
+
+	<span class=c1>// 调用 modify1 将 a 传到 函数中
+</span><span class=c1></span>	<span class=nf>modify1</span><span class=p>(</span><span class=nx>a</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;modify1 = %d \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>)</span>
+
+	<span class=c1>// 调用 modify2 将 a 的地址传到 函数中
+</span><span class=c1></span>	<span class=nf>modify2</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>a</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;modify2 = %d \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>)</span>
+
+<span class=p>}</span>
+
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>modify1</span> <span class=p>=</span> <span class=mi>10</span>
+<span class=nx>modify2</span> <span class=p>=</span> <span class=mi>100</span>
+</code></pre></td></tr></table></div></div><h3 id=new和make>new和make</h3><ul><li><p>Go语言中<code>new</code>和<code>make</code>是内建的两个函数, 主要用来分配内存。</p></li><li><p>new</p><ul><li><code>new</code>是一个内置的函数，它的函数签名: <code>func new(Type) *Type</code> , <code>Type</code>表示类型, <code>new</code>函数只接受一个参数, 这个参数是一个类型. <code>*Type</code>表示类型指针, <code>new</code>函数返回一个指向该类型内存地址的指针。</li><li><code>new</code>函数不太常用, 使用<code>new</code>函数得到的是一个类型的指针,并且该指针对应的值为该类型的零值。</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>a</span> <span class=o>:=</span> <span class=nb>new</span><span class=p>(</span><span class=kt>int</span><span class=p>)</span>
+	<span class=nx>b</span> <span class=o>:=</span> <span class=nb>new</span><span class=p>(</span><span class=kt>bool</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;a 的类型: %T a 的值: %v \n&#34;</span><span class=p>,</span> <span class=nx>a</span><span class=p>,</span> <span class=o>*</span><span class=nx>a</span><span class=p>)</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;b 的类型: %T b 的值: %v \n&#34;</span><span class=p>,</span> <span class=nx>b</span><span class=p>,</span> <span class=o>*</span><span class=nx>b</span><span class=p>)</span>
+
+	<span class=c1>// 定义一个 指针类型 的变量 c
+</span><span class=c1></span>	<span class=kd>var</span> <span class=nx>c</span> <span class=o>*</span><span class=kt>int</span>
+	<span class=c1>// 定义了以后需要使用 new 来初始化这个变量
+</span><span class=c1></span>	<span class=nx>c</span> <span class=p>=</span> <span class=nb>new</span><span class=p>(</span><span class=kt>int</span><span class=p>)</span>
+	<span class=c1>// 不初始化会报 nil 空指针的错误
+</span><span class=c1></span>	<span class=o>*</span><span class=nx>c</span> <span class=p>=</span> <span class=mi>100</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=o>*</span><span class=nx>c</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=nx>a</span> <span class=nx>的类型</span><span class=p>:</span> <span class=o>*</span><span class=kt>int</span> <span class=nx>a</span> <span class=nx>的值</span><span class=p>:</span> <span class=mi>0</span>
+<span class=nx>b</span> <span class=nx>的类型</span><span class=p>:</span> <span class=o>*</span><span class=kt>bool</span> <span class=nx>b</span> <span class=nx>的值</span><span class=p>:</span> <span class=kc>false</span>
+<span class=mi>100</span>
+</code></pre></td></tr></table></div></div><ul><li><code>make</code> 也是用于内存分配的，区别于<code>new</code>, 它只用于<code>slice</code>、<code>map</code>以及<code>chan</code>的内存创建, 而且它返回的类型就是这三个类型本身, 而不是他们的指针类型, 因为这三种类型就是引用类型, 所以就没有必要返回他们的指针了。</li><li><code>make</code> 函数的函数签名 <code>func make(t Type, size ...IntegerType) Type</code></li><li><code>make</code> 函数是无可替代的, 我们在使用<code>slice</code>、<code>map</code>以及<code>channel</code>的时候, 都需要使用<code>make</code>进行初始化, 然后才可以对它们进行操作。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// make
+</span><span class=c1></span>	<span class=c1>//  定义一个 map
+</span><span class=c1></span>	<span class=kd>var</span> <span class=nx>m</span> <span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span>
+	<span class=c1>// 使用 make 进行初始化
+</span><span class=c1></span>	<span class=nx>m</span> <span class=p>=</span> <span class=nb>make</span><span class=p>(</span><span class=kd>map</span><span class=p>[</span><span class=kt>string</span><span class=p>]</span><span class=kt>int</span><span class=p>,</span> <span class=mi>10</span><span class=p>)</span>
+	<span class=c1>// 必须初始化以后才能操作,否则报错
+</span><span class=c1></span>	<span class=nx>m</span><span class=p>[</span><span class=s>&#34;Map&#34;</span><span class=p>]</span> <span class=p>=</span> <span class=mi>1</span>
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=nx>m</span><span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>输出:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>map</span><span class=p>[</span><span class=nx>Map</span><span class=p>:</span><span class=mi>1</span><span class=p>]</span>
+</code></pre></td></tr></table></div></div><h3 id=new-与-make-的区别>new 与 make 的区别</h3><ol><li>二者都是用来做内存分配的。</li><li><code>make</code>只用于<code>slice</code>、<code>map</code>以及<code>channel</code>的初始化, 返回的还是这三个引用类型本身。</li><li><code>new</code>用于类型的内存分配, 并且内存对应的值为类型零值, 返回的是指向类型的指针。</li></ol></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2000-01-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/golang-study-note-4/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记 data-via=jicki234 data-hashtags=golang><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/golang-study-note-4/ data-hashtag=golang><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记 data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记 data-description=Go学习笔记><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记 data-description=Go学习笔记><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/golang-study-note-4/ data-title=Go学习笔记><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/golang/>golang</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/golang-study-note-5/ class=prev rel=prev title=Go学习笔记><i class="fas fa-angle-left fa-fw"></i>Go学习笔记</a>
+<a href=/golang-study-note-4-4/ class=next rel=next title=Go学习笔记>Go学习笔记<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

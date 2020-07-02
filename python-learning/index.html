@@ -1,0 +1,1851 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Python 学习之路 - 小炒肉</title><meta name=Description content="Python 学习之路"><meta property="og:title" content="Python 学习之路"><meta property="og:description" content="Python 学习之路"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/python-learning/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2016-12-01T00:00:00+00:00"><meta property="article:modified_time" content="2016-12-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Python 学习之路"><meta name=twitter:description content="Python 学习之路"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/python-learning/><link rel=prev href=https://jicki.cn/kubernetes-application/><link rel=next href=https://jicki.cn/kubernetes-1.5.0/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Python 学习之路","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/python-learning\/"},"genre":"posts","wordcount":6569,"url":"https:\/\/jicki.cn\/python-learning\/","datePublished":"2016-12-01T00:00:00+00:00","dateModified":"2016-12-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Python 学习之路"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Python 学习之路</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/python/><i class="far fa-folder fa-fw"></i>python</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2016-12-01>2016-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6569 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟&nbsp;<span id=/python-learning/ class=leancloud_visitors data-flag-title="Python 学习之路">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#屏幕与文件输出>屏幕与文件输出</a></li><li><a href=#日志文件-轮转>日志文件 轮转</a></li><li><a href=#handle方法>handle方法</a></li></ul><ul><li><a href=#类的-实例化>类的 实例化</a></li><li><a href=#类的继承>类的继承</a></li><li><a href=#多态>多态</a></li></ul><ul><li><a href=#服务端例子>服务端例子</a></li><li><a href=#客户端例子>客户端例子</a></li></ul><ul><li><a href=#常用的异常列表>常用的异常列表</a></li><li><a href=#抓住特定错误>抓住特定错误</a></li><li><a href=#异常在程序中的应用>异常在程序中的应用</a></li><li><a href=#主动触发异常>主动触发异常</a></li><li><a href=#自定义异常>自定义异常</a></li><li><a href=#异常中的断言>异常中的断言</a></li></ul><ul><li><a href=#直接调用>直接调用</a></li><li><a href=#直接调用多线程>直接调用，多线程</a></li><li><a href=#继承的方式>继承的方式</a></li><li><a href=#继承方式增加join>继承方式，增加join</a></li><li><a href=#多线程-events>多线程 Events</a></li><li><a href=#多进程multiprocessing>多进程(multiprocessing)</a></li></ul><ul><li><a href=#多进程间通讯-queues>多进程间通讯 Queues</a></li><li><a href=#生产者消费者模型>生产者消费者模型</a></li><li><a href=#协程>协程</a></li><li><a href=#异步io模型>异步IO模型</a></li><li><a href=#python---mysql>Python - Mysql</a></li><li><a href=#事件驱动>事件驱动</a></li><li><a href=#python-redis>Python Redis</a></li><li><a href=#redis-订阅-与-发布>redis 订阅 与 发布</a></li><li><a href=#python---rabbitmq>Python - RabbitMQ</a></li><li><a href=#rabbitmq-发布与订阅>RabbitMQ 发布与订阅</a></li><li><a href=#rabbitmq-带过滤的订阅与发布>RabbitMQ 带过滤的订阅与发布</a></li></ul></nav></div></div><div class=content id=content><blockquote><p>Python 学习之路，Python 学习笔记</p></blockquote><h1 id=python-logging-日志模块>Python Logging 日志模块</h1><h2 id=屏幕与文件输出>屏幕与文件输出</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>import logging
+ 
+# 创建一个 logging 对象, TEST-LOG 为定义这个LOG的 name  [ %(name)s ]
+logger = logging.getLogger(&#39;TEST-LOG&#39;)
+# 设置日志 级别为 DEBUG, 全局日志 级别 全局级别 优先级高
+logger.setLevel(logging.DEBUG)
+ 
+ 
+# 创建一个 用于 屏幕输出 的 StreamHandeler
+ch = logging.StreamHandler()
+# 设置日志 级别为 DEBUG
+ch.setLevel(logging.DEBUG)
+ 
+ 
+# 创建一个 用于 文件输出 的 FileHandler, 并输出到 access.log 文件
+fh = logging.FileHandler(&#34;access.log&#34;)
+# 设置日志 级别为 WARNING
+fh.setLevel(logging.WARNING)
+ 
+ 
+# 创建一个 日志格式 Formatter (
+formatter = logging.Formatter(&#39;%(asctime)s - %(name)s - %(levelname)s - %(message)s&#39;)
+ 
+ 
+# 让 屏幕输出，与 文件输出 都按照 formatter 这个格式生成
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+ 
+ 
+# 讲 StreamHandeler 与 FileHandler 添加到 logger 这个对象中。
+logger.addHandler(ch)
+logger.addHandler(fh)
+ 
+ 
+# &#39;application&#39; code
+logger.debug(&#39;debug message&#39;)
+logger.info(&#39;info message&#39;)
+logger.warn(&#39;warn message&#39;)
+logger.error(&#39;error message&#39;)
+logger.critical(&#39;critical message&#39;)
+</code></pre></td></tr></table></div></div><h2 id=日志文件-轮转>日志文件 轮转</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+
+import logging
+
+ from logging.handlers import RotatingFileHandler
+
+
+ #定义一个RotatingFileHandler，最多备份5个日志文件，每个日志文件最大10M
+
+ Rthandler = RotatingFileHandler(&#39;myapp.log&#39;, maxBytes=10*1024*1024,backupCount=5)
+
+ Rthandler.setLevel(logging.INFO)
+
+ formatter = logging.Formatter(&#39;%(name)-12s: %(levelname)-8s %(message)s&#39;)
+
+ Rthandler.setFormatter(formatter)
+
+ logging.getLogger(&#39;&#39;).addHandler(Rthandler)
+
+
+</code></pre></td></tr></table></div></div><h2 id=handle方法>handle方法</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+logging.StreamHandler: 日志输出到流，可以是sys.stderr、sys.stdout或者文件
+
+logging.FileHandler: 日志输出到文件
+
+日志回滚方式，实际使用时用RotatingFileHandler和TimedRotatingFileHandler
+
+logging.handlers.BaseRotatingHandler
+
+logging.handlers.RotatingFileHandler
+
+logging.handlers.TimedRotatingFileHandler
+
+logging.handlers.SocketHandler: 远程输出日志到TCP/IP sockets
+
+logging.handlers.DatagramHandler:  远程输出日志到UDP sockets
+
+logging.handlers.SMTPHandler:  远程输出日志到邮件地址
+
+logging.handlers.SysLogHandler: 日志输出到syslog
+
+logging.handlers.NTEventLogHandler: 远程输出日志到Windows NT/2000/XP的事件日志
+
+logging.handlers.MemoryHandler: 日志输出到内存中的制定buffer
+
+logging.handlers.HTTPHandler: 通过&#34;GET&#34;或&#34;POST&#34;远程输出到HTTP服务器
+
+</code></pre></td></tr></table></div></div><h1 id=python-面相对象编程>Python 面相对象编程</h1><h2 id=类的-实例化>类的 实例化</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+# 把一个抽象的类变成一个具体的对象的过程， 叫实例化。
+
+class Role(object):
+    def __init__(self,name,role,weapon,life):
+        self.name = name
+        self.role = role
+        self.weapon = weapon
+        self.life = life
+
+    def buy_weapon(self,weapon):
+        self.weapon = weapon
+        print(&#34;[%s] buy weapon [%s]&#34; %(self.name,weapon))
+
+    def info(self):
+        print(&#39;&#39;&#39;
+        ------个人信息-------
+            姓名：%s
+            身份：%s
+            武器：%s
+            生命：%s
+        ---------------------
+        &#39;&#39;&#39; %(self.name,self.role,self.weapon,self.life))
+
+p1 = Role(&#39;jicki&#39;,&#39;警察&#39;,&#39;手枪&#39;,100)
+p2 = Role(&#39;luck&#39;,&#39;匪徒&#39;,&#39;机关枪&#39;,100)
+p1.info()
+p2.info()
+p1.buy_weapon(&#39;AK47&#39;)
+p2.buy_weapon(&#39;狙击枪&#39;)
+p1.info()
+p2.info()
+
+
+
+打印结果：
+------个人信息-------
+姓名：jicki
+身份：警察
+武器：手枪
+生命：100
+---------------------
+
+------个人信息-------
+姓名：luck
+身份：匪徒
+武器：机关枪
+生命：100
+---------------------
+
+[jicki] buy weapon [AK47]
+[luck] buy weapon [狙击枪]
+
+------个人信息-------
+姓名：jicki
+身份：警察
+武器：AK47
+生命：100
+---------------------
+
+------个人信息-------
+姓名：luck
+身份：匪徒
+武器：狙击枪
+生命：100
+---------------------
+</code></pre></td></tr></table></div></div><h2 id=类的继承>类的继承</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+class ShoolMember(object):
+    def __init__(self,name,age,sex):
+        self.name = name
+        self.age = age
+        self.sex = sex
+        self.enroll()
+
+    def enroll(self):
+        print(&#34;[%s] 加入了学校&#34; %self.name)
+
+    def tell(self):                            # 所有类 公有方法
+        print(&#34;大家好，我的名字叫[%s]&#34; %self.name)
+
+class Teacher(ShoolMember):       #继承了 ShoolMember 类
+    def __init__(self,name,age,sex,coures,salary):    # 重写 ShoolMember 父类的构造方法__init__
+        super(Teacher,self).__init__(name,age,sex)    # 新式类 的继承，继承了父类的__init__
+        self.coures = coures
+        self.salary = salary
+
+    def teaching(self):                              # Tenacher 类 私有方法
+        print(&#34;[%s] 是教 [%s] 课程&#34; %(self.name,self.coures))
+
+class Student(ShoolMember):    #继承 ShoolMember 类
+    def __init__(self,name,age,sex,coures,tuition):    # 重写 ShoolMember 父类的构造方法__init__
+        super(Student,self).__init__(name,age,sex)     # 新式类 的继承，继承了父类的__init__
+        self.coures = coures
+        self.tuition = tuition
+
+    def pay_tuition(self):                           # Student 类 私有方法
+        print(&#34;[%s] 学习 [%s] 课程交了 [%s] 学费&#34; %(self.name,self.coures,self.tuition))
+
+# 实例化
+t1 = Teacher(&#34;alax&#34;,22,&#39;F&#39;,&#39;Python&#39;,10000)
+t2 = Teacher(&#39;wupeiqi&#39;,23,&#39;F&#39;,&#39;Python&#39;,10000)
+s1 = Student(&#39;jicki&#39;,22,&#39;F&#39;,&#39;Python&#39;,6000)
+
+t1.teaching()       # 调用 Teacher 私有方法
+s1.pay_tuition()    # 调用 Student 私有方法
+
+t1.tell()     # 调用共用 方法
+s1.tell()     # 调用共用 方法
+
+
+输出结果：
+[alax] 加入了学校
+[wupeiqi] 加入了学校
+[jicki] 加入了学校
+[alax] 是教 [Python] 课程
+[jicki] 学习 [Python] 课程交了 [6000] 学费
+大家好，我的名字叫[alax]
+大家好，我的名字叫[jicki]
+
+</code></pre></td></tr></table></div></div><h2 id=多态>多态</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>Python 多态：
+    多态性 允许子类类型的指针赋值给父类类型的指针。
+    多态的作用是什么？  
+    我们知道，封装可以隐藏实现细节，使的代码模块化；
+    继承可以扩展已存在的代码模块（类）；
+    封装与继承的目的都是为了 代码重用。
+    而多态则是为了实现 接口重用，多态的作用就是为了类的继承和派生的时候，保证能使用类的成员中任意类的实例的某一属性时的正确调用。
+    
+
+Python 是不支持多态的，可以使用如下方法实现：
+
+class Animal(object):
+    def __init__(self,name):
+        self.name = name
+        
+    def talk(self):
+        raise NotImplementedError(&#34;Subclass must implement&#34;)
+        
+class Cat(Animal):
+    def talk(self):
+        return &#39;miao, miao !&#39;
+        
+class Dog(Animal):
+    def talk(self):
+        return &#39;wang wang !&#39;
+        
+
+def animal_talk(obj):
+    print(obj.talk())
+    
+d = Dog(&#34;WangCai&#34;)
+c = Cat(&#34;BoSi&#34;)
+
+animal_talk(c)
+animal_talk(d)
+
+
+输出结果：
+miao, miao !
+wang wang !
+
+</code></pre></td></tr></table></div></div><h1 id=python-反射>Python 反射</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>import sys
+class WebServer(object):
+    def __init__(self,host,port):
+        self.host = host
+        self.port = port
+
+    def start(self):
+        print(&#39;service start.....&#39;)
+
+    def stop(self):
+        print(&#39;service stop......&#39;)
+
+    def restart(self):
+        self.stop()
+        self.start()
+
+
+if __name__ == &#39;__main__&#39;:
+    server = WebServer(&#39;localhost&#39;,9999)
+
+    if hasattr(server,sys.argv[1]):         #判断server这个objcet 中是否包含 sys.argv[1] ，既然用户输入的这个 方法
+        fun = getattr(server,sys.argv[1])   #获取server 中这个objcet 的 sys.argv[1] ，既用户输入的这个 方法
+        fun()         # 加上() 调用
+
+</code></pre></td></tr></table></div></div><h1 id=python-socket>Python Socket</h1><h2 id=服务端例子>服务端例子</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>import socket
+
+ip_port = (&#39;127.0.0.1&#39;, 9999)   # IP 与 端口，在一个 元组里面
+
+sk = socket.socket()          # socket 默认是 tcp 协议
+sk.bind(ip_port)              # 绑定 IP 与 端口
+sk.listen(5)                  # 服务端最大连接数
+
+while True:
+    print(&#39;等待连接....&#39;)
+    conn,addr = sk.accept()                           #accpet 返回两个变量 conn 是客户端连接过来时创建的实例。addr 是客户端的IP地址。
+    print(&#39;客户段连接IP &#39;, addr)                      #当客户端连接过来时，打印 客户端的IP地址。
+    client_data = conn.recv(1024)                     # client_data 这个变量等于 客户端发送的数据 (1024) = 1K 。
+    print(str(client_data,&#39;utf8&#39;))                    # 打印客户端发送过来的信息，因为是中文所以python 3.0 中要使用 str 来声明 utf8
+    conn.sendall(bytes(&#39;服务端发来消息...&#39;,&#39;utf8&#39;))   # 发送这条信息到客户端,python 3.0 要使用 bytes 来发送, 并声明 utf8
+    conn.close()                                 
+</code></pre></td></tr></table></div></div><h2 id=客户端例子>客户端例子</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+import socket
+
+ip_port = (&#39;127.0.0.1&#39;, 9999)         # IP 与 端口，在一个 元组里面
+sk = socket.socket()                  # socket 默认是 tcp 协议
+sk.connect(ip_port)                   # 连接服务端 IP 与 端口
+
+sk.sendall(bytes(&#39;客户端发来消息....&#39;,&#39;utf8&#39;))            # 发送这条信息到服务端,python 3.0 要使用 bytes 来发送, 并声明 utf8
+server_reply = sk.recv(1024)                            # server_reply 这个变量等于 客户端发送的数据 (1024) = 1K 。
+print(str(server_reply,&#39;utf8&#39;))                         # 打印服务端发送过来的信息，因为是中文所以python 3.0 中要使用 str 来声明 utf8
+sk.close()                                              # 关闭连接
+
+</code></pre></td></tr></table></div></div><h1 id=python-异常处理>Python 异常处理</h1><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>try:
+    pass
+except Exception as e:
+    pass
+</code></pre></td></tr></table></div></div><h2 id=常用的异常列表>常用的异常列表</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>AttributeError   试图访问一个对象没有的树形，比如foo.x，但是foo没有属性x
+
+IOError    输入/输出异常；基本上是无法打开文件
+
+ImportError    无法引入模块或包；基本上是路径问题或名称错误
+
+IndentationError    语法错误（的子类） ；代码没有正确对齐
+
+IndexError   下标索引超出序列边界，比如当x只有三个元素，却试图访问x[5]
+
+KeyError   试图访问字典里不存在的键
+
+KeyboardInterrupt   Ctrl+C被按下
+
+NameError   使用一个还未被赋予对象的变量
+
+SyntaxError   Python代码非法，代码不能编译(个人认为这是语法错误，写错了）
+
+TypeError   传入对象类型与要求的不符合
+
+UnboundLocalError   试图访问一个还未被设置的局部变量，基本上是由于另有一个同名的全局变量，
+导致你以为正在访问它
+
+ValueError   传入一个调用者不期望的值，即使值的类型是正确的
+
+</code></pre></td></tr></table></div></div><h2 id=抓住特定错误>抓住特定错误</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+s1 = input(&#39;&gt;&gt;&gt;&#39;)
+try:
+    int(s1)
+except KeyError as e:
+    print(&#39;键错误&#39;)
+except ValueError as e:
+    print(&#39;Value 错误&#39;)
+except Exception as e:
+    print(&#39;错误: &#39;, e )
+
+</code></pre></td></tr></table></div></div><h2 id=异常在程序中的应用>异常在程序中的应用</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+
+try:
+    # 主代码块
+    pass
+except KeyError as e:
+    #出现KeyError时，执行如下程序
+    pass
+else:
+    # 主代码块执行完，执行该块
+    pass
+finally:
+    # 无论异常与否，都会执行该块
+    pass
+</code></pre></td></tr></table></div></div><h2 id=主动触发异常>主动触发异常</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+try:
+    raise Exception(&#39;抛出异常&#39;)
+except Exception as e:
+    print(e)
+</code></pre></td></tr></table></div></div><h2 id=自定义异常>自定义异常</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+class MyException(Exception):    #创建一个类，继承 Exception
+
+    def __init__(self, msg):
+        self.message = msg
+
+    def __str__(self):
+        return self.message
+ 
+try:
+    raise MyException(&#39;我的异常&#39;)   #主动触发MyException
+except MyException as e:
+    print(e)
+</code></pre></td></tr></table></div></div><h2 id=异常中的断言>异常中的断言</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+class MyException(Exception):    #创建一个类，继承 Exception
+
+    def __init__(self, msg):
+        self.message = msg
+
+    def __str__(self):
+        return self.message
+
+a = 1        #定义一个变量 
+
+try:
+    assert a == 2        # 断言 a 是否 等于 2 ,不等于就抛出 AssertionError 这个错误
+except MyException as e:
+    print(e)
+</code></pre></td></tr></table></div></div><h1 id=python-线程的调用>Python 线程的调用</h1><blockquote><p>Python 启动线程有2种方法，分别为 直接调用 与 继承调用。</p></blockquote><h2 id=直接调用>直接调用</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>import threading
+import time
+
+def sayhi(num):
+    print(&#39;运行线程号为： %s&#39; %num)
+    time.sleep(3)
+
+if __name__ == &#39;__main__&#39;:
+    t1 = threading.Thread(target=sayhi,args=(1,)) #创建一个线程 t1
+    t2 = threading.Thread(target=sayhi,args=(2,)) #创建一个线程 t2
+
+    t1.start()        #运行线程t1
+    t2.start()        #运行线程t2
+
+    print(t1.getName())    #打印线程t1名称
+    print(t2.getName())    #打印线程t2名称
+
+    t1.join()       #join 等待线程t1运行完毕再往下走
+    t2.join()       #join 等待线程t2运行完毕再往下走
+    
+    print(&#34;运行完毕&#34;)
+	
+</code></pre></td></tr></table></div></div><h2 id=直接调用多线程>直接调用，多线程</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>import threading
+import time
+
+def sayhi(num):
+    print(&#39;运行线程号为： %s&#39; %num)
+    time.sleep(3)
+
+if __name__ == &#39;__main__&#39;:
+    t_list = []
+    for i in range(10):       # 循环创建 10个 线程。
+        t = threading.Thread(target=sayhi,args=[i,])
+        t.start()
+        t_list.append(t)      # 将创建的进程 写入 t_list 这个列表中。
+
+    for i in t_list:         # 循环列表，让所有线程，join ,执行完毕。
+        i.join()
+
+    print(&#34;运行完毕&#34;)
+	
+</code></pre></td></tr></table></div></div><h2 id=继承的方式>继承的方式</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+import threading
+import time
+
+class MyThread(threading.Thread):    #定义一个类，继承 threading.Thread 这个父类。
+    def __init__(self,num):
+        threading.Thread.__init__(self)       # 重写父类的构造函数。
+        self.num = num
+
+    def run(self):  #定义每个线程要运行的函数
+        print(&#34;线程运行号:%s&#34; %self.num)
+        time.sleep(3)
+
+if __name__ == &#39;__main__&#39;:
+
+    t1 = MyThread(1)
+    t2 = MyThread(2)
+    t1.start()
+    t2.start()
+	
+</code></pre></td></tr></table></div></div><h2 id=继承方式增加join>继承方式，增加join</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>import threading
+import time
+
+class MyThread(threading.Thread):    #定义一个类，继承 threading.Thread 这个父类。
+    def __init__(self,num):
+        threading.Thread.__init__(self)       # 重写父类的构造函数。
+        self.num = num
+
+    def run(self):  #定义每个线程要运行的函数
+        print(&#34;线程运行号:%s&#34; %self.num)
+        time.sleep(3)
+        print(&#39;线程 %s 运行完毕&#39; %self.num)
+
+if __name__ == &#39;__main__&#39;:
+
+    t1 = MyThread(1)
+    t2 = MyThread(2)
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+
+</code></pre></td></tr></table></div></div><h2 id=多线程-events>多线程 Events</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># Event 对象用于线程间通信，它是由线程设置的信号标志，如果信号标志位真，则其他线程等待直到信号接触。
+# event = threading.Event() 生成实例
+# event.wait() 等待设定，既 线程信号标签为 假, 阻塞。
+# event.set()  设置标签，既 线程信号标签为 真，通行。
+# event.clear() 清除设定。
+# event.isSet() 判断是否有设定。
+
+
+import threading
+import time
+
+def light():
+    if not event.isSet():
+        event.set()
+    count = 0
+    while True:
+        if count &lt; 10:
+            print(&#39;\033[42;1m --绿灯-- \033[0m&#39;)
+        elif count &lt; 13:
+            print(&#39;\033[43;1m --黄灯-- \033[0m&#39;)
+        elif count &lt; 20:
+            if event.is_set():
+                event.clear()
+            print(&#39;\033[41;1m --红灯-- \033[0m&#39;)
+        else:
+            count = 0
+            event.set()
+            print(&#39;\033[42;1m --绿灯-- \033[0m&#39;)
+        time.sleep(1)
+        count += 1
+
+def car(n):
+    while 1:
+        time.sleep(1)
+        if event.isSet():
+            print(&#34;汽车 [%s] 通过红绿灯 &#34; %n)
+        else:
+            print(&#34;汽车 [%s] 等待红绿灯 &#34; %n)
+            event.wait()
+
+if __name__ == &#39;__main__&#39;:
+    event = threading.Event()
+    Light = threading.Thread(target=light)
+    Light.start()
+    for i in range(3):
+        t = threading.Thread(target=car,args=(i,))
+        t.start()
+		
+</code></pre></td></tr></table></div></div><h2 id=多进程multiprocessing>多进程(multiprocessing)</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 并发 执行 一个例子:
+
+from multiprocessing import Process
+import time
+
+def f(name):
+    time.sleep(2)
+    print(&#34;hello&#34;, name)
+
+def f2(name):
+    time.sleep(2)
+    print(&#34;hello&#34;, name)
+
+if __name__ == &#34;__main__&#34;:
+    p1 = Process(target=f, args=(&#39;bob1&#39;,))
+    p2 = Process(target=f, args=(&#39;bob2&#39;,))
+    p3 = Process(target=f2, args=(&#39;pop1&#39;,))
+    p4 = Process(target=f2, args=(&#39;pop2&#39;,))
+    p5 = Process(target=f2, args=(&#39;pop3&#39;,))
+    p1.start()
+    p2.start()
+    p3.start()
+    p4.start()
+    p5.start()
+    p5.join()
+	
+</code></pre></td></tr></table></div></div><h1 id=queue-队列>Queue 队列</h1><h2 id=多进程间通讯-queues>多进程间通讯 Queues</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 不同进程间内存是不共享的,要想实现进程间数据交换，可使用 Queues</span>
+
+
+<span class=kn>from</span> <span class=nn>multiprocessing</span> <span class=kn>import</span> <span class=n>Process</span><span class=p>,</span><span class=n>Queue</span>
+
+<span class=k>def</span> <span class=nf>f</span><span class=p>(</span><span class=n>q</span><span class=p>):</span>
+    <span class=n>q</span><span class=o>.</span><span class=n>put</span><span class=p>([</span><span class=mi>1</span><span class=p>,</span><span class=bp>None</span><span class=p>,</span> <span class=s1>&#39;hello&#39;</span><span class=p>])</span>
+    <span class=n>q</span><span class=o>.</span><span class=n>put</span><span class=p>([</span><span class=mi>2</span><span class=p>,</span><span class=bp>None</span><span class=p>,</span> <span class=s1>&#39;word&#39;</span><span class=p>])</span>
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s1>&#39;__main__&#39;</span><span class=p>:</span>
+    <span class=n>q</span> <span class=o>=</span> <span class=n>Queue</span><span class=p>()</span>
+    <span class=n>p</span> <span class=o>=</span> <span class=n>Process</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>f</span><span class=p>,</span> <span class=n>args</span><span class=o>=</span><span class=p>(</span><span class=n>q</span><span class=p>,))</span>
+    <span class=n>p2</span> <span class=o>=</span> <span class=n>Process</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>f</span><span class=p>,</span> <span class=n>args</span><span class=o>=</span><span class=p>(</span><span class=n>q</span><span class=p>,))</span>
+    <span class=n>p</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+    <span class=n>p2</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;p-1  get :&#39;</span> <span class=p>,</span> <span class=n>q</span><span class=o>.</span><span class=n>get</span><span class=p>())</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;p-2  get :&#39;</span> <span class=p>,</span> <span class=n>q</span><span class=o>.</span><span class=n>get</span><span class=p>())</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;p2-1 get :&#39;</span> <span class=p>,</span> <span class=n>q</span><span class=o>.</span><span class=n>get</span><span class=p>())</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;p2-3 get :&#39;</span> <span class=p>,</span> <span class=n>q</span><span class=o>.</span><span class=n>get</span><span class=p>())</span>
+    <span class=n>p</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div><h2 id=生产者消费者模型>生产者消费者模型</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>queue</span><span class=o>,</span><span class=nn>threading</span><span class=o>,</span><span class=nn>time</span>
+
+<span class=n>q</span> <span class=o>=</span> <span class=n>queue</span><span class=o>.</span><span class=n>Queue</span><span class=p>()</span>
+<span class=k>def</span> <span class=nf>consumer</span><span class=p>(</span><span class=n>n</span><span class=p>):</span>
+    <span class=k>while</span> <span class=bp>True</span><span class=p>:</span>
+        <span class=k>print</span><span class=p>(</span><span class=s2>&#34;消费者-[ </span><span class=si>%s</span><span class=s2> ]， 消费了 [ </span><span class=si>%s</span><span class=s2> ]&#34;</span> <span class=o>%</span> <span class=p>(</span><span class=n>n</span><span class=p>,</span><span class=n>q</span><span class=o>.</span><span class=n>get</span><span class=p>()))</span>
+        <span class=n>time</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+        <span class=n>q</span><span class=o>.</span><span class=n>task_done</span><span class=p>()</span>
+
+<span class=k>def</span> <span class=nf>profucer</span><span class=p>(</span><span class=n>n</span><span class=p>):</span>
+    <span class=n>count</span> <span class=o>=</span> <span class=mi>1</span>
+    <span class=k>while</span> <span class=bp>True</span><span class=p>:</span>
+        <span class=k>print</span><span class=p>(</span><span class=s2>&#34;生产者-[ </span><span class=si>%s</span><span class=s2> ]  生产了 [ </span><span class=si>%s</span><span class=s2> ] 个&#34;</span> <span class=o>%</span><span class=p>(</span><span class=n>n</span><span class=p>,</span><span class=n>count</span><span class=p>))</span>
+        <span class=n>q</span><span class=o>.</span><span class=n>put</span><span class=p>(</span><span class=n>count</span><span class=p>)</span>
+        <span class=n>q</span><span class=o>.</span><span class=n>join</span><span class=p>()</span>
+        <span class=k>print</span><span class=p>(</span><span class=s2>&#34;已经全部消费完毕&#34;</span><span class=p>)</span>
+
+
+<span class=n>c1</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>consumer</span><span class=p>,</span><span class=n>args</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;消费者1&#34;</span><span class=p>,])</span>
+<span class=n>c2</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>consumer</span><span class=p>,</span><span class=n>args</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;消费者2&#34;</span><span class=p>,])</span>
+<span class=n>c3</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>consumer</span><span class=p>,</span><span class=n>args</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;消费者3&#34;</span><span class=p>,])</span>
+
+<span class=n>p1</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>profucer</span><span class=p>,</span><span class=n>args</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;生产者1&#34;</span><span class=p>,])</span>
+<span class=n>p2</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>profucer</span><span class=p>,</span><span class=n>args</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;生产者2&#34;</span><span class=p>,])</span>
+<span class=n>p3</span> <span class=o>=</span> <span class=n>threading</span><span class=o>.</span><span class=n>Thread</span><span class=p>(</span><span class=n>target</span><span class=o>=</span><span class=n>profucer</span><span class=p>,</span><span class=n>args</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;生产者3&#34;</span><span class=p>,])</span>
+
+
+<span class=n>c1</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+<span class=n>c2</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+<span class=n>c3</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+<span class=n>p1</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+<span class=n>p2</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+<span class=n>p3</span><span class=o>.</span><span class=n>start</span><span class=p>()</span>
+</code></pre></td></tr></table></div></div><h2 id=协程>协程</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># gevent 模块</span>
+
+<span class=kn>import</span> <span class=nn>gevent</span>
+
+<span class=k>def</span> <span class=nf>foo</span><span class=p>():</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;运行foo&#34;</span><span class=p>)</span>
+    <span class=n>gevent</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;再次运行foo&#34;</span><span class=p>)</span>
+
+<span class=k>def</span> <span class=nf>b1</span><span class=p>():</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;运行b1&#34;</span><span class=p>)</span>
+    <span class=n>gevent</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;再次运行b1&#34;</span><span class=p>)</span>
+
+<span class=k>def</span> <span class=nf>c1</span><span class=p>():</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;运行c1&#34;</span><span class=p>)</span>
+    <span class=n>gevent</span><span class=o>.</span><span class=n>sleep</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;再次运行c1&#34;</span><span class=p>)</span>
+
+<span class=n>gevent</span><span class=o>.</span><span class=n>joinall</span><span class=p>([</span>
+    <span class=n>gevent</span><span class=o>.</span><span class=n>spawn</span><span class=p>(</span><span class=n>foo</span><span class=p>),</span>
+    <span class=n>gevent</span><span class=o>.</span><span class=n>spawn</span><span class=p>(</span><span class=n>b1</span><span class=p>),</span>
+    <span class=n>gevent</span><span class=o>.</span><span class=n>spawn</span><span class=p>(</span><span class=n>c1</span><span class=p>)</span>
+<span class=p>])</span>
+</code></pre></td></tr></table></div></div><h2 id=异步io模型>异步IO模型</h2><blockquote><ul><li>select</li><li>poll</li><li>Epoll</li></ul></blockquote><h2 id=python---mysql>Python - Mysql</h2><blockquote><p>python 操作 mysql</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># MySQLdb 模块 只能在 Python 2.7 中使用 Python3 以后不支持</span>
+<span class=c1># python 3.x 请使用 pymysql 模块</span>
+
+<span class=kn>import</span> <span class=nn>pymysql</span>
+
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pymysql</span><span class=o>.</span><span class=n>connect</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>,</span> <span class=n>user</span><span class=o>=</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=n>passwd</span><span class=o>=</span><span class=s1>&#39;123456&#39;</span><span class=p>,</span><span class=n>db</span><span class=o>=</span><span class=s1>&#39;jicki&#39;</span><span class=p>)</span>
+<span class=n>cur</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>cursor</span><span class=p>()</span>
+<span class=n>cur</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;INSERT INTO user (username,password,encrypt,valid) VALUES  (&#39;raid&#39;,&#39;123456&#39;,&#39;1&#39;,&#39;2&#39;)&#34;</span><span class=p>)</span>
+<span class=n>cur</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;SELECT * FROM user&#34;</span><span class=p>)</span>
+<span class=c1># fetchone() 取一条数据</span>
+<span class=c1># fetchamany(3) 取指定条数数据</span>
+<span class=c1># fetchall() 取所有数据</span>
+<span class=k>for</span> <span class=n>r</span> <span class=ow>in</span> <span class=n>cur</span><span class=o>.</span><span class=n>fetchall</span><span class=p>():</span>
+           <span class=k>print</span><span class=p>(</span><span class=n>r</span><span class=p>)</span>
+           <span class=n>cur</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+<span class=c1># conn.rollback()     # 回滚</span>
+<span class=n>conn</span><span class=o>.</span><span class=n>commit</span><span class=p>()</span>         <span class=c1># 写入数据库</span>
+<span class=n>conn</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 利用列表 与 executemany 批量插入数据</span>
+
+<span class=kn>import</span> <span class=nn>pymysql</span>
+
+<span class=n>li</span> <span class=o>=</span> <span class=p>[</span>
+    <span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;1234&#39;</span><span class=p>,</span> <span class=s1>&#39;2&#39;</span><span class=p>,</span> <span class=s1>&#39;3&#39;</span><span class=p>),</span>
+    <span class=p>(</span><span class=s1>&#39;xiao&#39;</span><span class=p>,</span> <span class=s1>&#39;3333&#39;</span><span class=p>,</span><span class=s1>&#39;4&#39;</span><span class=p>,</span><span class=s1>&#39;5&#39;</span><span class=p>),</span>
+    <span class=p>(</span><span class=s1>&#39;dada&#39;</span><span class=p>,</span> <span class=s1>&#39;4444&#39;</span><span class=p>,</span> <span class=s1>&#39;6&#39;</span><span class=p>,</span> <span class=s1>&#39;7&#39;</span><span class=p>),</span>
+<span class=p>]</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pymysql</span><span class=o>.</span><span class=n>connect</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>,</span> <span class=n>user</span><span class=o>=</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=n>passwd</span><span class=o>=</span><span class=s1>&#39;123456&#39;</span><span class=p>,</span><span class=n>db</span><span class=o>=</span><span class=s1>&#39;jicki&#39;</span><span class=p>)</span>
+<span class=n>cur</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>cursor</span><span class=p>()</span>
+<span class=n>cur</span><span class=o>.</span><span class=n>executemany</span><span class=p>(</span><span class=s2>&#34;INSERT INTO user(username,password,encrypt,valid) VALUES(</span><span class=si>%s</span><span class=s2>,</span><span class=si>%s</span><span class=s2>,</span><span class=si>%s</span><span class=s2>,</span><span class=si>%s</span><span class=s2>)&#34;</span><span class=p>,</span> <span class=n>li</span><span class=p>)</span>
+<span class=n>cur</span><span class=o>.</span><span class=n>execute</span><span class=p>(</span><span class=s2>&#34;SELECT * FROM user&#34;</span><span class=p>)</span>
+<span class=k>for</span> <span class=n>r</span> <span class=ow>in</span> <span class=n>cur</span><span class=o>.</span><span class=n>fetchall</span><span class=p>():</span>
+           <span class=k>print</span><span class=p>(</span><span class=n>r</span><span class=p>)</span>
+           <span class=n>cur</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+<span class=n>conn</span><span class=o>.</span><span class=n>commit</span><span class=p>()</span>
+<span class=n>conn</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</code></pre></td></tr></table></div></div><h2 id=事件驱动>事件驱动</h2><blockquote><p>事件驱动 分为二部分，注册事件 与 触发事件</p></blockquote><h2 id=python-redis>Python Redis</h2><blockquote><p>使用 redis 模块 pip install redis</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 简单的操作</span>
+
+<span class=kn>import</span> <span class=nn>redis</span>
+<span class=n>r</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>Redis</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>,</span><span class=n>port</span><span class=o>=</span><span class=mi>6379</span><span class=p>)</span>
+<span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>,</span> <span class=s2>&#34;jicki&#34;</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>r</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>))</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 连接池 的方式连接</span>
+
+<span class=kn>import</span> <span class=nn>redis</span>
+
+<span class=n>pool</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>ConnectionPool</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s2>&#34;127.0.0.1&#34;</span><span class=p>,</span><span class=n>port</span><span class=o>=</span><span class=mi>6379</span><span class=p>)</span>
+<span class=n>r</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>Redis</span><span class=p>(</span><span class=n>connection_pool</span><span class=o>=</span><span class=n>pool</span><span class=p>)</span>
+<span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>,</span> <span class=s2>&#34;jicki&#34;</span><span class=p>)</span>
+<span class=k>print</span><span class=p>(</span><span class=n>r</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>))</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># set 操作的参数</span>
+    <span class=n>ex</span>  <span class=err>过期时间</span> <span class=p>(</span><span class=err>秒</span><span class=p>)</span>
+    <span class=n>px</span>  <span class=err>过期时间</span> <span class=p>(</span><span class=err>毫秒</span><span class=p>)</span>
+    <span class=n>nx</span>  <span class=err>为</span> <span class=bp>True</span> <span class=err>时</span> <span class=err>只有</span> <span class=err>键值</span> <span class=err>不存在时</span> <span class=err>才可</span> <span class=nb>set</span>
+    <span class=n>xx</span>  <span class=err>为</span> <span class=bp>True</span> <span class=err>时</span> <span class=err>只有</span> <span class=err>键值</span> <span class=err>存在时</span> <span class=err>才可</span> <span class=nb>set</span>
+    
+<span class=c1># 例:</span>
+    <span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>,</span> <span class=s2>&#34;jicki&#34;</span><span class=p>,</span> <span class=n>ex</span><span class=o>=</span><span class=mi>3</span><span class=p>)</span>
+    <span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>,</span> <span class=s2>&#34;jicki&#34;</span><span class=p>,</span> <span class=n>px</span><span class=o>=</span><span class=mi>100</span><span class=p>)</span>
+    <span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>,</span> <span class=s2>&#34;jicki&#34;</span><span class=p>,</span> <span class=n>nx</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+    <span class=n>r</span><span class=o>.</span><span class=n>set</span><span class=p>(</span><span class=s2>&#34;name&#34;</span><span class=p>,</span> <span class=s2>&#34;jicki&#34;</span><span class=p>,</span> <span class=n>xx</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># Hash 操作</span>
+
+<span class=kn>import</span> <span class=nn>redis</span>
+
+<span class=n>pool</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>ConnectionPool</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s2>&#34;127.0.0.1&#34;</span><span class=p>,</span><span class=n>port</span><span class=o>=</span><span class=mi>6379</span><span class=p>)</span>
+<span class=n>r</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>Redis</span><span class=p>(</span><span class=n>connection_pool</span><span class=o>=</span><span class=n>pool</span><span class=p>)</span>
+
+<span class=n>r</span><span class=o>.</span><span class=n>hmset</span><span class=p>(</span><span class=s2>&#34;info&#34;</span><span class=p>,</span> <span class=p>{</span><span class=s1>&#39;fo1&#39;</span><span class=p>:</span><span class=s1>&#39;o1&#39;</span><span class=p>,</span><span class=s1>&#39;fo2&#39;</span><span class=p>:</span><span class=s1>&#39;o2&#39;</span><span class=p>,</span> <span class=s1>&#39;fo3&#39;</span><span class=p>:</span><span class=s1>&#39;o3&#39;</span><span class=p>})</span>
+
+<span class=k>print</span><span class=p>(</span><span class=n>r</span><span class=o>.</span><span class=n>hget</span><span class=p>(</span><span class=s2>&#34;info&#34;</span><span class=p>,</span><span class=s1>&#39;fo1&#39;</span><span class=p>))</span>
+
+<span class=k>print</span><span class=p>(</span><span class=n>r</span><span class=o>.</span><span class=n>hgetall</span><span class=p>(</span><span class=s2>&#34;info&#34;</span><span class=p>))</span>
+
+</code></pre></td></tr></table></div></div><h2 id=redis-订阅-与-发布>redis 订阅 与 发布</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 创建一个类</span>
+
+<span class=kn>import</span> <span class=nn>redis</span>
+
+<span class=n>redis_pool</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>ConnectionPool</span><span class=p>(</span><span class=n>host</span><span class=o>=</span><span class=s2>&#34;127.0.0.1&#34;</span><span class=p>,</span> <span class=n>port</span><span class=o>=</span><span class=mi>6379</span><span class=p>)</span>  <span class=c1># 创建一个连接池</span>
+
+<span class=k>class</span> <span class=nc>RedisHelper</span><span class=p>(</span><span class=nb>object</span><span class=p>):</span>
+    <span class=k>def</span> <span class=fm>__init__</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>__conn</span> <span class=o>=</span> <span class=n>redis</span><span class=o>.</span><span class=n>Redis</span><span class=p>(</span><span class=n>connection_pool</span><span class=o>=</span><span class=n>redis_pool</span><span class=p>)</span>   <span class=c1># 配置连接池</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>chan_sub</span> <span class=o>=</span> <span class=s1>&#39;fm109&#39;</span>  <span class=c1># 订阅频道号</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>chan_pub</span> <span class=o>=</span> <span class=s1>&#39;fm109&#39;</span>  <span class=c1># 发布频道号</span>
+
+    <span class=k>def</span> <span class=nf>public</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span><span class=n>msg</span><span class=p>):</span>     <span class=c1># 定义了一个发布的函数</span>
+        <span class=bp>self</span><span class=o>.</span><span class=n>__conn</span><span class=o>.</span><span class=n>publish</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>chan_pub</span><span class=p>,</span><span class=n>msg</span><span class=p>)</span>    <span class=c1># 发布消息</span>
+        <span class=k>return</span> <span class=bp>True</span>
+
+    <span class=k>def</span> <span class=nf>subscribe</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>              <span class=c1># 定义一个 订阅 的函数</span>
+        <span class=n>pub</span> <span class=o>=</span> <span class=bp>self</span><span class=o>.</span><span class=n>__conn</span><span class=o>.</span><span class=n>pubsub</span><span class=p>()</span>    <span class=c1># 生成一个 订阅的实例</span>
+        <span class=n>pub</span><span class=o>.</span><span class=n>subscribe</span><span class=p>(</span><span class=bp>self</span><span class=o>.</span><span class=n>chan_sub</span><span class=p>)</span>  <span class=c1># 选择订阅频道</span>
+        <span class=n>pub</span><span class=o>.</span><span class=n>parse_response</span><span class=p>()</span>          <span class=c1># 接收发布的消息</span>
+        <span class=k>return</span> <span class=n>pub</span>
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 订阅端</span>
+
+<span class=kn>from</span> <span class=nn>redis_helper</span> <span class=kn>import</span> <span class=n>RedisHelper</span>
+
+<span class=n>obj</span> <span class=o>=</span> <span class=n>RedisHelper</span><span class=p>()</span>   <span class=c1># 实例化</span>
+
+<span class=n>redis_sub</span> <span class=o>=</span> <span class=n>obj</span><span class=o>.</span><span class=n>subscribe</span><span class=p>()</span>   <span class=c1># 订阅者调用 subscribe 这个函数</span>
+
+<span class=k>while</span> <span class=bp>True</span><span class=p>:</span>          <span class=c1># 循环接收 发布者 发送的消息</span>
+    <span class=n>msg</span> <span class=o>=</span> <span class=n>redis_sub</span><span class=o>.</span><span class=n>parse_response</span><span class=p>()</span>      <span class=c1># 收听 订阅频道</span>
+    <span class=k>print</span><span class=p>(</span><span class=n>msg</span><span class=p>)</span>                            <span class=c1># 打印消息</span>
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># 发布端</span>
+
+<span class=kn>from</span> <span class=nn>redis_helper</span> <span class=kn>import</span> <span class=n>RedisHelper</span>
+
+<span class=n>obj</span> <span class=o>=</span> <span class=n>RedisHelper</span><span class=p>()</span>   <span class=c1># 实例化</span>
+
+<span class=k>while</span> <span class=bp>True</span><span class=p>:</span>
+    <span class=n>msg</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s2>&#34;请输入发布的信息: &#34;</span><span class=p>)</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
+    <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>msg</span><span class=p>)</span> <span class=o>==</span> <span class=mi>0</span><span class=p>:</span>
+        <span class=k>continue</span>
+    <span class=k>else</span><span class=p>:</span>
+        <span class=n>redis_pub</span> <span class=o>=</span> <span class=n>obj</span><span class=o>.</span><span class=n>public</span><span class=p>(</span><span class=n>msg</span><span class=p>)</span>
+</code></pre></td></tr></table></div></div><h2 id=python---rabbitmq>Python - RabbitMQ</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># Python 使用pika 模块操作 RabbitMQ</span>
+<span class=c1># RabbitMQ 发送端 (生产者)</span>
+
+<span class=kn>import</span> <span class=nn>pika</span>
+
+<span class=c1>#  创建认证</span>
+<span class=n>credentials</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>PlainCredentials</span><span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;123456&#39;</span><span class=p>)</span>
+
+<span class=c1>#  定义 rabbitmq 的连接</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>BlockingConnection</span><span class=p>(</span><span class=n>pika</span><span class=o>.</span><span class=n>ConnectionParameters</span><span class=p>(</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>,</span><span class=mi>5672</span><span class=p>,</span> <span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>credentials</span><span class=p>))</span>
+
+<span class=c1># 生成一个管道</span>
+<span class=n>channel</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>channel</span><span class=p>()</span>
+
+<span class=c1># 创建一个队列 名 (durable=True 设置为持久化队列)</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>queue_declare</span><span class=p>(</span><span class=n>queue</span><span class=o>=</span><span class=s1>&#39;hello&#39;</span><span class=p>,</span> <span class=n>durable</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+
+<span class=c1># 发送消息</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_publish</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>routing_key</span><span class=o>=</span><span class=s1>&#39;hello&#39;</span><span class=p>,</span> <span class=n>body</span><span class=o>=</span><span class=s1>&#39;hello jicki &#39;</span><span class=p>)</span>
+
+<span class=k>print</span><span class=p>(</span><span class=s2>&#34; 消息  发送成功&#34;</span> <span class=p>)</span>
+
+<span class=c1># 关闭连接</span>
+<span class=n>conn</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python><span class=c1># RabbitMQ 接收端 (消费者)</span>
+
+<span class=kn>import</span> <span class=nn>pika</span>
+
+<span class=c1>#  创建认证</span>
+<span class=n>credentials</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>PlainCredentials</span><span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;123456&#39;</span><span class=p>)</span>
+
+<span class=c1>#  定义 rabbitmq 的连接</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>BlockingConnection</span><span class=p>(</span><span class=n>pika</span><span class=o>.</span><span class=n>ConnectionParameters</span><span class=p>(</span><span class=s1>&#39;127.0.0.1&#39;</span><span class=p>,</span><span class=mi>5672</span><span class=p>,</span> <span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>credentials</span><span class=p>))</span>
+
+<span class=c1># 生成一个管道</span>
+<span class=n>channel</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>channel</span><span class=p>()</span>
+
+<span class=c1># 创建一个队列 名 (durable=True 设置为持久化队列)</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>queue_declare</span><span class=p>(</span><span class=n>queue</span><span class=o>=</span><span class=s1>&#39;hello&#39;</span><span class=p>,</span> <span class=n>durable</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+
+
+<span class=k>def</span> <span class=nf>callback</span><span class=p>(</span><span class=n>ch</span><span class=p>,</span> <span class=n>method</span><span class=p>,</span> <span class=n>properties</span><span class=p>,</span> <span class=n>body</span><span class=p>):</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34;返回信息 </span><span class=si>%r</span><span class=s2>&#34;</span> <span class=o>%</span><span class=n>body</span><span class=p>)</span>
+
+
+<span class=c1># 设置同时只处理一个任务(负载均衡, 如果不设置，会轮询)</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_qos</span><span class=p>(</span><span class=n>prefetch_count</span><span class=o>=</span><span class=mi>1</span><span class=p>)</span>
+
+<span class=c1># 声明队列信息</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_consume</span><span class=p>(</span><span class=n>callback</span><span class=p>,</span> <span class=n>queue</span><span class=o>=</span><span class=s1>&#39;hello&#39;</span><span class=p>,</span> <span class=n>no_ack</span><span class=o>=</span><span class=bp>False</span><span class=p>)</span>
+
+<span class=k>print</span><span class=p>(</span><span class=s1>&#39;等待队列消息&#39;</span><span class=p>)</span>
+
+<span class=c1># 开始接收任务</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>start_consuming</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div><h2 id=rabbitmq-发布与订阅>RabbitMQ 发布与订阅</h2><blockquote><p>发布端代码</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python>
+<span class=kn>import</span> <span class=nn>pika</span>
+
+<span class=c1>#  创建认证</span>
+<span class=n>credentials</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>PlainCredentials</span><span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;123456&#39;</span><span class=p>)</span>
+
+<span class=c1>#  定义 rabbitmq 的连接</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>BlockingConnection</span><span class=p>(</span><span class=n>pika</span><span class=o>.</span><span class=n>ConnectionParameters</span><span class=p>(</span><span class=s1>&#39;10.6.0.188&#39;</span><span class=p>,</span><span class=mi>5672</span><span class=p>,</span> <span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>credentials</span><span class=p>))</span>
+
+<span class=c1># 生成一个管道</span>
+<span class=n>channel</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>channel</span><span class=p>()</span>
+
+<span class=c1># 创建一个 exchange</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>exchange_declare</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;logs&#39;</span><span class=p>,</span><span class=nb>type</span><span class=o>=</span><span class=s1>&#39;fanout&#39;</span><span class=p>)</span>
+
+<span class=c1># 发布的消息</span>
+<span class=n>message</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>:])</span> <span class=ow>or</span> <span class=s1>&#39;Hello jicki&#39;</span>
+
+<span class=c1># 往 exchange 发送消息</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_publish</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;logs&#39;</span><span class=p>,</span> <span class=n>routing_key</span><span class=o>=</span><span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>body</span><span class=o>=</span><span class=n>message</span><span class=p>)</span>
+
+<span class=k>print</span><span class=p>(</span><span class=s1>&#39;消息 [ </span><span class=si>%r</span><span class=s1> ] 发送成功&#39;</span> <span class=o>%</span><span class=n>message</span><span class=p>)</span>
+
+<span class=n>conn</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div><blockquote><p>订阅端代码</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python>
+<span class=kn>import</span> <span class=nn>pika</span>
+
+
+<span class=c1>#  创建认证</span>
+<span class=n>credentials</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>PlainCredentials</span><span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;123456&#39;</span><span class=p>)</span>
+
+<span class=c1>#  定义 rabbitmq 的连接</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>BlockingConnection</span><span class=p>(</span><span class=n>pika</span><span class=o>.</span><span class=n>ConnectionParameters</span><span class=p>(</span><span class=s1>&#39;10.6.0.188&#39;</span><span class=p>,</span><span class=mi>5672</span><span class=p>,</span> <span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>credentials</span><span class=p>))</span>
+
+<span class=c1># 生成一个管道</span>
+<span class=n>channel</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>channel</span><span class=p>()</span>
+
+<span class=c1># 声明这个 exchange</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>exchange_declare</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;logs&#39;</span><span class=p>,</span> <span class=nb>type</span><span class=o>=</span><span class=s1>&#39;fanout&#39;</span><span class=p>)</span>
+
+<span class=c1># 声明一个 queue, 不需要指定 queue 名</span>
+<span class=c1># rabbitmq 会随机生成一个 queue , 当消费者断开后，queue 会自动删除</span>
+<span class=n>result</span> <span class=o>=</span> <span class=n>channel</span><span class=o>.</span><span class=n>queue_declare</span><span class=p>(</span><span class=n>exclusive</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+
+<span class=n>queue_name</span> <span class=o>=</span> <span class=n>result</span><span class=o>.</span><span class=n>method</span><span class=o>.</span><span class=n>queue</span>
+
+<span class=c1># 将这个 queue 与 exchange 绑定</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>queue_bind</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;logs&#39;</span><span class=p>,</span> <span class=n>queue</span><span class=o>=</span><span class=n>queue_name</span><span class=p>)</span>
+
+<span class=k>print</span><span class=p>(</span><span class=s2>&#34;等待消息.....&#34;</span><span class=p>)</span>
+
+
+<span class=k>def</span> <span class=nf>callbak</span><span class=p>(</span><span class=n>ch</span><span class=p>,</span> <span class=n>method</span><span class=p>,</span> <span class=n>properties</span><span class=p>,</span> <span class=n>body</span><span class=p>):</span>
+    <span class=k>print</span><span class=p>(</span><span class=s2>&#34; [ </span><span class=si>%r</span><span class=s2> ]&#34;</span> <span class=o>%</span><span class=n>body</span><span class=p>)</span>
+
+<span class=c1># 声明队列信息</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_consume</span><span class=p>(</span><span class=n>callbak</span><span class=p>,</span> <span class=n>queue</span><span class=o>=</span><span class=n>queue_name</span><span class=p>,</span> <span class=n>no_ack</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+
+<span class=c1># 开始接受消息</span>
+<span class=n>channel</span><span class=o>.</span><span class=n>start_consuming</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div><h2 id=rabbitmq-带过滤的订阅与发布>RabbitMQ 带过滤的订阅与发布</h2><blockquote><p>topic pub 端</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python>
+<span class=kn>import</span> <span class=nn>pika</span>
+<span class=kn>import</span> <span class=nn>sys</span>
+
+<span class=c1>#  创建认证</span>
+<span class=n>credentials</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>PlainCredentials</span><span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;123456&#39;</span><span class=p>)</span>
+
+<span class=c1>#  定义 rabbitmq 的连接</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>BlockingConnection</span><span class=p>(</span><span class=n>pika</span><span class=o>.</span><span class=n>ConnectionParameters</span><span class=p>(</span><span class=s1>&#39;10.6.0.188&#39;</span><span class=p>,</span><span class=mi>5672</span><span class=p>,</span> <span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>credentials</span><span class=p>))</span>
+
+<span class=c1># 生成一个管道</span>
+<span class=n>channel</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>channel</span><span class=p>()</span>
+
+<span class=n>channel</span><span class=o>.</span><span class=n>exchange_declare</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;topic_logs&#39;</span><span class=p>,</span> <span class=nb>type</span><span class=o>=</span><span class=s1>&#39;topic&#39;</span><span class=p>)</span>
+
+<span class=n>routing_key</span> <span class=o>=</span> <span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=k>if</span> <span class=nb>len</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>)</span> <span class=o>&gt;</span> <span class=mi>1</span> <span class=k>else</span> <span class=s1>&#39;anonymous.info&#39;</span>
+
+<span class=n>message</span> <span class=o>=</span> <span class=s1>&#39;&#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>2</span><span class=p>:])</span> <span class=ow>or</span> <span class=s1>&#39;hello jicki&#39;</span>
+
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_publish</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span> <span class=s1>&#39;topic_logs&#39;</span><span class=p>,</span> <span class=n>routing_key</span><span class=o>=</span><span class=n>routing_key</span><span class=p>,</span> <span class=n>body</span><span class=o>=</span><span class=n>message</span><span class=p>)</span>
+
+<span class=k>print</span><span class=p>(</span><span class=s1>&#39;发送 [ </span><span class=si>%r</span><span class=s1>:</span><span class=si>%r</span><span class=s1> ]&#39;</span> <span class=o>%</span><span class=p>(</span><span class=n>routing_key</span><span class=p>,</span> <span class=n>message</span><span class=p>))</span>
+
+<span class=n>conn</span><span class=o>.</span><span class=n>close</span><span class=p>()</span>
+</code></pre></td></tr></table></div></div><blockquote><p>topic sub 端</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-python data-lang=python>
+<span class=kn>import</span> <span class=nn>pika</span>
+<span class=kn>import</span> <span class=nn>sys</span>
+
+<span class=c1>#  创建认证</span>
+<span class=n>credentials</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>PlainCredentials</span><span class=p>(</span><span class=s1>&#39;jicki&#39;</span><span class=p>,</span> <span class=s1>&#39;123456&#39;</span><span class=p>)</span>
+
+<span class=c1>#  定义 rabbitmq 的连接</span>
+<span class=n>conn</span> <span class=o>=</span> <span class=n>pika</span><span class=o>.</span><span class=n>BlockingConnection</span><span class=p>(</span><span class=n>pika</span><span class=o>.</span><span class=n>ConnectionParameters</span><span class=p>(</span><span class=s1>&#39;10.6.0.188&#39;</span><span class=p>,</span><span class=mi>5672</span><span class=p>,</span> <span class=s1>&#39;/&#39;</span><span class=p>,</span> <span class=n>credentials</span><span class=p>))</span>
+
+<span class=c1># 生成一个管道</span>
+<span class=n>channel</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>channel</span><span class=p>()</span>
+
+<span class=n>channel</span><span class=o>.</span><span class=n>exchange_declare</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;topic_logs&#39;</span><span class=p>,</span> <span class=nb>type</span><span class=o>=</span><span class=s1>&#39;topic&#39;</span><span class=p>)</span>
+
+<span class=n>result</span> <span class=o>=</span> <span class=n>channel</span><span class=o>.</span><span class=n>queue_declare</span><span class=p>(</span><span class=n>exclusive</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+
+<span class=n>queue_name</span> <span class=o>=</span> <span class=n>result</span><span class=o>.</span><span class=n>method</span><span class=o>.</span><span class=n>queue</span>
+
+<span class=n>binding_keys</span> <span class=o>=</span> <span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>1</span><span class=p>:]</span>
+<span class=k>if</span> <span class=ow>not</span> <span class=n>binding_keys</span><span class=p>:</span>
+    <span class=n>sys</span><span class=o>.</span><span class=n>stderr</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=s2>&#34;</span><span class=si>%s</span><span class=s2> [binding_keys] </span><span class=se>\n</span><span class=s2>&#34;</span> <span class=o>%</span> <span class=n>sys</span><span class=o>.</span><span class=n>argv</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+    <span class=n>sys</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+
+<span class=k>for</span> <span class=n>binding_keys</span> <span class=ow>in</span> <span class=n>binding_keys</span><span class=p>:</span>
+    <span class=n>channel</span><span class=o>.</span><span class=n>queue_bind</span><span class=p>(</span><span class=n>exchange</span><span class=o>=</span><span class=s1>&#39;topic_logs&#39;</span><span class=p>,</span> <span class=n>queue</span><span class=o>=</span><span class=n>queue_name</span><span class=p>,</span> <span class=n>routing_key</span><span class=o>=</span><span class=n>binding_keys</span><span class=p>)</span>
+
+<span class=k>print</span><span class=p>(</span><span class=s1>&#39;等待消息.......&#39;</span><span class=p>)</span>
+
+<span class=k>def</span> <span class=nf>callback</span><span class=p>(</span><span class=n>ch</span><span class=p>,</span> <span class=n>method</span><span class=p>,</span> <span class=n>properties</span><span class=p>,</span> <span class=n>body</span><span class=p>):</span>
+    <span class=k>print</span><span class=p>(</span><span class=s1>&#39;消息 [ </span><span class=si>%r</span><span class=s1>:</span><span class=si>%r</span><span class=s1> ] 发送成功&#39;</span> <span class=o>%</span> <span class=p>(</span><span class=n>method</span><span class=o>.</span><span class=n>routing_key</span><span class=p>,</span> <span class=n>body</span><span class=p>))</span>
+
+<span class=n>channel</span><span class=o>.</span><span class=n>basic_consume</span><span class=p>(</span><span class=n>callback</span><span class=p>,</span> <span class=n>queue</span><span class=o>=</span><span class=n>queue_name</span><span class=p>,</span> <span class=n>no_ack</span><span class=o>=</span><span class=bp>True</span><span class=p>)</span>
+
+<span class=n>channel</span><span class=o>.</span><span class=n>start_consuming</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2016-12-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/python-learning/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路" data-via=jicki234><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/python-learning/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路" data-description="Python 学习之路"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路" data-description="Python 学习之路"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/python-learning/ data-title="Python 学习之路"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/kubernetes-application/ class=prev rel=prev title="kubernetes 实战应用部署"><i class="fas fa-angle-left fa-fw"></i>kubernetes 实战应用部署</a>
+<a href=/kubernetes-1.5.0/ class=next rel=next title="kubernetes 1.5.1">kubernetes 1.5.1<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

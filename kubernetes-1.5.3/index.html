@@ -1,0 +1,1143 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>kubernetes 1.5.3 - 小炒肉</title><meta name=Description content="kubernetes 1.5.3"><meta property="og:title" content="kubernetes 1.5.3"><meta property="og:description" content="kubernetes 1.5.3"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/kubernetes-1.5.3/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2017-03-03T00:00:00+00:00"><meta property="article:modified_time" content="2017-03-03T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="kubernetes 1.5.3"><meta name=twitter:description content="kubernetes 1.5.3"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/kubernetes-1.5.3/><link rel=prev href=https://jicki.cn/ubuntu-desktop/><link rel=next href=https://jicki.cn/kargo-kubernetes-1.5.4/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"kubernetes 1.5.3","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/kubernetes-1.5.3\/"},"genre":"posts","wordcount":2384,"url":"https:\/\/jicki.cn\/kubernetes-1.5.3\/","datePublished":"2017-03-03T00:00:00+00:00","dateModified":"2017-03-03T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"kubernetes 1.5.3"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">kubernetes 1.5.3</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2017-03-03>2017-03-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2384 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=/kubernetes-1.5.3/ class=leancloud_visitors data-flag-title="kubernetes 1.5.3">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#11-环境>1.1 环境：</a></li><li><a href=#12-设置hostname>1.2 设置hostname</a></li><li><a href=#13-配置-hosts>1.3 配置 hosts</a></li></ul><ul><li><a href=#21-添加yum>2.1 添加yum</a></li><li><a href=#22-安装docker>2.2 安装docker</a></li><li><a href=#23-下载镜像>2.3 下载镜像</a></li><li><a href=#24-启动-kubernetes>2.4 启动 kubernetes</a></li><li><a href=#25-创建集群>2.5 创建集群</a></li><li><a href=#26-记录-token>2.6 记录 token</a></li><li><a href=#27-配置网络>2.7 配置网络</a></li><li><a href=#28-检查-kubelet-状态>2.8 检查 kubelet 状态</a></li></ul><ul><li><a href=#31-安装docker>3.1 安装docker</a></li><li><a href=#32-下载镜像>3.2 下载镜像</a></li><li><a href=#33-启动-kubernetes>3.3 启动 kubernetes</a></li><li><a href=#34-加入集群>3.4 加入集群</a></li><li><a href=#35-查看集群状态>3.5 查看集群状态</a></li><li><a href=#36-查看服务状态>3.6 查看服务状态</a></li></ul><ul><li><a href=#41-其他主机控制集群>4.1 其他主机控制集群</a></li><li><a href=#42-配置dashboard>4.2 配置dashboard</a></li></ul><ul><li><a href=#51-部署一个-nginx--rc>5.1 部署一个 nginx rc</a></li><li><a href=#52-部署一个-zookeeper-集群>5.2 部署一个 zookeeper 集群</a></li><li><a href=#53-部署一个-kafka-集群>5.3 部署一个 kafka 集群</a></li></ul><ul><li><a href=#kube-discovery-error>kube-discovery error</a></li></ul></nav></div></div><div class=content id=content><blockquote><p>kubernetes update 1.5.3</p></blockquote><h1 id=1-初始化环境>1 初始化环境</h1><h2 id=11-环境>1.1 环境：</h2><table><thead><tr><th>节点</th><th>IP</th></tr></thead><tbody><tr><td>node-1</td><td>10.6.0.140</td></tr><tr><td>node-2</td><td>10.6.0.187</td></tr><tr><td>node-3</td><td>10.6.0.188</td></tr></tbody></table><h2 id=12-设置hostname>1.2 设置hostname</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>hostnamectl --static set-hostname hostname
+</code></pre></td></tr></table></div></div><table><thead><tr><th>IP</th><th>hostname</th></tr></thead><tbody><tr><td>10.6.0.140</td><td>k8s-node-1</td></tr><tr><td>10.6.0.187</td><td>k8s-node-2</td></tr><tr><td>10.6.0.188</td><td>k8s-node-3</td></tr></tbody></table><h2 id=13-配置-hosts>1.3 配置 hosts</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>vi /etc/hosts
+</code></pre></td></tr></table></div></div><table><thead><tr><th>IP</th><th>hostname</th></tr></thead><tbody><tr><td>10.6.0.140</td><td>k8s-node-1</td></tr><tr><td>10.6.0.187</td><td>k8s-node-2</td></tr><tr><td>10.6.0.188</td><td>k8s-node-3</td></tr></tbody></table><h1 id=20-部署-kubernetes-master>2.0 部署 kubernetes master</h1><h2 id=21-添加yum>2.1 添加yum</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 使用我朋友的 yum 源，嘿嘿
+
+cat &lt;&lt;EOF&gt; /etc/yum.repos.d/kubernetes.repo
+[mritdrepo]
+name=Mritd Repository
+baseurl=https://yum.mritd.me/centos/7/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://cdn.mritd.me/keys/rpm.public.key
+EOF
+
+
+
+yum makecache
+
+yum install -y socat kubelet kubeadm kubectl kubernetes-cni
+
+</code></pre></td></tr></table></div></div><h2 id=22-安装docker>2.2 安装docker</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>wget -qO- https://get.docker.com/ | sh
+
+
+systemctl enable docker
+systemctl start docker
+</code></pre></td></tr></table></div></div><h2 id=23-下载镜像>2.3 下载镜像</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>images=(kube-proxy-amd64:v1.5.3 kube-discovery-amd64:1.0 kubedns-amd64:1.9 kube-scheduler-amd64:v1.5.3 kube-controller-manager-amd64:v1.5.3 kube-apiserver-amd64:v1.5.3 etcd-amd64:3.0.14-kubeadm kube-dnsmasq-amd64:1.4 exechealthz-amd64:1.2 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.5.1 dnsmasq-metrics-amd64:1.0)
+for imageName in ${images[@]} ; do
+  docker pull jicki/$imageName
+  docker tag jicki/$imageName gcr.io/google_containers/$imageName
+  docker rmi jicki/$imageName
+done
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 如果速度很慢，可配置一下加速
+
+docker 启动文件 增加 --registry-mirror=http://b438f72b.m.daocloud.io
+
+</code></pre></td></tr></table></div></div><h2 id=24-启动-kubernetes>2.4 启动 kubernetes</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl enable kubelet
+systemctl start kubelet
+</code></pre></td></tr></table></div></div><h2 id=25-创建集群>2.5 创建集群</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm init --api-advertise-addresses=10.6.0.140 \
+--use-kubernetes-version v1.5.3 \
+--pod-network-cidr 10.244.0.0/16
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[kubeadm] WARNING: kubeadm is in alpha, please do not use it for production clusters.
+[preflight] Running pre-flight checks
+[preflight] Starting the kubelet service
+[init] Using kubernetes version: v1.5.3
+[tokens] Generated token: &#34;c53ef2.d257d49589d634f0&#34;
+[certificates] Generated Certificate Authority key and certificate.
+[certificates] Generated API Server key and certificate
+[certificates] Generated Service Account signing keys
+[certificates] Created keys and certificates in &#34;/etc/kubernetes/pki&#34;
+[kubeconfig] Wrote KubeConfig file to disk: &#34;/etc/kubernetes/kubelet.conf&#34;
+[kubeconfig] Wrote KubeConfig file to disk: &#34;/etc/kubernetes/admin.conf&#34;
+[apiclient] Created API client, waiting for the control plane to become ready
+[apiclient] All control plane components are healthy after 15.299235 seconds
+[apiclient] Waiting for at least one node to register and become ready
+[apiclient] First node is ready after 1.002937 seconds
+[apiclient] Creating a test deployment
+[apiclient] Test deployment succeeded
+[token-discovery] Created the kube-discovery deployment, waiting for it to become ready
+[token-discovery] kube-discovery is ready after 2.502881 seconds
+[addons] Created essential addon: kube-proxy
+[addons] Created essential addon: kube-dns
+
+Your kubernetes master has initialized successfully!
+
+You should now deploy a pod network to the cluster.
+Run &#34;kubectl apply -f [podnetwork].yaml&#34; with one of the options listed at:
+    http://kubernetes.io/docs/admin/addons/
+
+You can now join any number of machines by running the following on each node:
+
+kubeadm join --token=c53ef2.d257d49589d634f0 10.6.0.140
+
+
+</code></pre></td></tr></table></div></div><h2 id=26-记录-token>2.6 记录 token</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+You can now join any number of machines by running the following on each node:
+
+kubeadm join --token=c53ef2.d257d49589d634f0 10.6.0.140
+
+
+# 如果忘记了 token 使用如下 命令可获取
+
+kubectl -n kube-system get secret clusterinfo -o yaml | grep token-map | awk &#39;{print $2}&#39; | base64 --decode | sed &#34;s|{||g;s|}||g;s|:|.|g;s/\&#34;//g;&#34; | xargs echo
+
+</code></pre></td></tr></table></div></div><h2 id=27-配置网络>2.7 配置网络</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 建议先下载镜像，否则容易下载不到
+
+docker pull quay.io/coreos/flannel:v0.7.0-amd64
+
+# 或者这样
+
+docker pull jicki/flannel:v0.7.0-amd64
+docker tag jicki/flannel:v0.7.0-amd64 quay.io/coreos/flannel:v0.7.0-amd64
+docker rmi jicki/flannel:v0.7.0-amd64
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># http://kubernetes.io/docs/admin/addons/  这里有多种网络模式，选择一种
+
+# 这里选择 Flannel  选择 Flannel  init 时必须配置 --pod-network-cidr
+
+kubectl create -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+</code></pre></td></tr></table></div></div><h2 id=28-检查-kubelet-状态>2.8 检查 kubelet 状态</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl status kubelet
+</code></pre></td></tr></table></div></div><h1 id=30-部署-kubernetes-node>3.0 部署 kubernetes node</h1><h2 id=31-安装docker>3.1 安装docker</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>wget -qO- https://get.docker.com/ | sh
+
+
+systemctl enable docker
+systemctl start docker
+</code></pre></td></tr></table></div></div><h2 id=32-下载镜像>3.2 下载镜像</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>images=(kube-proxy-amd64:v1.5.3 kube-discovery-amd64:1.0 kubedns-amd64:1.9 kube-scheduler-amd64:v1.5.3 kube-controller-manager-amd64:v1.5.3 kube-apiserver-amd64:v1.5.3 etcd-amd64:3.0.14-kubeadm kube-dnsmasq-amd64:1.4 exechealthz-amd64:1.2 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.5.1 dnsmasq-metrics-amd64:1.0)
+for imageName in ${images[@]} ; do
+  docker pull jicki/$imageName
+  docker tag jicki/$imageName gcr.io/google_containers/$imageName
+  docker rmi jicki/$imageName
+done
+</code></pre></td></tr></table></div></div><h2 id=33-启动-kubernetes>3.3 启动 kubernetes</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl enable kubelet
+systemctl start kubelet
+</code></pre></td></tr></table></div></div><h2 id=34-加入集群>3.4 加入集群</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm join --token=c53ef2.d257d49589d634f0 10.6.0.140
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>Node join complete:
+* Certificate signing request sent to master and response
+  received.
+* Kubelet informed of new secure connection details.
+
+Run &#39;kubectl get nodes&#39; on the master to see this machine join.
+</code></pre></td></tr></table></div></div><h2 id=35-查看集群状态>3.5 查看集群状态</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 ~]#kubectl get node
+NAME         STATUS         AGE
+k8s-node-1   Ready,master   27m
+k8s-node-2   Ready          6s
+k8s-node-3   Ready          9s
+
+</code></pre></td></tr></table></div></div><h2 id=36-查看服务状态>3.6 查看服务状态</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 ~]#kubectl get pods --all-namespaces
+NAMESPACE     NAME                                 READY     STATUS    RESTARTS   AGE
+kube-system   dummy-2088944543-qrp68               1/1       Running   1          1h
+kube-system   kube-apiserver-k8s-node-1            1/1       Running   2          1h
+kube-system   kube-controller-manager-k8s-node-1   1/1       Running   2          1h
+kube-system   kube-discovery-1769846148-g2lpc      1/1       Running   1          1h
+kube-system   kube-dns-2924299975-xbhv4            4/4       Running   3          1h
+kube-system   kube-flannel-ds-39g5n                2/2       Running   2          1h
+kube-system   kube-flannel-ds-dwc82                2/2       Running   2          1h
+kube-system   kube-flannel-ds-qpkm0                2/2       Running   2          1h
+kube-system   kube-proxy-16c50                     1/1       Running   2          1h
+kube-system   kube-proxy-5rkc8                     1/1       Running   2          1h
+kube-system   kube-proxy-xwrq0                     1/1       Running   2          1h
+kube-system   kube-scheduler-k8s-node-1            1/1       Running   2          1h
+
+</code></pre></td></tr></table></div></div><h1 id=40-设置-kubernetes>4.0 设置 kubernetes</h1><h2 id=41-其他主机控制集群>4.1 其他主机控制集群</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 备份master节点的 配置文件
+
+/etc/kubernetes/admin.conf
+
+# 保存至 其他电脑, 通过执行配置文件控制集群
+
+kubectl --kubeconfig ./admin.conf get nodes
+
+</code></pre></td></tr></table></div></div><h2 id=42-配置dashboard>4.2 配置dashboard</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>#下载 yaml 文件, 直接导入会去官方拉取images
+
+curl -O https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+
+
+#编辑 yaml 文件
+
+imagePullPolicy: Always
+
+修改为
+
+imagePullPolicy: IfNotPresent
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl create -f ./kubernetes-dashboard.yaml
+
+deployment &#34;kubernetes-dashboard&#34; created
+service &#34;kubernetes-dashboard&#34; created
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 查看 NodePort ，既外网访问端口
+
+kubectl describe svc kubernetes-dashboard --namespace=kube-system
+
+NodePort:               &lt;unset&gt; 31736/TCP
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 访问 dashboard
+
+http://10.6.0.140:31736
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/kubernetes/1.png data-srcset="https://jicki.cn/img/posts/kubernetes/1.png, https://jicki.cn/img/posts/kubernetes/1.png 1.5x, https://jicki.cn/img/posts/kubernetes/1.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/kubernetes/1.png title=此处输入图片的描述></p><h1 id=50-kubernetes-应用部署>5.0 kubernetes 应用部署</h1><h2 id=51-部署一个-nginx--rc>5.1 部署一个 nginx rc</h2><blockquote><p>编写 一个 nginx yaml</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>apiVersion: v1 
+kind: ReplicationController 
+metadata: 
+  name: nginx-rc 
+spec: 
+  replicas: 2 
+  selector: 
+    name: nginx 
+  template: 
+    metadata: 
+      labels: 
+        name: nginx 
+    spec: 
+      containers: 
+        - name: nginx 
+          image: nginx:alpine
+          imagePullPolicy: IfNotPresent
+          ports: 
+            - containerPort: 80
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 ~]#kubectl get rc
+NAME       DESIRED   CURRENT   READY     AGE
+nginx-rc   2         2         2         2m
+
+
+[root@k8s-node-1 ~]#kubectl get pod -o wide
+NAME             READY     STATUS    RESTARTS   AGE       IP          NODE
+nginx-rc-2s8k9   1/1       Running   0          10m       10.32.0.3   k8s-node-1
+nginx-rc-s16cm   1/1       Running   0          10m       10.40.0.1   k8s-node-2
+</code></pre></td></tr></table></div></div><blockquote><p>编写一个 nginx service 让集群内部容器可以访问 (ClusterIp)</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>apiVersion: v1 
+kind: Service 
+metadata: 
+  name: nginx-svc 
+spec: 
+  ports: 
+    - port: 80
+      targetPort: 80
+      protocol: TCP 
+  selector: 
+    name: nginx
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 ~]#kubectl create -f nginx-svc.yaml 
+service &#34;nginx-svc&#34; created
+
+
+[root@k8s-node-1 ~]#kubectl get svc -o wide
+NAME         CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE       SELECTOR
+kubernetes   10.0.0.1      &lt;none&gt;        443/TCP   2d        &lt;none&gt;
+nginx-svc    10.6.164.79   &lt;none&gt;        80/TCP    29s       name=nginx
+
+</code></pre></td></tr></table></div></div><blockquote><p>编写一个 curl 的pods</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+spec:
+  containers:
+  - name: curl
+    image: radial/busyboxplus:curl
+    command:
+    - sh
+    - -c
+    - while true; do sleep 1; done
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 测试pods 内部通信
+[root@k8s-node-1 ~]#kubectl exec curl curl nginx
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 在任何node节点中，可使用ip访问
+
+[root@k8s-node-2 ~]# curl 10.6.164.79
+[root@k8s-node-3 ~]# curl 10.6.164.79
+
+</code></pre></td></tr></table></div></div><blockquote><p>编写一个 nginx service 让外部可以访问 (NodePort)</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc-node
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: NodePort
+  selector:
+    name: nginx
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 ~]#kubectl get svc -o wide
+NAME             CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE       SELECTOR
+kubernetes       10.0.0.1       &lt;none&gt;        443/TCP   2d        &lt;none&gt;
+nginx-svc        10.6.164.79    &lt;none&gt;        80/TCP    29m       name=nginx
+nginx-svc-node   10.12.95.227   &lt;nodes&gt;       80/TCP    17s       name=nginx
+
+
+[root@k8s-node-1 ~]#kubectl describe svc nginx-svc-node |grep NodePort
+Type:                   NodePort
+NodePort:               &lt;unset&gt; 32669/TCP
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 使用 ALL node节点物理IP + 端口访问
+
+http://10.6.0.140:32669
+
+http://10.6.0.187:32669
+
+http://10.6.0.188:32669
+</code></pre></td></tr></table></div></div><h2 id=52-部署一个-zookeeper-集群>5.2 部署一个 zookeeper 集群</h2><blockquote><p>编写 一个 zookeeper-cluster.yaml</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>apiVersion: extensions/v1beta1
+kind: Deployment 
+metadata: 
+  name: zookeeper-1
+spec: 
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        name: zookeeper-1 
+    spec: 
+      containers: 
+        - name: zookeeper-1
+          image: zk:alpine 
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ID
+            value: &#34;1&#34;
+          - name: NODES
+            value: &#34;0.0.0.0,zookeeper-2,zookeeper-3&#34;
+          ports:
+          - containerPort: 2181
+
+---
+
+apiVersion: extensions/v1beta1 
+kind: Deployment
+metadata:
+  name: zookeeper-2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: zookeeper-2
+    spec:
+      containers:
+        - name: zookeeper-2
+          image: zk:alpine
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ID
+            value: &#34;2&#34;
+          - name: NODES
+            value: &#34;zookeeper-1,0.0.0.0,zookeeper-3&#34;
+          ports:
+          - containerPort: 2181
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zookeeper-3
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: zookeeper-3
+    spec:
+      containers:
+        - name: zookeeper-3
+          image: zk:alpine
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ID
+            value: &#34;3&#34;
+          - name: NODES
+            value: &#34;zookeeper-1,zookeeper-2,0.0.0.0&#34;
+          ports:
+          - containerPort: 2181
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: zookeeper-1 
+  labels:
+    name: zookeeper-1
+spec: 
+  ports: 
+    - name: client
+      port: 2181
+      protocol: TCP
+    - name: followers
+      port: 2888
+      protocol: TCP
+    - name: election
+      port: 3888
+      protocol: TCP
+  selector: 
+    name: zookeeper-1
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: zookeeper-2
+  labels:
+    name: zookeeper-2
+spec: 
+  ports: 
+    - name: client
+      port: 2181
+      protocol: TCP
+    - name: followers
+      port: 2888
+      protocol: TCP
+    - name: election
+      port: 3888
+      protocol: TCP
+  selector: 
+    name: zookeeper-2
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: zookeeper-3
+  labels:
+    name: zookeeper-3
+spec: 
+  ports: 
+    - name: client
+      port: 2181
+      protocol: TCP
+    - name: followers
+      port: 2888
+      protocol: TCP
+    - name: election
+      port: 3888
+      protocol: TCP
+  selector: 
+    name: zookeeper-3
+	
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 ~]#kubectl create -f zookeeper-cluster.yaml --record
+
+
+
+[root@k8s-node-1 ~]#kubectl get pods -o wide
+NAME                           READY     STATUS    RESTARTS   AGE       IP          NODE
+zookeeper-1-2149121414-cfyt4   1/1       Running   0          51m       10.32.0.3   k8s-node-2
+zookeeper-2-2653289864-0bxee   1/1       Running   0          51m       10.40.0.1   k8s-node-3
+zookeeper-3-3158769034-5csqy   1/1       Running   0          51m       10.40.0.2   k8s-node-3
+
+
+[root@k8s-node-1 ~]#kubectl get deployment -o wide    
+NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+zookeeper-1   1         1         1            1           51m
+zookeeper-2   1         1         1            1           51m
+zookeeper-3   1         1         1            1           51m
+
+
+[root@k8s-node-1 ~]#kubectl get svc -o wide
+NAME          CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE       SELECTOR
+zookeeper-1   10.8.111.19    &lt;none&gt;        2181/TCP,2888/TCP,3888/TCP   51m       name=zookeeper-1
+zookeeper-2   10.6.10.124    &lt;none&gt;        2181/TCP,2888/TCP,3888/TCP   51m       name=zookeeper-2
+zookeeper-3   10.0.146.143   &lt;none&gt;        2181/TCP,2888/TCP,3888/TCP   51m       name=zookeeper-3
+
+
+
+</code></pre></td></tr></table></div></div><h2 id=53-部署一个-kafka-集群>5.3 部署一个 kafka 集群</h2><blockquote><p>编写 一个 kafka-cluster.yaml</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+apiVersion: extensions/v1beta1
+kind: Deployment 
+metadata: 
+  name: kafka-deployment-1
+spec: 
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        name: kafka-1 
+    spec: 
+      containers: 
+        - name: kafka-1
+          image: kafka:alpine 
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ID
+            value: &#34;1&#34;
+          - name: ZK_NODES
+            value: &#34;zookeeper-1,zookeeper-2,zookeeper-3&#34;
+          ports:
+          - containerPort: 9092
+
+---
+
+apiVersion: extensions/v1beta1 
+kind: Deployment
+metadata:
+  name: kafka-deployment-2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: kafka-2  
+    spec:
+      containers:
+        - name: kafka-2
+          image: kafka:alpine
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ID
+            value: &#34;2&#34;
+          - name: ZK_NODES
+            value: &#34;zookeeper-1,zookeeper-2,zookeeper-3&#34;
+          ports:
+          - containerPort: 9092
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kafka-deployment-3
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: kafka-3  
+    spec:
+      containers:
+        - name: kafka-3
+          image: kafka:alpine
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: NODE_ID
+            value: &#34;3&#34;
+          - name: ZK_NODES
+            value: &#34;zookeeper-1,zookeeper-2,zookeeper-3&#34;
+          ports:
+          - containerPort: 9092
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: kafka-1 
+  labels:
+    name: kafka-1
+spec: 
+  ports: 
+    - name: client
+      port: 9092
+      protocol: TCP
+  selector: 
+    name: kafka-1
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: kafka-2
+  labels:
+    name: kafka-2
+spec: 
+  ports: 
+    - name: client
+      port: 9092
+      protocol: TCP
+  selector: 
+    name: kafka-2
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: kafka-3
+  labels:
+    name: kafka-3
+spec: 
+  ports: 
+    - name: client
+      port: 9092
+      protocol: TCP
+  selector: 
+    name: kafka-3
+
+</code></pre></td></tr></table></div></div><h1 id=faq>FAQ:</h1><h2 id=kube-discovery-error>kube-discovery error</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>	failed to create &#34;kube-discovery&#34; deployment [deployments.extensions &#34;kube-discovery&#34; already exists]
+	
+
+kubeadm reset
+
+kubeadm init
+
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2017-03-03</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/kubernetes-1.5.3/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3" data-via=jicki234><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/kubernetes-1.5.3/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3" data-description="kubernetes 1.5.3"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3" data-description="kubernetes 1.5.3"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/kubernetes-1.5.3/ data-title="kubernetes 1.5.3"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/ubuntu-desktop/ class=prev rel=prev title="Ubuntu Desktop"><i class="fas fa-angle-left fa-fw"></i>Ubuntu Desktop</a>
+<a href=/kargo-kubernetes-1.5.4/ class=next rel=next title="kargo kubernetes 1.5.4">kargo kubernetes 1.5.4<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

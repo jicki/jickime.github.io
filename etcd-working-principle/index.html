@@ -1,0 +1,419 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>ETCD 原理剖析 - 小炒肉</title><meta name=Description content="ETCD 原理剖析"><meta property="og:title" content="ETCD 原理剖析"><meta property="og:description" content="ETCD 原理剖析"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/etcd-working-principle/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2020-01-01T00:00:00+00:00"><meta property="article:modified_time" content="2020-01-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="ETCD 原理剖析"><meta name=twitter:description content="ETCD 原理剖析"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/etcd-working-principle/><link rel=prev href=https://jicki.cn/jenkins-pipeline/><link rel=next href=https://jicki.cn/contaienr-network-interface/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"ETCD 原理剖析","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/etcd-working-principle\/"},"genre":"posts","keywords":"etcd","wordcount":5044,"url":"https:\/\/jicki.cn\/etcd-working-principle\/","datePublished":"2020-01-01T00:00:00+00:00","dateModified":"2020-01-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"ETCD 原理剖析"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">ETCD 原理剖析</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/etcd/><i class="far fa-folder fa-fw"></i>etcd</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2020-01-01>2020-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5044 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;<span id=/etcd-working-principle/ class=leancloud_visitors data-flag-title="ETCD 原理剖析">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#etcd-架构与内部机制>Etcd 架构与内部机制</a><ul><li><a href=#etcd-术语简介>Etcd 术语简介</a></li><li><a href=#etcd-基础概念>etcd 基础概念</a></li><li><a href=#etcd-写操作流程>etcd 写操作流程</a></li><li><a href=#etcd-读操作流程>etcd 读操作流程</a></li><li><a href=#etcd-数据版本号机制>etcd 数据版本号机制</a></li><li><a href=#etcd-leader-选举机制>etcd leader 选举机制</a></li><li><a href=#etcd-mvcc--watch>etcd mvcc && watch</a></li><li><a href=#etcd-mini-transactions>etcd mini-transactions</a></li><li><a href=#etcd-lease>etcd lease</a></li></ul></li><li><a href=#etcd-性能优化>etcd 性能优化</a><ul><li><a href=#etcd-性能分析>etcd 性能分析</a></li><li><a href=#etcd-server-硬件需求>Etcd Server 硬件需求</a></li></ul></li><li><a href=#etcd-运维>etcd 运维</a><ul><li><a href=#etcd-集群数据备份>etcd 集群数据备份</a></li><li><a href=#etcd-集群数据恢复>etcd 集群数据恢复</a></li></ul></li></ul></nav></div></div><div class=content id=content><h1 id=etcd>ETCD</h1><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/etcd/etcd.png data-srcset="https://jicki.cn/img/posts/etcd/etcd.png, https://jicki.cn/img/posts/etcd/etcd.png 1.5x, https://jicki.cn/img/posts/etcd/etcd.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/etcd/etcd.png title=etcd></p><ul><li><p>etcd 官方地址 <code>https://etcd.io/</code></p></li><li><p>etcd 是 CoreOS 公司, 最初用于解决集群管理系统中 OS 升级时的分布式并发控制、配置文件的存储于分发等问题。</p><ul><li>etcd 被设计为提供高可用、强一致性的小型 <code>key/value</code> 数据存储服务。</li></ul></li><li><p>etcd 目前已经隶属于<code>CNCF (Cloud Native Computing Foundation)</code> 基金会, 被包含 AWS 、Google、Microsoft、Alibaba 等大型互联网公司广泛使用。</p></li><li><p>etcd 最早在 2013年6月份 于 <code>github</code> 中开源。</p></li><li><p>etcd 于 2014年6月份 正式被 <code>kubernetes</code> 使用, 用于存储 <code>kubernetes</code> 集群中的元数据。</p></li><li><p>etcd 于 2015年2月份 发布 2.0 版本, 正式支持分布式协议 Raft, 并支持 1000/s 的并发 <code>writes</code> 。</p></li><li><p>etcd 于 2017年1月份 发布 3.1 版本, 全面优化了 <code>etcd</code> , 新的<code>API</code>、重写了强一致性(read)读的方法,并提供了 gRPC Proxy 接口, 以及大量 <code>gc</code> 的优化。</p></li><li><p>etcd 于 2018年11月 加入 CNCF 基金会。</p></li><li><p>etcd 于 2019年 发布 etcd v3.4 该版本又 <code>Google、AWS、Alibaba</code> 等大公司联合打造的一个版本。将进一步优化稳定性以及性能。</p></li></ul><h2 id=etcd-架构与内部机制>Etcd 架构与内部机制</h2><h3 id=etcd-术语简介>Etcd 术语简介</h3><table><thead><tr><th>名称</th><th>含义</th></tr></thead><tbody><tr><td>Raft</td><td>etcd 使用的一致性算法</td></tr><tr><td>WAL</td><td>预写<code>Log</code>, 持久化数据, 防止节点重启等导致数据丢失</td></tr><tr><td>Snapshot</td><td>快照, 数据更新超过阈值时, 会通过快照的方式来压缩 <code>WAL</code> 文件大小</td></tr><tr><td>MVCC</td><td>多版本并发控制</td></tr><tr><td>DB</td><td><code>boltdb</code>/<code>bboltdb</code>, 实际存储 <code>etcd v3</code> 的数据</td></tr><tr><td>Revision</td><td>版本号, 作为 <code>etcd</code> 数据的逻辑时钟</td></tr><tr><td>Auth revision</td><td>鉴权操作所用的版本号, 为了避免 <code>TOCTOU</code> 问题引入</td></tr><tr><td>Propose</td><td>发起一次 <code>Raft</code> 请求提案</td></tr><tr><td>Committed</td><td>一半以上的节点同意这次请求后的状态, 此时数据可以被应用层 <code>apply</code></td></tr><tr><td>Apply</td><td>应用层实际将 <code>Committed</code> 的数据应用到 <code>DB</code></td></tr><tr><td>Compact</td><td>压缩历史版本数据</td></tr><tr><td>Defrag</td><td>碎片整理, 压缩 <code>etcd</code> 的 <code>db</code> 存储大小</td></tr><tr><td>Endpoint</td><td>客户端指定的 <code>etcd</code> 访问地址</td></tr><tr><td>Node</td><td>组成 <code>etcd</code> 集群的节点</td></tr><tr><td>Term</td><td><code>Leader</code> 任期, 每进行一次 <code>leader</code> 选举 <code>Term</code> 会增加 1</td></tr><tr><td>Index</td><td>单调递增, 每次经过 <code>Raft</code> 模块发起变更操作时由 <code>leader</code> 增加</td></tr><tr><td>CommittedIndex</td><td>经过 <code>Raft</code> 协议同意提交的数据 <code>Index</code></td></tr><tr><td>AppliedIndex</td><td>已经被应用层应用的 <code>Index</code></td></tr><tr><td>ConsistentIndex</td><td>为保证不重复 <code>Apply</code> 同一条数据引入, 保证 <code>Apply</code> 操作的幂等性</td></tr><tr><td>ReadIndex</td><td>通过 <code>Raft</code> 模块获取 <code>leader</code> 当前的 <code>committedIndex</code></td></tr></tbody></table><h3 id=etcd-基础概念>etcd 基础概念</h3><ul><li><p>etcd 是一个 <code>分布式</code>、<code>强一致性可靠</code>、<code>key/value</code> 存储系统。 它主要用于存储分布式系统中的 关键数据。</p><ul><li><p>etcd <code>key/value</code>存储是按照 有序 <code>key</code> 排列的, 可以顺序遍历。</p></li><li><p>因为 <code>key</code> 有序, 所以 <code>etcd</code> 支持按目录结构高效遍历。</p></li><li><p>支持复杂事务, 提供类似 <code>if ... then ... else ...</code> 的事务能力。</p></li><li><p>基于租约机制实现 <code>key</code> 的 <code>TTL</code> 过期。</p></li></ul></li><li><p>etcd 包含二种状态：<code>Leader</code> <code>Follower</code></p></li><li><p>etcd 集群通常由 奇数(最低3)个 etcd 组成。</p><ul><li><p>集群中多个 etcd 通过 <code>Raft consensus algorithm</code> 算法进行协同, 多个 etcd 会通过 <code>Raft</code> 算法选举出一个 <code>Leader</code>, 由 <code>Leader</code> 节点进行数据同步, 以及数据分发。</p></li><li><p><code>etcd</code> 通过 <code>boltdb</code> 持久化存储数据。</p></li><li><p>当 <code>Leader</code> 出现故障时, 集群中的 etcd 会投票选举出另一个 <code>Leader</code> , 并重新进行数据同步以及数据分发。</p></li><li><p>客户端从任何一个 etcd 都可以进行 <code>读/写</code> 操作。</p></li><li><p>在 etcd 集群中 有一个关键概念 <code>quorum</code>、 <code>quorum = ( n + 1 ) / 2</code>, 也就是说超过集群中半数节点组成的一个团体。 集群中可以容忍故障的数量, 如  <code>(3 + 1) / 2 = 1</code> 可以容忍的故障数为1台。</p></li><li><p>在 etcd 集群中 任意两个 quorum 的成员之间一定会有交集, 只要有任意一个<code>quorum</code>存活, 其中一定存在某一个节点它包含 etcd 集群中最新的数据, 基于这种假设, <code>Raft</code> 一致性算法就可以在一个 quorum 之间采用这份最新的数据去完成数据的同步。</p><ul><li><code>quorum</code>:  在<code>Raft</code> 中超过一半以上的人数就是法定人数。</li></ul></li></ul></li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/etcd/etcd-1.png data-srcset="https://jicki.cn/img/posts/etcd/etcd-1.png, https://jicki.cn/img/posts/etcd/etcd-1.png 1.5x, https://jicki.cn/img/posts/etcd/etcd-1.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/etcd/etcd-1.png title=etcd-1></p><ul><li><p>etcd 提供了如下 <code>API</code></p><ul><li><code>Put(key, value)</code>  增加</li><li><code>Delete(key)</code>  删除</li><li><code>Get(key)</code> / <code>Get(keyFrom, keyEnd)</code>  查询</li><li><code>Watch(key)</code> / <code>Watch(key前缀)</code>  事件监听, 监听key的变化</li><li><code>Transactions(if / then / else ops).Commit()</code> 事务操作, 指定某些条件, 为<code>true</code>时执行其他操作。</li><li><code>Leasesi Grant / Revoke / KeepAlive</code></li></ul></li></ul><h3 id=etcd-写操作流程>etcd 写操作流程</h3><ul><li><p>1.  <code>etcd</code> 任一节点的 <code>etcd Server</code> 模块收到 <code>Client</code> 写请求</p><ul><li>1.1.  如果是 <code>follower</code> 节点, 会先通过 <code>Raft</code> 模块将请求转发至 <code>leader</code> 节点处理。</li></ul></li><li><p>2.  <code>etcd Server</code> 将请求封装为 <code>Raft</code> 请求, 然后提交给 <code>Raft</code> 模块处理。</p></li><li><p>3.  <code>leader</code> 通过 <code>Raft</code> 协议与集群中 <code>follower</code> 节点进行交互, 将消息复制到 <code>follower</code> 节点, 于此同时, 并行将日志持久化到 <code>WAL</code>。</p></li><li><p>4.  <code>follower</code> 节点对该请求进行响应, 回复自己是否同意该请求。</p></li><li><p>5.  当集群中超过半数节点<code>（(n/2)+1 members ）</code>同意接收这条日志数据时, 表示该请求可以被<code>Commit</code>, <code>Raft</code> 模块通知 <code>etcd Server</code> 该日志数据已经 <code>Commit</code>, 可以进行 <code>Apply</code>。</p></li><li><p>6.  各个节点的 <code>etcd Server</code> 的 <code>applierV3</code> 模块异步进行 <code>Apply</code> 操作, 并通过 <code>MVCC</code> 模块写入后端存储 <code>BoltDB</code>。</p></li><li><p>7.  当 <code>client</code> 所连接的节点数据 <code>apply</code> 成功后, 会返回给客户端 <code>apply</code> 的结果。</p></li></ul><h3 id=etcd-读操作流程>etcd 读操作流程</h3><ul><li><p>1.  <code>etcd</code> 任一节点的 <code>etcd Server</code> 模块收到客户端读请求<code>(Range 请求)</code>。</p></li><li><p>2.  判断读请求类型, 如果是串行化读<code>(serializable)</code>则直接进入 <code>Apply</code> 流程。</p></li><li><p>3.  如果是线性一致性读<code>(linearizable)</code>, 则进入 <code>Raft</code> 模块。</p></li><li><p>4.  <code>Raft</code> 模块向 <code>leader</code> 发出 <code>ReadIndex</code> 请求, 获取当前集群已经提交的最新数据 <code>Index</code> 。</p></li><li><p>5.  等待本地 <code>AppliedIndex</code> 大于或等于 <code>ReadIndex</code> 获取的 <code>CommittedIndex</code> 时, 进入 <code>Apply</code> 流程。</p></li><li><p>6.  <code>Apply</code> 流程:  通过 <code>Key</code> 名从 <code>KV Index</code> 模块获取 <code>Key</code> 最新的 <code>Revision</code>, 再通过 <code>Revision</code> 从 <code>BoltDB</code> 获取对应的 <code>Key</code> 和 <code>Value</code>。</p></li></ul><h3 id=etcd-数据版本号机制>etcd 数据版本号机制</h3><blockquote><p>etcd 的数据版本号机制非常重要</p></blockquote><ul><li><p><code>term</code>: 全局单调递增 (64bits), <code>term</code> 表示整个集群中 <code>leader</code> 的任期, 当集群中发生 <code>leader</code> 切换, 如: <code>leader</code>节点故障、<code>leader</code>网络故障、整个集群重启都会发生 <code>leader</code> 切换, 这个时候 <code>term = term + 1</code>。</p></li><li><p><code>revision</code>: 全局单调递增 (64bits), <code>revision</code> 表示在整个集群中数据变更版本号, 当集群中数据发生变更, 包括 <code>创建</code>、<code>修改</code>、<code>删除</code> 的时候, <code>revision = revision + 1</code>。</p></li><li><p><code>Key/Vaule</code>:</p><ul><li><p><code>Create_revision</code>:  表示在当前 <code>Key/Value</code> 中在整个集群数据中创建时(revision)的版本号。每个 <code>Key/Value</code> 都有一个 <code>Create_revision</code>。</p></li><li><p><code>mod_revision</code>:  表示当前 <code>Key/Value</code> 等于当前修改时的全局的版本数 (revision) 既 <code>mod_version = 当前 revision</code>。</p></li><li><p><code>version</code>:   表示当前 <code>Key/Value</code> 被修改了多少次。</p></li></ul></li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/etcd/etcd-2.png data-srcset="https://jicki.cn/img/posts/etcd/etcd-2.png, https://jicki.cn/img/posts/etcd/etcd-2.png 1.5x, https://jicki.cn/img/posts/etcd/etcd-2.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/etcd/etcd-2.png title=etcd-3></p><ul><li><p>实际例子操作</p><ul><li>查看 key 的相关版本信息</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-1 opt]# etcdctl -w json get key0 | jq
+{
+  # header 下显示的是 etcd 全局中的信息
+  &#34;header&#34;: {
+    &#34;cluster_id&#34;: 12826157174689708000,
+    &#34;member_id&#34;: 15154619590888327000,
+    # revision 全局数据变更版本号  
+    &#34;revision&#34;: 4462858,
+    # term 是全局 leader 任期
+    &#34;raft_term&#34;: 4
+  },
+  # kvs 表示当前 key/value 的信息
+  &#34;kvs&#34;: [
+    {
+      # key 在这里显示是 base64 编码后的二进制数
+      &#34;key&#34;: &#34;a2V5MA==&#34;,
+      # create_revision 与 mod_revision 相同
+      # 因为没有对 key0 进行任何的修改  
+      &#34;create_revision&#34;: 4462566,
+      # 如果对 key0 进行修改
+      # mod_revision 等于 当前 revision 版本数
+      &#34;mod_revision&#34;: 4462566,
+      # version 为 1 如果对 key0 进行修改
+      # version 会递增修改的次数
+      &#34;version&#34;: 1,
+      # value 在这里显示是 base64 编码后的二进制数
+      &#34;value&#34;: &#34;dmFsdWUw&#34;
+    }
+  ],
+  # 返回的数据条数
+  &#34;count&#34;: 1
+}
+
+</code></pre></td></tr></table></div></div><h3 id=etcd-leader-选举机制>etcd leader 选举机制</h3><ol><li><p>集群选举 <code>Leader</code> 需要半数以上节点参与</p></li><li><p>节点 <code>revision</code> 版本最大的允许选举为 <code>Leader</code></p></li><li><p>节点中 <code>revision</code> 相同, 则 <code>term</code> 越大的允许选举为 <code>Leader</code></p></li></ol><h3 id=etcd-mvcc--watch>etcd mvcc && watch</h3><ul><li><p><code>mvcc</code>:   全称 <code>Multi-Version Concurrency Control</code> 即多版本并发控制。</p><ul><li><code>mvcc</code>:   是一种并发控制的方法, 一般在数据库管理系统中, 实现对数据库的并发访问。</li></ul></li><li><p>在 <code>etcd</code> 中, 支持对同一个 <code>Key</code> 发起多次数据修改。因为已经知道每次数据修改都对应一个版本号<code>(mod_revision)</code>, 多次修改就意味着一个 <code>key</code> 中存在多个版本, 在查询数据的时候可以通过不指定版本号查询<code>Get key</code>, 这时 <code>etcd</code> 会返回该数据的最新版本。当我们指定一个版本号查询数据后<code>Get --rev=1 Key</code>, 可以获取到一个 <code>Key</code> 的历史版本。</p></li><li><p>在 <code>watch</code> 的时候指定数据的版本, 创建一个 <code>watcher</code>, 并通过这个 <code>watcher</code> 提供的一个数据管道, 能够获取到指定的 <code>revision</code> 之后所有的数据变更。如果指定的 <code>revision</code> 是一个旧版本, 可以立即拿到从旧版本到当前版本所有的数据更新。并且, <code>watch</code> 的机制会保证 <code>etcd</code> 中, 该 <code>Key</code> 的数据发生后续的修改后, 依然可以从这个数据管道中拿到数据增量的更新。</p></li><li><p>在 <code>etcd</code> 中 所有的数据都存储在一个 <code>b + tree</code> 中。</p><ul><li><p><code>b + tree</code> 是保存在磁盘中, 并通过 <code>mmap</code> 的方式映射到内存用来查询操作。</p><ul><li><code>mmap</code>  是一种内存映射文件的方法, 即将一个文件或者其对象映射到进程的内存地址空间, 实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系。</li></ul></li><li><p><code>b + tree</code>  维护着 <code>revision</code> 到 <code>value</code> 的映射关系。也就是说当指定 <code>revision</code> 查询数据的时候, 就可以通过该 <code>b + tree</code> 直接返回数据。当我们通过 <code>watch</code> 来订阅数据的时候, 也可以通过这个 <code>b + tree</code> 维护的 <code>revision</code> 到 <code>value</code> 映射关系, 从而通过指定的 <code>revision</code> 开始遍历这个<code>b + tree</code> ,拿到所有的数据更新。</p></li></ul></li><li><p>在 <code>etcd</code> 内部还维护着另外一个 <code>b + tree</code> 。它管理着 <code>key</code> 到 <code>revision</code> 的映射关系。当需要查询 <code>Key</code> 对应数据的时候, 会通过 <code>etcd</code> 内部的 <code>b + tree</code>, 将 <code>key</code> 翻译成 <code>revision</code>。再通过磁盘中的 <code>b + tree</code> 的 <code>revision</code> 获取到对应的 <code>value</code>。</p></li><li><p>在 <code>etcd</code> 中 一个数据是存在多个版本的。</p></li><li><p>在 <code>etcd</code> 持续运行过程中会不断的发生修改, 意味着 <code>etcd</code> 中内存及磁盘的数据都会持续增长。这对资源有限的场景来说是无法接受的。因此在 <code>etcd</code> 中会周期性的运行一个 <code>Compaction</code> 的机制来清理历史数据。 对于一个 <code>Key</code> 的历史版本数据, 可以选择清理掉。</p></li></ul><h3 id=etcd-mini-transactions>etcd mini-transactions</h3><ul><li>etcd 的 <code>transaction</code> 机制比较简单, 基本可以理解为一段 <code>if else</code> 程序, 在 <code>if</code> 中可以提供多个操作。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 进入 事务操作
+[root@k8s-node-1 opt]# etcdctl txn -i
+compares:
+# 执行条件
+value(&#34;key0&#34;) = &#34;value0&#34;
+
+# 成功时执行的命令
+success requests (get, put, del):
+get key1
+
+# 失败时执行的命令
+failure requests (get, put, del):
+put key0 value0  
+get key2
+
+
+# 结果判定
+SUCCESS
+
+# 返回执行后的命令
+key1
+value1
+
+</code></pre></td></tr></table></div></div><ul><li><p>在 <code>etcd</code> 内部会保证整个事务操作的原子性。也就是说 <code>If</code> 操作所有的比较条件, 其看到的视图, 一定是一致的。同时它能够确保在争执条件中, 多个操作的原子性不会出现 <code>etc</code> 仅执行了一半的情况。</p></li><li><p>通过 <code>etcd</code> 提供的事务操作, 我们可以在多个竞争中去保证数据读写的一致性, 比如 <code>Kubernetes</code> , 它正是利用了 <code>etcd</code> 的事务机制, 来实现多个 <code>Kubernetes API server</code> 对同样一个数据修改的一致性。</p></li></ul><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/etcd/etcd-3.png data-srcset="https://jicki.cn/img/posts/etcd/etcd-3.png, https://jicki.cn/img/posts/etcd/etcd-3.png 1.5x, https://jicki.cn/img/posts/etcd/etcd-3.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/etcd/etcd-3.png title=etcd-3></p><ul><li><p><code>Kubernetes</code> 在使用 <code>etcd</code> 做为元数据存储后</p><ul><li><p>元数据实现高可用, 无单点故障</p></li><li><p>系统无状态, 故障修复相对容易</p></li><li><p>系统可水平扩展, 横向提升性能以及容量</p></li><li><p>简化整体架构, 降低维护的复杂度</p></li></ul></li></ul><h3 id=etcd-lease>etcd lease</h3><ul><li><p><code>lease</code> 是分布式系统中一个常见的概念, 用于代表一个租约。通常情况下, 在分布式系统中需要去检测一个节点是否存活的时候, 就需要租约机制。</p></li><li><p><code>etcd</code> 通过 <code>CreateLease(时间)</code> 来创建一个租约。如: <code>lease = CreateLease(10s)</code> 创建一个 10s 过期的一个租约。</p><ul><li><p>通过 Put(key1, value1, lease) 可以将之前创建的 租约绑定到 <code>key1</code> 中(同一个租约可以绑定多个key)。当租约过期时, <code>etcd</code>会自动清理 <code>key1</code> 对应的 <code>value1</code> 值。</p></li><li><p><code>KeepAlive</code> 方法:  可以续约租期。</p><ul><li>比如说需要检测分布式系统中一个进程是否存活, 那么就会在这个分布式进程中去访问 <code>etcd</code> 并且创建一个租约, 同时在该进程中去调用 <code>KeepAlive</code> 的方法, 与 <code>etcd</code> 保持一个租约不断的续约。当进程挂掉了, 租约在进程挂掉的一段时间就会被 <code>etcd</code> 自动清理掉。所以可以通过这个机制来判定节点是否存活。</li></ul></li></ul></li></ul><h2 id=etcd-性能优化>etcd 性能优化</h2><h3 id=etcd-性能分析>etcd 性能分析</h3><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/etcd/etcd-4.png data-srcset="https://jicki.cn/img/posts/etcd/etcd-4.png, https://jicki.cn/img/posts/etcd/etcd-4.png 1.5x, https://jicki.cn/img/posts/etcd/etcd-4.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/etcd/etcd-4.png title=etcd性能></p><h3 id=etcd-server-硬件需求>Etcd Server 硬件需求</h3><ul><li><p><code>etcd</code> 硬件需求 (如下为官方提供的参考数据)</p><ul><li><code>小型集群</code>  少于100个客户端, 每秒少于200个请求, 存储数据少于100MB。如: 少于50节点的<code>Kubernetes</code>集群。</li></ul></li></ul><table><thead><tr><th>CPU</th><th>内存</th><th>最大并发</th><th>磁盘吞吐量</th></tr></thead><tbody><tr><td>2核</td><td>4G</td><td>1500IOPS</td><td>50MB/S</td></tr></tbody></table><ul><li><code>中型集群</code>  少于500个客户端, 每秒少于1000个请求, 存储数据少于500MB。如: 少于250节点的<code>Kubernetes</code>集群。</li></ul><table><thead><tr><th>CPU</th><th>内存</th><th>最大并发</th><th>磁盘吞吐量</th></tr></thead><tbody><tr><td>4核</td><td>16G</td><td>5000IOPS</td><td>100MB/S</td></tr></tbody></table><ul><li><code>大型集群</code>  少于1500个客户端, 每秒少于10000个请求, 存储数据少于1GB。 如: 少于1000节点的<code>Kubernetes</code>集群。</li></ul><table><thead><tr><th>CPU</th><th>内存</th><th>最大并发</th><th>磁盘吞吐量</th></tr></thead><tbody><tr><td>8核</td><td>32G</td><td>8000IOPS</td><td>200MB/S</td></tr></tbody></table><ul><li><code>超大型集群</code>  大于1500个客户端, 每秒处理大于10000个请求, 存储数据大于1GB。如: 少于3000个节点的<code>Kubernetes</code>集群</li></ul><table><thead><tr><th>CPU</th><th>内存</th><th>最大并发</th><th>磁盘吞吐量</th></tr></thead><tbody><tr><td>16核</td><td>64G</td><td>15000IOPS</td><td>300MB/S</td></tr></tbody></table><h2 id=etcd-运维>etcd 运维</h2><h3 id=etcd-集群数据备份>etcd 集群数据备份</h3><ul><li>准备一些测试数据</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+
+<span class=nb>export</span> <span class=nv>IPS</span><span class=o>=</span><span class=s2>&#34;https://10.0.0.1:2379,https://10.0.0.2:2379,https://10.0.0.3:2379&#34;</span>
+
+
+<span class=k>for</span><span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span>i&lt;<span class=o>=</span>10<span class=p>;</span>i++<span class=o>))</span><span class=p>;</span><span class=k>do</span>
+  etcdctl --endpoints<span class=o>=</span><span class=si>${</span><span class=nv>IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>      --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>      --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>      --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>      put key<span class=nv>$i</span> value<span class=nv>$i</span>
+<span class=k>done</span>
+
+
+<span class=k>for</span><span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span>i&lt;<span class=o>=</span>10<span class=p>;</span>i++<span class=o>))</span><span class=p>;</span><span class=k>do</span>
+  etcdctl --endpoints<span class=o>=</span><span class=si>${</span><span class=nv>IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>      --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>      --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>      --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>      get key<span class=nv>$i</span>
+<span class=k>done</span>
+
+</code></pre></td></tr></table></div></div><ul><li><p>备份 Etcd 快照</p><ul><li><p><code>snapshot save</code> 命令备份。</p></li><li><p>在集群状态正常的情况下对任意一个节点进行数据备份都可以。</p><ul><li><code>etcd v3.4</code> 只能一个节点进行数据备份。<code>Snapshot can only be requested from one etcd node</code></li></ul></li><li><p>在使用 <code>ETCD API</code> 3 的情况下,只会备份 3 的数据。</p></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nv>ETCD_BACK</span><span class=o>=</span>/opt/etcd_bak
+mkdir -p <span class=si>${</span><span class=nv>ETCD_BACK</span><span class=si>}</span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+etcdctl --endpoints<span class=o>=</span>https://10.0.0.1 <span class=se>\
+</span><span class=se></span>        --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>        --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>        --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>        snapshot save <span class=si>${</span><span class=nv>ETCD_BACK</span><span class=si>}</span>/snap-<span class=k>$(</span>date +%Y%m%d%H%M<span class=k>)</span>.db
+</code></pre></td></tr></table></div></div><ul><li>删除创建的数据</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+
+<span class=nb>export</span> <span class=nv>IPS</span><span class=o>=</span><span class=s2>&#34;https://10.0.0.1:2379,https://10.0.0.2:2379,https://10.0.0.3:2379&#34;</span>
+
+
+<span class=k>for</span><span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span>i&lt;<span class=o>=</span>10<span class=p>;</span>i++<span class=o>))</span><span class=p>;</span><span class=k>do</span>
+  etcdctl --endpoints<span class=o>=</span><span class=si>${</span><span class=nv>IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>      --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>      --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>      --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>      del key<span class=nv>$i</span>
+<span class=k>done</span>
+
+
+<span class=k>for</span><span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span>i&lt;<span class=o>=</span>10<span class=p>;</span>i++<span class=o>))</span><span class=p>;</span><span class=k>do</span>
+  etcdctl --endpoints<span class=o>=</span><span class=si>${</span><span class=nv>IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>      --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>      --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>      --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>      get key<span class=nv>$i</span>
+<span class=k>done</span>
+
+</code></pre></td></tr></table></div></div><h3 id=etcd-集群数据恢复>etcd 集群数据恢复</h3><ul><li><p>恢复集群数据</p><ul><li><p><code>etcdctl snapshot restore</code> 命令恢复</p></li><li><p>恢复数据, 需要将快照覆盖到所有<code>ETCD</code>集群节点。</p></li></ul></li><li><p><code>节点-1</code></p><ul><li><p><code>--data-dir</code>  指定恢复数据的目录, 如果数据目录存在会报错, 可以选择删除原来的, 或者备份为新的目录。</p></li><li><p><code>--name</code>  每个节点的 <code>name</code> 都不相同</p></li><li><p><code>initial-cluster</code> 配置为集群所有节点的 2380 内部通讯端口</p></li><li><p><code>initial-cluster-token</code> 必须配置与原来相同</p></li><li><p><code>initial-advertise-peer-urls</code> 配置为恢复节点的 <code>IP:2380</code></p></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+<span class=nb>export</span> <span class=nv>ETCD_IPS</span><span class=o>=</span><span class=s2>&#34;etcd1=https://10.0.0.1:2380,etcd2=https://10.0.0.2:2380,etcd3=https://10.0.0.3:2380&#34;</span>
+
+etcdctl  <span class=se>\
+</span><span class=se></span>  --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>  --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>  --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>  snapshot restore /opt/etcd_bak/snapshot.db <span class=se>\
+</span><span class=se></span>  --data-dir<span class=o>=</span>/var/lib/etcd-new <span class=se>\
+</span><span class=se></span>  --name etcd1 <span class=se>\
+</span><span class=se></span>  --initial-cluster <span class=si>${</span><span class=nv>ETCD_IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>  --initial-cluster-token etcd-cluster <span class=se>\
+</span><span class=se></span>  --initial-advertise-peer-urls https://10.0.0.1:2380
+
+</code></pre></td></tr></table></div></div><ul><li><p><code>节点-2</code></p><ul><li><p><code>--data-dir</code>  指定恢复数据的目录, 如果数据目录存在会报错, 可以选择删除原来的, 或者备份为新的目录。</p></li><li><p><code>--name</code>  每个节点的 <code>name</code> 都不相同</p></li><li><p><code>initial-cluster</code> 配置为集群所有节点的 2380 内部通讯端口</p></li><li><p><code>initial-cluster-token</code> 必须配置与原来相同</p></li><li><p><code>initial-advertise-peer-urls</code> 配置为恢复节点的 <code>IP:2380</code></p></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+<span class=nb>export</span> <span class=nv>ETCD_IPS</span><span class=o>=</span><span class=s2>&#34;etcd1=https://10.0.0.1:2380,etcd2=https://10.0.0.2:2380,etcd3=https://10.0.0.3:2380&#34;</span>
+
+etcdctl  <span class=se>\
+</span><span class=se></span>  --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>  --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>  --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>  snapshot restore /opt/etcd_bak/snapshot.db <span class=se>\
+</span><span class=se></span>  --data-dir<span class=o>=</span>/var/lib/etcd-new <span class=se>\
+</span><span class=se></span>  --name etcd2 <span class=se>\
+</span><span class=se></span>  --initial-cluster <span class=si>${</span><span class=nv>ETCD_IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>  --initial-cluster-token etcd-cluster <span class=se>\
+</span><span class=se></span>  --initial-advertise-peer-urls https://10.0.0.2:2380
+
+</code></pre></td></tr></table></div></div><ul><li><p><code>节点-3</code></p><ul><li><p><code>--data-dir</code>  指定恢复数据的目录, 如果数据目录存在会报错, 可以选择删除原来的, 或者备份为新的目录。</p></li><li><p><code>--name</code>  每个节点的 <code>name</code> 都不相同</p></li><li><p><code>initial-cluster</code> 配置为集群所有节点的 2380 内部通讯端口</p></li><li><p><code>initial-cluster-token</code> 必须配置与原来相同</p></li><li><p><code>initial-advertise-peer-urls</code> 配置为恢复节点的 <code>IP:2380</code></p></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+<span class=nb>export</span> <span class=nv>ETCD_IPS</span><span class=o>=</span><span class=s2>&#34;etcd1=https://10.0.0.1:2380,etcd2=https://10.0.0.2:2380,etcd3=https://10.0.0.3:2380&#34;</span>
+
+etcdctl  <span class=se>\
+</span><span class=se></span>  --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>  --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>  --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>  snapshot restore /opt/etcd_bak/snapshot.db <span class=se>\
+</span><span class=se></span>  --data-dir<span class=o>=</span>/var/lib/etcd-new <span class=se>\
+</span><span class=se></span>  --name etcd3 <span class=se>\
+</span><span class=se></span>  --initial-cluster <span class=si>${</span><span class=nv>ETCD_IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>  --initial-cluster-token etcd-cluster <span class=se>\
+</span><span class=se></span>  --initial-advertise-peer-urls https://10.0.0.3:2380
+
+</code></pre></td></tr></table></div></div><ul><li><p>重启所有 <code>etcd</code> 服务</p><ul><li>如上恢复数据到新的数据目录 <code>--data-dir</code></li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 停止所有节点的 etcd 服务
+
+# 系统部署的 etcd
+systemctl stop etcd
+
+
+# 容器化的
+docker stop etcd
+
+</code></pre></td></tr></table></div></div><ul><li>备份原来的数据目录</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+mv /var/lib/etcd /var/lib/etcd-old
+
+</code></pre></td></tr></table></div></div><ul><li>使用新的数据</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>mv /var/lib/etcd-new /var/lib/etcd
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 重新启动所有节点的 etcd 服务
+
+systemctl start etcd
+
+
+# 容器化的
+docker start etcd
+
+</code></pre></td></tr></table></div></div><ul><li>查看节点的情况</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># status
+etcdctl  \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  endpoint status -w table 
+
+</code></pre></td></tr></table></div></div><ul><li>查询恢复数据</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash><span class=cp>#!/bin/bash
+</span><span class=cp></span>
+<span class=nb>export</span> <span class=nv>ETCDCTL_API</span><span class=o>=</span><span class=m>3</span>
+
+<span class=nb>export</span> <span class=nv>IPS</span><span class=o>=</span><span class=s2>&#34;https://10.0.0.1:2379,https://10.0.0.2:2379,https://10.0.0.3:2379&#34;</span>
+
+<span class=k>for</span><span class=o>((</span><span class=nv>i</span><span class=o>=</span>1<span class=p>;</span>i&lt;<span class=o>=</span>10<span class=p>;</span>i++<span class=o>))</span><span class=p>;</span><span class=k>do</span>
+  etcdctl --endpoints<span class=o>=</span><span class=si>${</span><span class=nv>IPS</span><span class=si>}</span> <span class=se>\
+</span><span class=se></span>      --cacert<span class=o>=</span>/etc/kubernetes/pki/etcd/ca.crt <span class=se>\
+</span><span class=se></span>      --cert<span class=o>=</span>/etc/kubernetes/pki/etcd/server.crt <span class=se>\
+</span><span class=se></span>      --key<span class=o>=</span>/etc/kubernetes/pki/etcd/server.key <span class=se>\
+</span><span class=se></span>      get key<span class=nv>$i</span>
+<span class=k>done</span>
+
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2020-01-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/etcd-working-principle/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析" data-via=jicki234 data-hashtags=etcd><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/etcd-working-principle/ data-hashtag=etcd><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析" data-description="ETCD 原理剖析"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析" data-description="ETCD 原理剖析"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/etcd-working-principle/ data-title="ETCD 原理剖析"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/etcd/>etcd</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/jenkins-pipeline/ class=prev rel=prev title="Jenkins Pipeline 语法"><i class="fas fa-angle-left fa-fw"></i>Jenkins Pipeline 语法</a>
+<a href=/contaienr-network-interface/ class=next rel=next title="Container Network Interface - CNI">Container Network Interface - CNI<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

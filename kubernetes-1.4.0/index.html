@@ -1,0 +1,523 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>docker kubernetes 1.4 部署 - 小炒肉</title><meta name=Description content="docker kubernetes 1.4 部署"><meta property="og:title" content="docker kubernetes 1.4 部署"><meta property="og:description" content="docker kubernetes 1.4 部署"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/kubernetes-1.4.0/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2016-10-13T00:00:00+00:00"><meta property="article:modified_time" content="2016-10-13T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="docker kubernetes 1.4 部署"><meta name=twitter:description content="docker kubernetes 1.4 部署"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/kubernetes-1.4.0/><link rel=prev href=https://jicki.cn/kubernetes-1.3.8/><link rel=next href=https://jicki.cn/gitlab-runner-cn/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"docker kubernetes 1.4 部署","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/kubernetes-1.4.0\/"},"genre":"posts","wordcount":1394,"url":"https:\/\/jicki.cn\/kubernetes-1.4.0\/","datePublished":"2016-10-13T00:00:00+00:00","dateModified":"2016-10-13T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"docker kubernetes 1.4 部署"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">docker kubernetes 1.4 部署</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2016-10-13>2016-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1394 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;<span id=/kubernetes-1.4.0/ class=leancloud_visitors data-flag-title="docker kubernetes 1.4 部署">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#环境说明>环境说明</a></li><li><a href=#初始化环境>初始化环境</a></li></ul><ul><li><a href=#安装依赖>安装依赖</a></li><li><a href=#增加yum-文件>增加yum 文件</a></li><li><a href=#yum-安装程序>yum 安装程序</a></li><li><a href=#下载镜像>下载镜像</a></li><li><a href=#启动-kubelet>启动 kubelet</a></li><li><a href=#init-初始化集群>init 初始化集群</a></li><li><a href=#配置子节点>配置子节点</a></li><li><a href=#安装-pod-网络>安装 POD 网络</a></li><li><a href=#glusterfs-作为-volume>GlusterFS 作为 volume</a></li><li><a href=#yaml-文件>yaml 文件</a></li></ul></nav></div></div><div class=content id=content><h1 id=k8s-14>k8s 1.4</h1><h2 id=环境说明>环境说明</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>node-1: 10.6.0.140
+node-2: 10.6.0.187
+node-3: 10.6.0.188
+</code></pre></td></tr></table></div></div><p>kubernetes 集群，包含 master 节点，与 node 节点。</p><h2 id=初始化环境>初始化环境</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>hostnamectl --static set-hostname hostname
+
+10.6.0.140 - k8s-master
+10.6.0.187 - k8s-node-1
+10.6.0.188 - k8s-node-2
+</code></pre></td></tr></table></div></div><p>配置 /etc/hosts</p><p>添加</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>10.6.0.140 k8s-master
+10.6.0.187 k8s-node-1
+10.6.0.188 k8s-node-2
+</code></pre></td></tr></table></div></div><h1 id=安装kubernetes>安装kubernetes</h1><h2 id=安装依赖>安装依赖</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>yum install -y socat
+</code></pre></td></tr></table></div></div><h2 id=增加yum-文件>增加yum 文件</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF&gt; /etc/yum.repos.d/k8s.repo
+[kubelet]
+name=kubelet
+baseurl=http://files.rm-rf.ca/rpms/kubelet/
+enabled=1
+gpgcheck=0
+EOF
+</code></pre></td></tr></table></div></div><h2 id=yum-安装程序>yum 安装程序</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>yum makecache
+
+yum install -y kubelet kubeadm kubectl kubernetes-cni
+</code></pre></td></tr></table></div></div><p>由于 google 被墙, 所以使用 kubeadm init 创建 集群 的时候会出现卡住</p><p>国内已经有人将镜像上传至 docker hub 里面了</p><h2 id=下载镜像>下载镜像</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>docker pull chasontang/kube-proxy-amd64:v1.4.0
+docker pull chasontang/kube-discovery-amd64:1.0
+docker pull chasontang/kubedns-amd64:1.7
+docker pull chasontang/kube-scheduler-amd64:v1.4.0
+docker pull chasontang/kube-controller-manager-amd64:v1.4.0
+docker pull chasontang/kube-apiserver-amd64:v1.4.0
+docker pull chasontang/etcd-amd64:2.2.5
+docker pull chasontang/kube-dnsmasq-amd64:1.3
+docker pull chasontang/exechealthz-amd64:1.1
+docker pull chasontang/pause-amd64:3.0
+
+
+# 下载以后使用 docker tag 命令将其做别名改为 gcr.io/google_containers
+
+
+docker tag chasontang/kube-proxy-amd64:v1.4.0  gcr.io/google_containers/kube-proxy-amd64:v1.4.0
+docker tag chasontang/kube-discovery-amd64:1.0 gcr.io/google_containers/kube-discovery-amd64:1.0
+docker tag chasontang/kubedns-amd64:1.7  gcr.io/google_containers/kubedns-amd64:1.7
+docker tag chasontang/kube-scheduler-amd64:v1.4.0  gcr.io/google_containers/kube-scheduler-amd64:v1.4.0
+docker tag chasontang/kube-controller-manager-amd64:v1.4.0  gcr.io/google_containers/kube-controller-manager-amd64:v1.4.0
+docker tag chasontang/kube-apiserver-amd64:v1.4.0  gcr.io/google_containers/kube-apiserver-amd64:v1.4.0
+docker tag chasontang/etcd-amd64:2.2.5  gcr.io/google_containers/etcd-amd64:2.2.5
+docker tag chasontang/kube-dnsmasq-amd64:1.3  gcr.io/google_containers/kube-dnsmasq-amd64:1.3
+docker tag chasontang/exechealthz-amd64:1.1  gcr.io/google_containers/exechealthz-amd64:1.1
+docker tag chasontang/pause-amd64:3.0  gcr.io/google_containers/pause-amd64:3.0
+
+
+# 清除原来下载的镜像
+
+
+docker rmi chasontang/kube-proxy-amd64:v1.4.0
+docker rmi chasontang/kube-discovery-amd64:1.0
+docker rmi chasontang/kubedns-amd64:1.7
+docker rmi chasontang/kube-scheduler-amd64:v1.4.0
+docker rmi chasontang/kube-controller-manager-amd64:v1.4.0
+docker rmi chasontang/kube-apiserver-amd64:v1.4.0
+docker rmi chasontang/etcd-amd64:2.2.5
+docker rmi chasontang/kube-dnsmasq-amd64:1.3
+docker rmi chasontang/exechealthz-amd64:1.1
+docker rmi chasontang/pause-amd64:3.0
+
+</code></pre></td></tr></table></div></div><h2 id=启动-kubelet>启动 kubelet</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl enable kubelet
+systemctl start kubelet
+</code></pre></td></tr></table></div></div><h2 id=init-初始化集群>init 初始化集群</h2><p>kubenetes 1.4 利用 kubeadm 创建 集群</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubeadm init --api-advertise-addresses=10.6.0.140
+
+
+&lt;master/tokens&gt; generated token: &#34;eb4d40.67aac8417294a8cf&#34;
+&lt;master/pki&gt; created keys and certificates in &#34;/etc/kubernetes/pki&#34;
+&lt;util/kubeconfig&gt; created &#34;/etc/kubernetes/kubelet.conf&#34;
+&lt;util/kubeconfig&gt; created &#34;/etc/kubernetes/admin.conf&#34;
+&lt;master/apiclient&gt; created API client configuration
+&lt;master/apiclient&gt; created API client, waiting for the control plane to become ready
+&lt;master/apiclient&gt; all control plane components are healthy after 10.304645 seconds
+&lt;master/apiclient&gt; waiting for at least one node to register and become ready
+&lt;master/apiclient&gt; first node has registered, but is not ready yet
+&lt;master/apiclient&gt; first node has registered, but is not ready yet
+&lt;master/apiclient&gt; first node has registered, but is not ready yet
+&lt;master/apiclient&gt; first node has registered, but is not ready yet
+&lt;master/apiclient&gt; first node has registered, but is not ready yet
+&lt;master/apiclient&gt; first node is ready after 3.004762 seconds
+&lt;master/discovery&gt; created essential addon: kube-discovery, waiting for it to become ready
+&lt;master/discovery&gt; kube-discovery is ready after 4.002661 seconds
+&lt;master/addons&gt; created essential addon: kube-proxy
+&lt;master/addons&gt; created essential addon: kube-dns
+
+kubernetes master initialised successfully!
+
+You can now join any number of machines by running the following on each node:
+
+kubeadm join --token 8609e3.c2822cf312e597e1 10.6.0.140
+
+</code></pre></td></tr></table></div></div><p>查看 kubelet 状态</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl status kubelet
+</code></pre></td></tr></table></div></div><h2 id=配置子节点>配置子节点</h2><p>子节点 启动 kubelet 首先必须启动 docker</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl enable kubelet
+systemctl start kubelet
+</code></pre></td></tr></table></div></div><p>加入集群</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubeadm join --token 8609e3.c2822cf312e597e1 10.6.0.140
+</code></pre></td></tr></table></div></div><p>查看 kubelet 状态</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>systemctl status kubelet
+</code></pre></td></tr></table></div></div><p>查看集群状态</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl get node
+NAME         STATUS    AGE
+k8s-master   Ready     1d
+k8s-node-1   Ready     1d
+k8s-node-2   Ready     1d
+</code></pre></td></tr></table></div></div><p>此时可看到 三个节点 都已经 Ready , 但是其实 Pod 只会运行在 node 节点</p><p>如果需要所有节点，包括master 也运行 Pod 需要运行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback> kubectl taint nodes --all dedicated-
+</code></pre></td></tr></table></div></div><h2 id=安装-pod-网络>安装 POD 网络</h2><p>这里使用官方推荐的 weave 网络</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl apply -f https://git.io/weave-kube
+</code></pre></td></tr></table></div></div><p>查看所有pod 状态</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl get pods --all-namespaces
+NAMESPACE     NAME                                 READY     STATUS    RESTARTS   AGE
+kube-system   etcd-k8s-master                      1/1       Running   1          49m
+kube-system   kube-apiserver-k8s-master            1/1       Running   1          48m
+kube-system   kube-controller-manager-k8s-master   1/1       Running   1          48m
+kube-system   kube-discovery-1971138125-0oq58      1/1       Running   1          49m
+kube-system   kube-dns-2247936740-ojzhw            3/3       Running   3          49m
+kube-system   kube-proxy-amd64-1hhdf               1/1       Running   1          49m
+kube-system   kube-proxy-amd64-4c2qt               1/1       Running   0          47m
+kube-system   kube-proxy-amd64-tc3kw               1/1       Running   1          47m
+kube-system   kube-scheduler-k8s-master            1/1       Running   1          48m
+kube-system   weave-net-9mrlt                      2/2       Running   2          46m
+kube-system   weave-net-oyguh                      2/2       Running   4          46m
+kube-system   weave-net-zc67d                      2/2       Running   0          46m
+</code></pre></td></tr></table></div></div><h2 id=glusterfs-作为-volume>GlusterFS 作为 volume</h2><p>官方详细说明：</p><p><a href=https://github.com/kubernetes/kubernetes/tree/master/examples/volumes/glusterfs>https://github.com/kubernetes/kubernetes/tree/master/examples/volumes/glusterfs</a></p><ol><li><p>配置 GlusterFS 集群，以及设置好 GlusterFS 的 volume , node 客户端安装 glusterfs-client</p></li><li><p>k8s-master 创建一个 endpoints.</p></li></ol><p>我这边 GlusterFS 有3个节点</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>vi glusterfs-endpoints.json
+
+
+# 每一个 GlusterFS 节点，必须写一列. 端口随意填写(1-65535)
+
+
+{
+  &#34;kind&#34;: &#34;Endpoints&#34;,
+  &#34;apiVersion&#34;: &#34;v1&#34;,
+  &#34;metadata&#34;: {
+    &#34;name&#34;: &#34;glusterfs-cluster&#34;
+  },
+  &#34;subsets&#34;: [
+    {
+      &#34;addresses&#34;: [
+        {
+          &#34;ip&#34;: &#34;10.6.0.140&#34;
+        }
+      ],
+      &#34;ports&#34;: [
+        {
+          &#34;port&#34;: 1
+        }
+      ]
+    },
+    {
+      &#34;addresses&#34;: [
+        {
+          &#34;ip&#34;: &#34;10.6.0.187&#34;
+        }
+      ],
+      &#34;ports&#34;: [
+        {
+          &#34;port&#34;: 1
+        }
+      ]
+    },
+    {
+      &#34;addresses&#34;: [
+        {
+          &#34;ip&#34;: &#34;10.6.0.188&#34;
+        }
+      ],
+      &#34;ports&#34;: [
+        {
+          &#34;port&#34;: 1
+        }
+      ]
+    }
+  ]
+}
+</code></pre></td></tr></table></div></div><p>创建 endpoints</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl create -f glusterfs-endpoints.json 
+endpoints &#34;glusterfs-cluster&#34; created
+</code></pre></td></tr></table></div></div><p>查看 endpoints</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl get endpoints
+NAME                ENDPOINTS                                AGE
+glusterfs-cluster   10.6.0.140:1,10.6.0.187:1,10.6.0.188:1   37s
+</code></pre></td></tr></table></div></div><ol start=3><li>k8s-master 创建一个 service.</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>vi glusterfs-service.json
+
+# 这里注意之前填写的 port
+
+
+{
+  &#34;kind&#34;: &#34;Service&#34;,
+  &#34;apiVersion&#34;: &#34;v1&#34;,
+  &#34;metadata&#34;: {
+    &#34;name&#34;: &#34;glusterfs-cluster&#34;
+  },
+  &#34;spec&#34;: {
+    &#34;ports&#34;: [
+      {&#34;port&#34;: 1}
+    ]
+  }
+}
+</code></pre></td></tr></table></div></div><p>创建 service</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl create -f glusterfs-service.json 
+service &#34;glusterfs-cluster&#34; created
+</code></pre></td></tr></table></div></div><p>查看 service</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl get service
+NAME                CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+glusterfs-cluster   100.71.255.174   &lt;none&gt;        1/TCP     14s
+</code></pre></td></tr></table></div></div><ol start=4><li>k8s-master 创建一个 Pod 来测试挂载</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>vi glusterfs-pod.json
+
+
+{
+    &#34;apiVersion&#34;: &#34;v1&#34;,
+    &#34;kind&#34;: &#34;Pod&#34;,
+    &#34;metadata&#34;: {
+        &#34;name&#34;: &#34;glusterfs&#34;
+    },
+    &#34;spec&#34;: {
+        &#34;containers&#34;: [
+            {
+                &#34;name&#34;: &#34;glusterfs&#34;,
+                &#34;image&#34;: &#34;gcr.io/google_containers/pause-amd64:3.0&#34;,
+                &#34;volumeMounts&#34;: [
+                    {
+                        &#34;mountPath&#34;: &#34;/mnt/glusterfs&#34;,
+                        &#34;name&#34;: &#34;glusterfsvol&#34;
+                    }
+                ]
+            }
+        ],
+        &#34;volumes&#34;: [
+            {
+                &#34;name&#34;: &#34;glusterfsvol&#34;,
+                &#34;glusterfs&#34;: {
+                    &#34;endpoints&#34;: &#34;glusterfs-cluster&#34;,
+                    &#34;path&#34;: &#34;models&#34;,
+                    &#34;readOnly&#34;: false
+                }
+            }
+        ]
+    }
+}
+</code></pre></td></tr></table></div></div><p>glusterfs 下 path 配置 glusterfs volume 的名称</p><p>readOnly: true (只读) and readOnly: false</p><p>查看 挂载的 volume</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-node-2 ~]# mount | grep models
+10.6.0.140:models on /var/lib/kubelet/pods/947390da-8f6a-11e6-9ade-d4ae52d1f0c9/volumes/kubernetes.io~glusterfs/glusterfsvol type fuse.glusterfs (rw,relatime,user_id=0,group_id=0,default_permissions,allow_other,max_read=131072)
+</code></pre></td></tr></table></div></div><h2 id=yaml-文件>yaml 文件</h2><p>编写一个 Deployment 的 yaml 文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+          - containerPort: 80
+</code></pre></td></tr></table></div></div><p>使用 kubectl create 进行创建</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>kubectl create -f nginx.yaml --record
+</code></pre></td></tr></table></div></div><p>查看 pod</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl get pod
+NAME                               READY     STATUS    RESTARTS   AGE
+nginx-deployment-646889141-459i5   1/1       Running   0          9m
+nginx-deployment-646889141-vxn29   1/1       Running   0          9m
+</code></pre></td></tr></table></div></div><p>查看 deployment</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>[root@k8s-master ~]#kubectl get deploy
+NAME               DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx-deployment   2         2         2            2           10m
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2016-10-13</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/kubernetes-1.4.0/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署" data-via=jicki234><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/kubernetes-1.4.0/><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署" data-description="docker kubernetes 1.4 部署"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署" data-description="docker kubernetes 1.4 部署"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/kubernetes-1.4.0/ data-title="docker kubernetes 1.4 部署"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/kubernetes-1.3.8/ class=prev rel=prev title="docker k8s 1.3.8 + flannel"><i class="fas fa-angle-left fa-fw"></i>docker k8s 1.3.8 + flannel</a>
+<a href=/gitlab-runner-cn/ class=next rel=next title="GitLab + Runner">GitLab + Runner<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

@@ -1,0 +1,639 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Muddery 部署 配置文档 - 小炒肉</title><meta name=Description content="Muddery 部署 配置文档"><meta property="og:title" content="Muddery 部署 配置文档"><meta property="og:description" content="Muddery 部署 配置文档"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/muddery-0.3.3/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2019-02-27T00:00:00+00:00"><meta property="article:modified_time" content="2019-02-27T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Muddery 部署 配置文档"><meta name=twitter:description content="Muddery 部署 配置文档"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/muddery-0.3.3/><link rel=prev href=https://jicki.cn/hyperledger-fabric-1.4-to-k8s/><link rel=next href=https://jicki.cn/kubeadm-1.14.1/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Muddery 部署 配置文档","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/muddery-0.3.3\/"},"genre":"posts","keywords":"Muddery, Game, python","wordcount":1851,"url":"https:\/\/jicki.cn\/muddery-0.3.3\/","datePublished":"2019-02-27T00:00:00+00:00","dateModified":"2019-02-27T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Muddery 部署 配置文档"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Muddery 部署 配置文档</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/python/><i class="far fa-folder fa-fw"></i>python</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2019-02-27>2019-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1851 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/muddery-0.3.3/ class=leancloud_visitors data-flag-title="Muddery 部署 配置文档">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#muddery-特点>Muddery 特点</a></li></ul><ul><li><a href=#安装所需软件>安装所需软件</a></li><li><a href=#配置-virtualenv>配置 virtualenv</a></li><li><a href=#配置-muddery>配置 muddery</a></li><li><a href=#初始化-模板>初始化 模板</a></li><li><a href=#启动游戏>启动游戏</a></li><li><a href=#登录-web-ui>登录 web-ui</a></li><li><a href=#编辑游戏>编辑游戏</a></li></ul></nav></div></div><div class=content id=content><h1 id=muddery-简介>Muddery 简介</h1><blockquote><p>程序源代码：https://github.com/muddery/muddery</p><p>Muddery是一个用Python编写的在线文字游戏（如MUD）框架，所有的代码都是开源的，采用BSD许可证发布。它使用Evennia（一个MUD游戏框架）作为其内核。</p></blockquote><h2 id=muddery-特点>Muddery 特点</h2><ul><li>Muddery具有以下特点:</li></ul><ol><li>使用Python开发，可以跨平台使用，只需要花几分钟时间就能够安装它。</li><li>支持多人在线游戏，游戏内容主要以文字形式展现，但也可以扩展加入多媒体的内容。</li><li>内建有基本的任务系统、事件系统、对话系统等，便于游戏的创建。</li><li>自带有网页版的游戏编辑器，可以在网页上构建游戏世界。</li><li>自带网页客户端，可以轻松地发布游戏。</li><li>完全使用点击式的游戏操作模式，便于在智能手机、平板设备上使用。</li></ol><h1 id=muddery-安装部署>Muddery 安装部署</h1><h2 id=安装所需软件>安装所需软件</h2><blockquote><p>这里使用 CentOS 7.x 64 系统</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>1. # Python , CentOS 默认都会自带 python 2.7
+
+2. 安装 pip
+
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
+python get-pip.py
+
+
+3. 安装 git
+
+yum -y install git
+
+
+4. 安装 python-devel
+
+yum -y install python-devel
+
+
+5. 安装 virtualenv
+
+pip install virtualenv
+
+</code></pre></td></tr></table></div></div><h2 id=配置-virtualenv>配置 virtualenv</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 创建 虚拟环境目录
+
+mkdir -p /opt/muddery
+
+# 创建 一个 虚拟环境
+
+virtualenv pyenv
+
+
+# 如果 系统安装了 python 3.x 版本 请使用 使用 2.7 版本来创建 virtualenv 环境
+
+virtualenv -p /usr/bin/python2 pyenv
+
+
+
+# 创建虚拟环境以后会生成 pyenv 目录
+
+
+# 激活/进入 虚拟环境
+
+source pyenv/bin/activate
+
+
+# 激活以后~会变成:   
+
+(pyenv) [root@localhost muddery]# 
+
+</code></pre></td></tr></table></div></div><h2 id=配置-muddery>配置 muddery</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 下载源码
+
+(pyenv) [root@localhost muddery]# git clone https://github.com/muddery/muddery.git
+
+
+# 进入目录
+
+(pyenv) [root@localhost muddery]# cd /opt/muddery/muddery
+
+
+
+# 下载 muddery 所需要的依赖
+
+(pyenv) [root@localhost muddery]# pip install -e .
+
+
+# 相关依赖在 requirements.txt 文件中
+
+</code></pre></td></tr></table></div></div><h2 id=初始化-模板>初始化 模板</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># muddery 支持创建 英文 与 中文 版本的模板
+
+
+# 进入我们的目录
+
+cd /opt/muddery
+
+# 创建一个模板
+
+# 英文版 ( mygame 为 模板目录 )
+
+muddery --init mygame
+
+
+# 中文版 ( mygame 为 模板目录  cn 为 中文 )
+
+muddery --init mygame cn
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 模板配置文件在 mygame/server/conf/settings.py 中
+
+# 配置文件中可以修改 启动端口, 语言 等参数
+
+
+# 服务器内部管理端口 admin web-ui
+WEBSERVER_PORTS = [(8000, 5001)]
+
+# websocket 端口, 用于 webclient 连接
+WEBSOCKET_CLIENT_PORT = 8001
+
+# AMP 连接端口
+AMP_PORT = 5000
+
+# 语言设置, en 与 cn
+LANGUAGE_CODE = &#39;zh-cn&#39;
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>
+# 修改数据库 Muddery 默认使用Sqlite3数据库。
+
+# Sqlite3 数据库只适用于测试， 修改为 mysql 或者其他
+
+# 编辑 mygame/server/conf/settings.py  文件
+
+
+vi mygame/server/conf/settings.py
+
+# 在 最下面 添加 如下
+
+######################################################################
+# Evennia Database config
+######################################################################
+
+# Database config syntax:
+# ENGINE - path to the the database backend. Possible choices are:
+#            &#39;django.db.backends.sqlite3&#39;, (default)
+#            &#39;django.db.backends.mysql&#39;,
+#            &#39;django.db.backends.postgresql_psycopg2&#39; (see Issue 241),
+#            &#39;django.db.backends.oracle&#39; (untested).
+# NAME - database name, or path to the db file for sqlite3
+# USER - db admin (unused in sqlite3)
+# PASSWORD - db admin password (unused in sqlite3)
+# HOST - empty string is localhost (unused in sqlite3)
+# PORT - empty string defaults to localhost (unused in sqlite3)
+DATABASES = {
+    &#39;default&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,
+        &#39;NAME&#39;: &#39;mygame&#39;,
+        &#39;USER&#39;: &#39;root&#39;,
+        &#39;PASSWORD&#39;: &#39;123456789&#39;,
+        &#39;HOST&#39;: &#39;127.0.0.1&#39;,
+        &#39;PORT&#39;: &#39;3306&#39;
+        },
+    &#39;worlddata&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,
+        &#39;NAME&#39;: &#39;mygame_worlddata&#39;,
+        &#39;USER&#39;: &#39;root&#39;,
+        &#39;PASSWORD&#39;: &#39;123456789&#39;,
+        &#39;HOST&#39;: &#39;127.0.0.1&#39;,
+        &#39;PORT&#39;: &#39;3306&#39;
+        }}
+        
+# Database&#39;s router
+DATABASE_ROUTERS = [&#39;muddery.worlddata.db.database_router.DatabaseAppsRouter&#39;]
+
+DATABASE_APPS_MAPPING = {
+    &#39;worlddata&#39;: &#39;worlddata&#39;,
+}
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 安装 django 的 mysql 库
+
+# 首先安装 mysql 支持
+
+
+yum install mysql-devel
+
+
+
+# 安装 python mysql 库 
+
+pip install mysql-python
+
+
+
+
+DEPRECATION: Python 2.7 will reach the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 won&#39;t be maintained after that date. A future version of pip will drop support for Python 2.7.
+Collecting mysql-python
+  Using cached https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip
+Building wheels for collected packages: mysql-python
+  Building wheel for mysql-python (setup.py) ... done
+  Stored in directory: /root/.cache/pip/wheels/07/d2/5f/314860e4cb53a44bf0ee0d051d4b34465e4b4fbe9de6d42f42
+Successfully built mysql-python
+Installing collected packages: mysql-python
+Successfully installed mysql-python-1.2.5
+
+
+
+
+# 登录 mysql 创建 两个数据库 mygame 与 mygame_worlddata
+
+
+mysq -h 127.0.0.1 -uroot -p123456
+
+
+MySQL [(none)]&gt; create database mygame;
+Query OK, 1 row affected (0.00 sec)
+
+
+
+MySQL [(none)]&gt; create database mygame_worlddata;
+Query OK, 1 row affected (0.00 sec)
+
+
+
+
+
+# 初始化 数据库 的表结构
+
+(pyenv) [root@payment mygame]# cd /opt/mudgame/mygame
+
+
+# 创建 数据库 与 基础数据
+(pyenv) [root@payment mygame]# muddery --loaddata
+
+Operations to perform:
+  Apply all migrations: accounts, admin, auth, comms, contenttypes, database, flatpages, help, objects, scripts, server, sessions, sites, typeclasses, worlddata
+
+....
+
+Import local data success.
+</code></pre></td></tr></table></div></div><h2 id=启动游戏>启动游戏</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 进入刚才的游戏模板目录
+
+cd /opt/muddery/mygame
+
+
+# 执行启动 (初次启动 会让 创建一个 超级管理员 )
+
+(pyenv) [root@payment mygame]# muddery -i start
+
+Create a superuser below. The superuser is Account #1, the &#39;owner&#39; account of the server.
+
+
+Username: 
+Email address: 
+Password: 
+Password (again): 
+Superuser created successfully.
+Portal starting ...
+... Portal started.
+Server starting  ...
+... Server started.
+Evennia running.
+----------------------- Evennia ---
+Muddery Portal 0.8.0 (rev bab4b86)
+    external ports:
+        webserver-proxy: 8000
+        webclient-websocket: 8001
+    internal_ports (to Server):
+        webserver: 5001
+        amp: 5000
+
+Muddery Server 0.8.0 (rev bab4b86)
+    internal ports (to Portal):
+        webserver: 5001
+        amp : 5000
+-----------------------------------
+
+</code></pre></td></tr></table></div></div><h2 id=登录-web-ui>登录 web-ui</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 浏览器 访问
+
+http://127.0.0.1:8000/
+
+
+# 输入 第一次 muddery -i start 时 创建的 管理员账号密码
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-web.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-web.png, https://jicki.cn/img/posts/muddery/muddery-web.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-web.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-web.png title=muddery-web></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 游戏编辑器
+
+http://127.0.0.1:8000/editor/views/main.html
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-editor.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-editor.png, https://jicki.cn/img/posts/muddery/muddery-editor.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-editor.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-editor.png title=muddery-editor></p><h2 id=编辑游戏>编辑游戏</h2><blockquote><p>编辑器中各 选项的属性 请参考 文档 <a href="http://www.muddery.org/?cate=docs&content=documentations">http://www.muddery.org/?cate=docs&content=documentations</a></p><p>点击 web ui 中的 编辑游戏 打开 游戏编辑器</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>1. 添加 区域
+
+    首先我们点击 世界地图 --&gt; 区域 --&gt; Add 
+
+    添加一个新手村 
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-AREA.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-AREA.png, https://jicki.cn/img/posts/muddery/muddery-AREA.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-AREA.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-AREA.png title=muddery-AREA></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>2. 添加 房间
+
+    点击 世界地图 --&gt; 房间 --&gt; Add
+
+    添加一个房间 , 该房间创建于上面添加的 新手村区域中
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-ROOM.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-ROOM.png, https://jicki.cn/img/posts/muddery/muddery-ROOM.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-ROOM.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-ROOM.png title=muddery-ROOM></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>3. 添加 角色模板
+
+     点击 角色 --&gt; 角色模板 --&gt; Add
+
+     添加 角色模板.
+     
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-models.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-models.png, https://jicki.cn/img/posts/muddery/muddery-models.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-models.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-models.png title=muddery-models></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>4. 添加 世界NPC
+
+   点击 角色 --&gt; 世界NPC --&gt; Add
+   
+   添加 世界NPC
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-world-npc.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-world-npc.png, https://jicki.cn/img/posts/muddery/muddery-world-npc.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-world-npc.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-world-npc.png title=muddery-world-npc></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>5. 添加 对话
+
+   点击 对话 --&gt; 对话列表 --&gt; Add
+
+   添加 对话
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-dialogues.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-dialogues.png, https://jicki.cn/img/posts/muddery/muddery-dialogues.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-dialogues.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-dialogues.png title=muddery-dialogues></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback># 添加对话内容 必须要保存了 对话才能添加
+
+   点击 对话 --&gt; 对话列表 --&gt; 刚才添加的对话 --&gt; Edit
+   
+   点击 Sentences --&gt; Add
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-dialogue-sentences.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-dialogue-sentences.png, https://jicki.cn/img/posts/muddery/muddery-dialogue-sentences.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-dialogue-sentences.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-dialogue-sentences.png title=muddery-dialogue-sentences></p><blockquote><p>添加完以上东西以后，再回去配置 游戏设置</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>6.  配置 游戏设置
+
+    点击 基础设置 --&gt; 游戏设置
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>7. 应用到游戏
+
+    点击 管理 --&gt; 应用
+    
+    Changes Applied. Please wait the server to restart.
+
+    这里需要手动到 服务器上面 执行重启游戏服务
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>8.  登录游戏 
+
+http://127.0.0.1:8000/webclient/main.html
+
+</code></pre></td></tr></table></div></div><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-game.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-game.png, https://jicki.cn/img/posts/muddery/muddery-game.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-game.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-game.png title=muddery-game></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-game-2.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-game-2.png, https://jicki.cn/img/posts/muddery/muddery-game-2.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-game-2.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-game-2.png title=muddery-game-2></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-game-3.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-game-3.png, https://jicki.cn/img/posts/muddery/muddery-game-3.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-game-3.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-game-3.png title=muddery-game-3></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-game-4.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-game-4.png, https://jicki.cn/img/posts/muddery/muddery-game-4.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-game-4.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-game-4.png title=muddery-game-4></p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://jicki.cn/img/posts/muddery/muddery-game-5.png data-srcset="https://jicki.cn/img/posts/muddery/muddery-game-5.png, https://jicki.cn/img/posts/muddery/muddery-game-5.png 1.5x, https://jicki.cn/img/posts/muddery/muddery-game-5.png 2x" data-sizes=auto alt=https://jicki.cn/img/posts/muddery/muddery-game-5.png title=muddery-game-4></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2019-02-27</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/muddery-0.3.3/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档" data-via=jicki234 data-hashtags=Muddery,Game,python><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/muddery-0.3.3/ data-hashtag=Muddery><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档" data-description="Muddery 部署 配置文档"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档" data-description="Muddery 部署 配置文档"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/muddery-0.3.3/ data-title="Muddery 部署 配置文档"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/muddery/>Muddery</a>,&nbsp;<a href=/tags/game/>Game</a>,&nbsp;<a href=/tags/python/>python</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/hyperledger-fabric-1.4-to-k8s/ class=prev rel=prev title="Hyperledger Fabric to kubernetes"><i class="fas fa-angle-left fa-fw"></i>Hyperledger Fabric to kubernetes</a>
+<a href=/kubeadm-1.14.1/ class=next rel=next title="kubeadm HA to 1.14.1">kubeadm HA to 1.14.1<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
