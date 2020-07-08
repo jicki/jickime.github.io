@@ -74,6 +74,13 @@ func main() {
 * `sql.Open` 返回的 DB 对象可以安全的被多个`goroutine`并发使用, 并维护自己的空闲连接池, 因此很少需要关闭 DB 这个对象。
 
 
+* `SetMaxOpenConns` 设置与数据库建立连接的最大连接数。默认为0 (无限制)
+
+
+* `SetMaxIdleConns` 设置连接池中最大闲置连接数。
+
+
+
 ```go
 package main
 
@@ -101,6 +108,10 @@ func initDB() (err error) {
 	if err != nil {
 		return err
 	}
+	// 最大连接数
+	DB.SetMaxOpenConns(100)
+	// 连接池中空闲连接数
+	DB.SetMaxIdleConns(50)
 	return nil
 }
 
@@ -110,6 +121,7 @@ func main() {
 		fmt.Printf("initDB failed, err:%v \n", err)
 		return
 	}
+	defer DB.Close()
 }
 
 ```
