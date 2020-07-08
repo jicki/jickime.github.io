@@ -22,7 +22,7 @@
 
 [ 【Go Web编程 - 跨域资源共享 CORS 】](https://jicki.cn/golang-web-note-3 "CORS 跨域解决")
 
-[ 【Go Web编程 - sqlx 模块介绍 】](https://jicki.cn/golang-web-note-4 "Go sqlx 模块介绍")
+[ 【Go Web编程 - Go 操作 Mysql 】](https://jicki.cn/golang-web-note-4 "Golang 操作 Mysql")
 
 [ 【Go Web编程 - GORM MYSQL 】](https://jicki.cn/golang-web-note-5 "Go GORM MYSQL")
 

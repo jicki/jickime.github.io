@@ -1,7 +1,123 @@
-# Golang sqlx模块
+# Golang 操作 Mysql
 
 
 # Go Web 编程
+
+## sql 标准库
+
+* Go 语言中的 `database/sql` 包提供了保证SQL或类SQL数据库的范接口, 但是并不提供具体的数据库驱动。
+
+* 使用`database/sql`包时 必须注入至少一个数据库驱动。
+
+
+> 下载 Mysql 驱动
+
+```shell
+
+go get -u github.com/go-sql-driver/mysql
+
+
+```
+
+
+> 驱动说明
+
+
+```go
+// sql.Open 函数
+
+func Open(driverName, dataSourceName string) (*DB, error)
+
+
+``` 
+
+* `driverName` - 指具体的数据库类型, 如: mysql
+
+* `dataSourceName` - 指具体的数据信息, 如: 账号、密码、协议、IP、端口、数据库名 等。
+
+
+
+> 例子
+
+```go
+
+package main
+
+import (
+	"database/sql"
+
+        // 引入 mysql 驱动, 只需要用到 init() 方法
+	_ "github.com/go-sql-driver/mysql"
+)
+
+func main() {
+	dsn := "user:password@tcp(127.0.0.1:3306)/dbname"
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		panic(err)
+	}
+	// 关闭数据库连接
+	defer db.Close()
+
+	// Ping 函数 尝试校验 dsn
+	err = DB.Ping()
+	if err != nil {
+		return err
+	}
+}
+
+```
+
+
+> 初始化连接的例子
+
+* `sql.Open` 返回的 DB 对象可以安全的被多个`goroutine`并发使用, 并维护自己的空闲连接池, 因此很少需要关闭 DB 这个对象。
+
+
+```go
+package main
+
+import (
+	"database/sql"
+	"fmt"
+
+	// 引入 mysql 驱动, 只需要用到 init() 方法
+	_ "github.com/go-sql-driver/mysql"
+)
+
+// 定义全局的 数据库对象 DB
+var DB *sql.DB
+
+func initDB() (err error) {
+	dsn := "user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True"
+
+	// 这里 DB 赋值是给 上面定义的全局变量赋值, 不要使用 :=
+	DB, err = sql.Open("mysql", dsn)
+	if err != nil {
+		return err
+	}
+	// 调用 Ping() 方法会尝试连接数据库,校检 dsn 是否正确
+	err = DB.Ping()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+}
+
+```
+
+
+
+
+
 
 ## sqlx 模块
 
