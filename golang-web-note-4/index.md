@@ -127,6 +127,273 @@ func main() {
 ```
 
 
+### 增删改查操作
+
+
+> 查询操作
+
+
+* 单行查询 - 单行查询使用`DB.QueryRow()` 方法执行一次查询, 并返回最多一行结果(Row)
+
+  * `QueryRow`方法 总是返回非`nil`值, 直到返回值的`Scan`方法被调用时才会返回被延迟的错误. 如: 未查询到结果
+
+  * `func (db *DB) QueryRow(query string, args ...interface{}) *Row` 方法
+
+
+
+```go
+
+type user struct {
+	id   int
+	name string
+	age  int
+}
+
+func queryRowToID(id int) {
+	var u user
+	sqlStr := "select id, name, age from user where id=?"
+        // .Scan 是链式操作, Scan是将查询出来的结果赋值到结构体对应的字段中.
+        // 使用 QueryRow 以后必须要调用 Scan 方法,否则数据库连接不会被释放.
+	err := DB.QueryRow(sqlStr, id).Scan(&u.id, &u.name, &u.age)
+	if err != nil {
+		fmt.Printf("QueryRow Scan Failed, Error %v\n", err)
+		return
+	}
+	fmt.Printf("ID: %d Name: %s  Age: %d \n", u.id, u.name, u.age)
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	queryRowToID(1)
+}
+
+
+```
+
+```shell
+# 输出结果
+ID: 1 Name: jicki  Age: 20 
+```
+
+
+* 多行查询 - 多行查询使用 `DB.Query()` 方法执行一次查询, 返回多行结果(Row)。
+
+  * `func (db *DB) Query(query string, args ...interface{}) (*Rows, error)` 方法
+
+
+
+```go
+
+type user struct {
+	id   int
+	name string
+	age  int
+}
+
+func queryMultiRowToID(id int) {
+	var u user
+	sqlStr := "select id, name, age from user where id > ?"
+	rows, err := DB.Query(sqlStr, id)
+	if err != nil {
+		fmt.Printf("QueryMulti Failed, Error %v\n", err)
+		return
+	}
+	// 关闭数据库连接
+	defer rows.Close()
+
+	// 遍历读取的多条数据
+	for rows.Next() {
+		err := rows.Scan(&u.id, &u.name, &u.age)
+		if err != nil {
+			fmt.Printf("QueryMulti Scan Failed, Error %v\n", err)
+			return
+		}
+		fmt.Printf("ID: %d Name: %s  Age: %d \n", u.id, u.name, u.age)
+	}
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	queryMultiRowToID(0)
+}
+
+```
+
+
+```shell
+# 输出结果
+ID: 1 Name: jicki  Age: 20 
+ID: 2 Name: Jack  Age: 30 
+ID: 3 Name: Vicki  Age: 30 
+```
+
+
+
+> 插入数据操作
+
+* 插入、更新、删除操作都可以使用`Exec`方法。
+
+  * `Exec` 执行一次命令(包含查询、删除、更新、插入等), 返回的`Result`是对已执行的SQL命令的总结。
+
+  * `func (db *DB) Exec(query string, args ...interface{}) (Result, error)` 方法
+
+
+```go
+
+
+func insertRow(name string, age int) {
+	sqlStr := "insert into user(name,age) values (?,?)"
+	ret, err := DB.Exec(sqlStr, name, age)
+	if err != nil {
+		fmt.Printf("Insert Row Error %v\n", err)
+		return
+	}
+        var inID int64
+	// 获取Last最后一次插入数据的ID
+	inID, err = ret.LastInsertId()
+	if err != nil {
+		fmt.Printf("Get LastInsertId Error %v\n", err)
+		return
+	}
+	fmt.Printf("Insert Success ID %d \n", inID)
+}
+
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	insertRow("小炒肉", 10)
+	queryMultiRowToID(0)
+}
+
+```
+
+```shell
+# 输出结果
+Insert Success ID 4 
+ID: 1 Name: jicki  Age: 20 
+ID: 2 Name: Jack  Age: 30 
+ID: 3 Name: Vicki  Age: 30 
+ID: 4 Name: 小炒肉  Age: 10 
+
+```
+
+
+
+> 更新数据操作
+
+
+```go
+
+func updateRowToAge(age, id int) {
+	sqlStr := "update user set age = ? where id = ?"
+	ret, err := DB.Exec(sqlStr, age, id)
+	if err != nil {
+		fmt.Printf("Update Failed Error %v\n", err)
+		return
+	}
+        var n int64
+	// RowsAffected 返回更新影响的行数
+	n, err = ret.RowsAffected()
+	if err != nil {
+		fmt.Printf("Get RowAffected Failed Error %v\n", err)
+		return
+	}
+	fmt.Printf("Update Success Affected Row: %d \n", n)
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	queryRowToID(1)
+	updateRowToAge(11, 1)
+	queryRowToID(1)
+}
+
+```
+
+```shell
+# 输出结果
+
+ID: 1 Name: jicki  Age: 20 
+Update Success Affected Row: 1 
+ID: 1 Name: jicki  Age: 11 
+
+```
+
+
+
+> 删除数据操作
+
+
+
+```go
+
+func deleteRowToID(id int) {
+	sqlStr := "delete from user where id = ?"
+	ret, err := DB.Exec(sqlStr, id)
+	if err != nil {
+		fmt.Printf("Delete Failed Error %v\n", err)
+		return
+	}
+	var n int64
+	// RowsAffected 返回更新影响的行数
+	n, err = ret.RowsAffected()
+	if err != nil {
+		fmt.Printf("Get RowAffected Failed Error %v\n", err)
+		return
+	}
+	fmt.Printf("Delete Success Affected Row: %d \n", n)
+}
+
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	queryMultiRowToID(0)
+	deleteRowToID(3)
+	queryMultiRowToID(0)
+}
+
+```
+
+
+```shell
+# 输出结果
+ID: 1 Name: jicki  Age: 11 
+ID: 2 Name: Jack  Age: 30 
+ID: 3 Name: Vicki  Age: 30 
+ID: 4 Name: 小炒肉  Age: 10 
+Delete Success Affected Row: 1 
+ID: 1 Name: jicki  Age: 11 
+ID: 2 Name: Jack  Age: 30 
+ID: 4 Name: 小炒肉  Age: 10 
+
+```
+
+
 
 
 
