@@ -16,16 +16,17 @@
 > Github :  https://github.com/AliyunContainerService/log-pilot
 
 
-* 在 kubernetes 下，Log-Pilot 可以依据环境变量 aliyun_logs_$name = $path 动态地生成日志采集配置文件，其中包含两个变量：
+* 在 kubernetes 下, Log-Pilot 可以依据环境变量 `aliyun_logs_$name = $path` 动态地生成日志采集配置文件, 其中包含两个变量:
 
-*  1. $name 是我们自定义的一个字符串，它在不同的场景下指代不同的含义，在本场景中，将日志采集到 ElasticSearch 的时候，这个 $name 表示的是 Index。
-*  2. $path，支持两种输入形式，stdout 和容器内部日志文件的路径，对应日志标准输出和容器内的日志文件。
-    * 第一种 约定关键字 stdout 表示的是采集容器的标准输出日志，如本例中我们要采集 Nginx 容器日志，那么我们通过配置标签 aliyun_logs_nginx-logs=stdout 来采集 nginx 标准输出日志。
-    * 第二种 容器内部日志文件的路径，也支持通配符的方式，通过配置环境变量 aliyun_logs_access=/var/log/nginx/*.log来采集 Nginx 容器内部的日志。当然如果你不想使用 aliyun 这个关键字，Log-Pilot 也提供了环境变量 PILOT_LOG_PREFIX 可以指定自己的声明式日志配置前缀，比如 PILOT_LOG_PREFIX: "aliyun,custom"。
+*  1. `$name` 是我们自定义的一个字符串, 它在不同的场景下指代不同的含义, 在本场景中, 将日志采集到 ElasticSearch 的时候, 这个 `$name` 表示的是 `Index`。
+
+*  2. `$path` 支持两种输入形式, `stdout` 和容器内部日志文件的路径, 对应日志标准输出和容器内的日志文件。
+    * 第一种 约定关键字 `stdout` 表示的是采集容器的标准输出日志, 如本例中我们要采集 Nginx 容器日志, 那么我们通过配置标签 `aliyun_logs_nginx-logs=stdout` 来采集 nginx 标准输出日志。
+    * 第二种 容器内部日志文件的路径, 也支持通配符的方式, 通过配置环境变量 `aliyun_logs_access=/var/log/nginx/*.log` 来采集 Nginx 容器内部的日志。当然如果你不想使用 aliyun 这个关键字, Log-Pilot 也提供了环境变量 `PILOT_LOG_PREFIX` 可以指定自己的声明式日志配置前缀, 比如 `PILOT_LOG_PREFIX: "aliyun,custom"`。
 
 
-* Log-Pilot 还支持多种日志解析格式，通过 aliyun_logs_$name_format=<format> 标签就可以告诉 Log-Pilot 在采集日志的时候，同时以什么样的格式来解析日志记录，支持的格式包括：none、json、csv、nginx、apache2 和 regxp。
-* Log-Pilot 同时支持自定义 tag，我们可以在环境变量里配置 aliyun_logs_$name_tags="K1=V1,K2=V2"，那么在采集日志的时候也会将 K1=V1 和 K2=V2 采集到容器的日志输出中。自定义 tag 可帮助您给日志产生的环境打上 tag，方便进行日志统计、日志路由和日志过滤。
+* Log-Pilot 还支持多种日志解析格式, 通过 `aliyun_logs_$name_format=<format>` 标签就可以告诉 Log-Pilot 在采集日志的时候, 同时以什么样的格式来解析日志记录, 支持的格式包括：none、json、csv、nginx、apache2 和 regxp。
+* Log-Pilot 同时支持自定义 `tag` 我们可以在环境变量里配置 `aliyun_logs_$name_tags="K1=V1,K2=V2"` 那么在采集日志的时候也会将 `K1=V1` 和 `K2=V2` 采集到容器的日志输出中。自定义 `tag` 可帮助您给日志产生的环境打上 `tag` 方便进行日志统计、日志路由和日志过滤。
 
 
 ## 部署 ELK
@@ -525,7 +526,6 @@ green  open   nginx-log-2019.07.02 TuXuOOONTL-aIZt2wq_hHQ   5   1         20    
 
 ## filebeat 配置 
 
-{% raw %}
 
 ```
 # 修改镜像内的模板文件 添加 multiline
@@ -550,7 +550,6 @@ green  open   nginx-log-2019.07.02 TuXuOOONTL-aIZt2wq_hHQ   5   1         20    
 
 ```
 
-{% endraw %}
 
 ![图1][1]
 
