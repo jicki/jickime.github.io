@@ -10,7 +10,7 @@
 * 使用`database/sql`包时 必须注入至少一个数据库驱动。
 
 
-> 下载 Mysql 驱动
+### 下载 Mysql 驱动
 
 ```shell
 
@@ -20,7 +20,7 @@ go get -u github.com/go-sql-driver/mysql
 ```
 
 
-> 驱动说明
+### 驱动说明
 
 
 ```go
@@ -37,7 +37,7 @@ func Open(driverName, dataSourceName string) (*DB, error)
 
 
 
-> 例子
+### 连接数据库例子
 
 ```go
 
@@ -69,7 +69,7 @@ func main() {
 ```
 
 
-> 初始化连接的例子
+### 初始化连接的例子
 
 * `sql.Open` 返回的 DB 对象可以安全的被多个`goroutine`并发使用, 并维护自己的空闲连接池, 因此很少需要关闭 DB 这个对象。
 
@@ -393,6 +393,204 @@ ID: 4 Name: 小炒肉  Age: 10
 
 ```
 
+
+
+### Mysql 预处理
+
+
+* 预处理
+
+  * 普通`SQL` 语句执行过程:
+
+    * 客户端对 `SQL` 语句进行占位符替换得到完整的`SQL` 语句。
+    * 客户端发送完整`SQL` 语句到 MySQL 服务端。
+    * MySQL 服务端执行完整的 `SQL` 语句并将结果返回给客户端。
+
+  * 预处理执行过程:
+
+    * 把`SQL` 语句分成两部分, 命令部分与数据部分。
+    * 把命令部分发送给 MySQL 服务端, MySQL 服务端进行`SQL` 预处理。
+    * 数据部分发送给 MySQL 服务端, MySQL 服务端对`SQL` 语句进行占位符替换。
+    * MySQL 服务端执行完整的 `SQL` 语句并将结果返回给客户端。
+
+
+
+* 预处理的优点:
+
+  * 优化 MySQL 服务重复执行`SQL` 语句, 可提高 MySQL 服务性能, 一次编译多次执行, 节省编译成本。
+
+  * 避免 `SQL` 注入的安全问题。 
+
+
+#### Go 实现MySQL 预处理
+
+
+* `database/sql` 包中使用 `Prepare` 方法实现预处理操作。
+
+
+* `func (db *DB) Prepare(query string) (*Stmt, error)`
+
+
+* `Prepare` 方法会先将 `SQL` 语句发送给 MySQL 服务端, 服务端返回一个状态用于后续的查询和操作。返回值可以同时执行多个查询和操作。 
+
+
+
+> 预处理 查询例子
+
+```go
+
+type user struct {
+	id   int
+	name string
+	age  int
+}
+
+func perPareQuery(id int) {
+	sqlStr := "select id, name, age from user where id > ?"
+	stmt, err := DB.Prepare(sqlStr)
+	if err != nil {
+		fmt.Printf("Prepare Failed Error %v\n", err)
+		return
+	}
+	defer stmt.Close()
+	rows, err := stmt.Query(id)
+	if err != nil {
+		fmt.Printf("Prepare Query Error %v\n", err)
+		return
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var u user
+		err := rows.Scan(&u.id, &u.name, &u.age)
+		if err != nil {
+			fmt.Printf("Perpare Scan Failed Error %v\n", err)
+			return
+		}
+		fmt.Printf("ID: %d  Name: %s Age: %d \n", u.id, u.name, u.age)
+	}
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	perPareQuery(0)
+}
+
+```
+
+
+```shell
+# 输出结果
+ID: 1  Name: jicki Age: 11 
+ID: 2  Name: Jack Age: 30 
+ID: 4  Name: 小炒肉 Age: 10 
+```
+
+
+
+> 预处理 插入处理
+
+
+```go
+
+func perPareInsert(name string, age int) {
+	sqlStr := "insert into user(name, age) values (?, ?)"
+	stmt, err := DB.Prepare(sqlStr)
+	if err != nil {
+		fmt.Printf("Prepare Failed Error %v\n", err)
+		return
+	}
+	defer stmt.Close()
+	result, err := stmt.Exec(name, age)
+	if err != nil {
+		fmt.Printf("Prepare Exec Error %v\n", err)
+		return
+	}
+	InID, err := result.LastInsertId()
+	if err != nil {
+		fmt.Printf("Get LastInsertID Error %v \n", err)
+		return
+	}
+	fmt.Printf("Insert ID: %d Success \n", InID)
+}
+
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	perPareQuery(0)
+	perPareInsert("大炒肉", 20)
+	perPareQuery(0)
+}
+
+
+
+```
+
+```shell
+# 输出结果
+
+ID: 1  Name: jicki Age: 11 
+ID: 2  Name: Jack Age: 30 
+ID: 4  Name: 小炒肉 Age: 10 
+ID: 5  Name: 小小肉 Age: 20 
+Insert ID: 6 Success 
+ID: 1  Name: jicki Age: 11 
+ID: 2  Name: Jack Age: 30 
+ID: 4  Name: 小炒肉 Age: 10 
+ID: 5  Name: 小小肉 Age: 20 
+ID: 6  Name: 大炒肉 Age: 20 
+
+```
+
+
+
+#### SQL 注入问题
+
+* 我们任何时候都不应该自己拼接`SQL`语句。
+
+
+```go
+
+func sqlInject(name string) {
+	sqlStr := fmt.Sprintf("select id,name,age from user where name='%s'", name)
+	fmt.Println("SQL: ", sqlStr)
+	var u user
+	err := DB.QueryRow(sqlStr).Scan(&u.id, &u.name, &u.age)
+	if err != nil {
+		fmt.Printf("QueryRow Falied Error %v\n", err)
+		return
+	}
+	fmt.Printf("ID: %d  Name: %s  Age: %d \n", u.id, u.name, u.age)
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	sqlInject("xxxx' or 1=1#")
+}
+
+```
+
+```shell
+# 输出结果
+
+SQL:  select id,name,age from user where name='xxxx' or 1=1#'
+ID: 1  Name: jicki  Age: 11 
+
+```
 
 
 
