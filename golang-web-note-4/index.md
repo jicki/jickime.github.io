@@ -776,21 +776,64 @@ go get -u github.com/jmoiron/sqlx
 ```
 
 
+
+
+### 初始化数据库
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+
+	// 引入 mysql 驱动, 只需要用到 init() 方法
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
+)
+
+// 定义全局的 数据库对象 DB
+var DB *sqlx.DB
+
+func initDB() (err error) {
+	dsn := "root:jicki@tcp(127.0.0.1:13306)/jicki?charset=utf8mb4&parseTime=True"
+
+	// 这里 DB 赋值是给 上面定义的全局变量赋值, 不要使用 :=
+	DB, err = sqlx.Connect("mysql", dsn)
+	if err != nil {
+		return
+	}
+	// 连接存活时间,超时会被自动关闭
+	DB.SetConnMaxLifetime(time.Second * 10)
+	// 最大连接数
+	DB.SetMaxOpenConns(100)
+	// 连接池中空闲连接数
+	DB.SetMaxIdleConns(50)
+	return
+}
+
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+
+}
+```
+
+
+
 ### 插入数据库
 
 ```shell
 /*
-数据库 student 表
+数据库 sqlx 表
 
-CREATE TABLE `student` (
+CREATE TABLE `sqlx` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
-  `nick` varchar(64) DEFAULT NULL,
-  `country` varchar(128) DEFAULT NULL,
-  `province` varchar(64) DEFAULT NULL,
-  `city` varchar(64) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `create_time` varchar(32) DEFAULT NULL,
+  `age` int(6) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -798,221 +841,231 @@ CREATE TABLE `student` (
 ```
 
 ```go
-import (
-	"fmt"
-	"log"
 
-	"github.com/jmoiron/sqlx"
-
-	_ "github.com/go-sql-driver/mysql"
-)
-
-// 创建一个学生结构体,并为 db 打上标签
-type Student struct {
-	Id         int    `db:"id"`
-	Name       string `db:"name"`
-	Nick       string `db:"nick"`
-	Country    string `db:"country"`
-	Province   string `db:"province"`
-	City       string `db:"city"`
-	ImgUrl     string `db:"img_url"`
-	Status     int    `db:"status"`
-	CreateTime string `db:"create_time"`
+// 创建一个结构体,并为 db 打上标签
+type user struct {
+	Id   int    `db:"id"`
+	Name string `db:"name"`
+	Age  int    `db:"age"`
 }
 
-// 操作数据库
+func InsertSqlX(u user) {
+        // (:后面是数据库字段), 最后传入整个 结构体
+	sqlStr := "insert into sqlx values (:id, :name, :age)"
+	result, err := DB.NamedExec(sqlStr, u)
+	if err != nil {
+		fmt.Printf("Insert NamedExec Failed Error %v\n", err)
+		return
+	}
+	var TheID int64
+	TheID, err = result.LastInsertId()
+	if err != nil {
+		fmt.Printf("InsertSqlx Get RowsAffected Falied Error %v\n", err)
+		return
+	}
+	fmt.Printf("InsertSqlx Exec Success %d \n", TheID)
+}
+
 func main() {
-	// 连接数据库信息
-	dsn := "root:rldb@tcp(127.0.0.1:3306)/jicki?parseTime=true"
-	// Connect 方法: 内部实现了Open()和Ping()
-	DB, err := sqlx.Connect("mysql", dsn)
-	if err != nil {
-		log.Fatalln(err)
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
 	}
-	// 关闭数据库连接
-	defer DB.Close()
-
-	// 创建2个结构体实例 s1 , s2
-	s1 := Student{
-		Id:       1,
-		Name:     "No1",
-		Nick:     "Num1",
-		Country:  "China",
-		Province: "GD",
-		City:     "SZ",
-		Status:   1,
+	s1 := user{
+		Id:   1,
+		Name: "小炒肉",
+		Age:  20,
 	}
-
-	s2 := Student{
-		Id:       2,
-		Name:     "No2",
-		Nick:     "Num2",
-		Country:  "China",
-		Province: "GD",
-		City:     "SZ",
-		Status:   1,
+	s2 := user{
+		Id:   2,
+		Name: "大炒肉",
+		Age:  30,
 	}
-
-	// 插入数据 一:
-	sqlStr := `insert into student (id,name,nick,country,province,city,status,create_time)
-	           values(?,?,?,?,?,?,?,?)`
-        DB.MustExec(sqlStr, s2.Id, s2.Name, s2.Nick, s2.Country, s2.Province, s2.City, s2.Status, time.Now())
-
-	// 插入数据 二: (:后面是数据库字段) , 最后传入整个 结构体
-
-	_, err = DB.NamedExec(`INSERT INTO student VALUES (:id, :name, :nick, :country, :province, :city, :status, :create_time);`, s1)
-	if err != nil {
-		log.Fatalf("NamedExec Failed err:%v\n", err)
-	}
-	fmt.Println("MustExec OK !")
+	InsertSqlX(s1)
+	InsertSqlX(s2)
 }
 
 ```
 
-* 输出
-
 
 ```shell
-
-MustExec OK !
+# 输出结果
+InsertSqlx Exec Success 1 
+InsertSqlx Exec Success 2 
 
 ```
 
 ### 查询数据
 
-* 查询单条数据
+>  查询单条数据
 
 ```go
-import (
-        "fmt"
-        "log"
-
-        "github.com/jmoiron/sqlx"
-
-        _ "github.com/go-sql-driver/mysql"
-)
-
-// 创建一个学生结构体,并为 db 打上标签
-type Student struct {
-        Id         int    `db:"id"`
-        Name       string `db:"name"`
-        Nick       string `db:"nick"`
-        Country    string `db:"country"`
-        Province   string `db:"province"`
-        City       string `db:"city"`
-        ImgUrl     string `db:"img_url"`
-        Status     int    `db:"status"`
-        CreateTime string `db:"create_time"`
+// 创建一个结构体,并为 db 打上标签
+type User struct {
+	Id   int    `db:"id"`
+	Name string `db:"name"`
+	Age  int    `db:"age"`
 }
 
-// 操作数据库
-func main() {
-        // 连接数据库信息
-        dsn := "root:rldb@tcp(127.0.0.1:3306)/jicki?parseTime=true"
-        // Connect 方法: 内部实现了Open()和Ping()
-        DB, err := sqlx.Connect("mysql", dsn)
-        if err != nil {
-                log.Fatalln(err)
-        }
-        // 关闭数据库连接
-        defer DB.Close()
-
-	// 查询单条数据 :
-	// 创建一个空的结构体实例 s3:
-	var s3 Student
-	//将查询的结果存入 s3 空结构体指针中
-	err = DB.Get(&s3, "SELECT id,name,nick,country,province,city,status,create_time FROM student WHERE name = ?", "No1")
+func queryRowToID(id int64) {
+	sqlStr := "select id, name, age from sqlx where id = ?"
+	var u User
+	err := DB.Get(&u, sqlStr, id)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Printf("QueryRowToID Get Failed Error %v\n", err)
+		return
 	}
-	// 打印查询的结构体
-	fmt.Println(s3)
-```
+	fmt.Printf("ID: %d  Name: %s  Age: %d \n", u.Id, u.Name, u.Age)
+}
 
-* 输出:
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+	queryRowToID(1)
+}
+```
 
 ```shell
-
-{1 No1 Num1 China GD SZ 1 }
+# 输出结果
+ID: 1  Name: 小炒肉  Age: 20 
 
 ```
 
-* 查询多条数据
+> 查询多条数据
+
+```go
+// 创建一个结构体,并为 db 打上标签
+type User struct {
+        Id   int    `db:"id"`
+        Name string `db:"name"`
+        Age  int    `db:"age"`
+}
+
+func queryMultiRows(id int64) {
+	sqlStr := "select id, name, age from sqlx where id > ?"
+        // 查询的结果存储到 User结构体类型的切片 u 中
+	var u []User
+        // Select 方法用于查询多条数据
+	err := DB.Select(&u, sqlStr, id)
+	if err != nil {
+		fmt.Printf("QueryMultiRows Select Failed Error %v\n", err)
+		return
+	}
+	for _, v := range u {
+		fmt.Printf("ID: %d  Name: %s  Age: %d \n", v.Id, v.Name, v.Age)
+	}
+}
+
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+	queryMultiRows(0)
+}
+
+```
+
+
+```shell
+# 输出结果
+ID: 1  Name: 小炒肉  Age: 20 
+ID: 2  Name: 大炒肉  Age: 30 
+ID: 3  Name: 小小肉  Age: 18 
+
+```
+
+
+> 更新数据
+
 
 ```go
 
-import (
-        "fmt"
-        "log"
-
-        "github.com/jmoiron/sqlx"
-
-        _ "github.com/go-sql-driver/mysql"
-)
-
-// 创建一个学生结构体,并为 db 打上标签
-type Student struct {
-        Id         int    `db:"id"`
-        Name       string `db:"name"`
-        Nick       string `db:"nick"`
-        Country    string `db:"country"`
-        Province   string `db:"province"`
-        City       string `db:"city"`
-        ImgUrl     string `db:"img_url"`
-        Status     int    `db:"status"`
-        CreateTime string `db:"create_time"`
+func updateRow(id, age int64) {
+	sqlStr := "update sqlx set age = ? where id = ?"
+	result, err := DB.Exec(sqlStr, age, id)
+	if err != nil {
+		fmt.Printf("UpdateRow Exec Failed Error %v\n", err)
+		return
+	}
+	var n int64
+	n, err = result.RowsAffected()
+	if err != nil {
+		fmt.Printf("updateRow Get RowsAffected Failed Error %v\n", err)
+		return
+	}
+	fmt.Printf("update id: %d To age = %d  Success Rows: %d \n", id, age, n)
 }
 
-// 操作数据库
 func main() {
-        // 连接数据库信息
-        dsn := "root:rldb@tcp(127.0.0.1:3306)/jicki?parseTime=true"
-        // Connect 方法: 内部实现了Open()和Ping()
-        DB, err := sqlx.Connect("mysql", dsn)
-        if err != nil {
-                log.Fatalln(err)
-        }
-        // 关闭数据库连接
-        defer DB.Close()
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+	queryMultiRows(0)
+	updateRow(1, 22)
+	queryMultiRows(0)
+}
 
-	// 查询多条数据:
-	// 定一个 结构体类型的 切片
-	var studs []Student
-	err = DB.Select(&studs, "SELECT id,name,nick,country,province,city,status,create_time FROM student")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	// 循环打印结构
-	for _, v := range studs {
-		fmt.Printf("%#v \n", v)
-	}
-
-	// 利用 Query 查询
-	// 创建一个空的Student的结构体
-	s4 := Student{}
-	rows, err := DB.Queryx("select id,name,nick,country,province,city,status,create_time FROM student")
-	if err != nil {
-		log.Fatal(err)
-	}
-	// Next 方法
-	for rows.Next() {
-		// 将查询的结构返回到 s4 结构体指针中
-		err := rows.StructScan(&s4)
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("%#v\n", s4)
-	}
 ```
 
-* 输出:
 
 ```shell
+# 输出结果
 
-main.Student{Id:1, Name:"No1", Nick:"Num1", Country:"China", Province:"GD", City:"SZ", Status:1, CreateTime:""} 
-main.Student{Id:2, Name:"No2", Nick:"Num2", Country:"China", Province:"GD", City:"SZ", Status:1, CreateTime:"2019-11-27 03:12:18.489914"} 
+ID: 1  Name: 小炒肉  Age: 20 
+ID: 2  Name: 大炒肉  Age: 30 
+ID: 3  Name: 小小肉  Age: 18 
+update id: 1 To age = 22  Success Rows: 1 
+ID: 1  Name: 小炒肉  Age: 22 
+ID: 2  Name: 大炒肉  Age: 30 
+ID: 3  Name: 小小肉  Age: 18 
 
-main.Student{Id:1, Name:"No1", Nick:"Num1", Country:"China", Province:"GD", City:"SZ", Status:1, CreateTime:""}
-main.Student{Id:2, Name:"No2", Nick:"Num2", Country:"China", Province:"GD", City:"SZ", Status:1, CreateTime:"2019-11-27 03:12:18.489914"}
+```
+
+
+
+> 删除数据
+
+```go
+func deleteRowToId(id int64) {
+	sqlStr := "delete from sqlx where id = ?"
+	result, err := DB.Exec(sqlStr, id)
+	if err != nil {
+		fmt.Printf("UpdateRow Exec Failed Error %v\n", err)
+		return
+	}
+	var n int64
+	n, err = result.RowsAffected()
+	if err != nil {
+		fmt.Printf("DeleteRow Get RowsAffected Failed Error %v\n", err)
+		return
+	}
+	fmt.Printf("delete id: %d Success  Rows: %d \n", id, n)
+}
+
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+	queryMultiRows(0)
+	deleteRowToId(3)
+	queryMultiRows(0)
+}
+```
+
+```shell
+# 输出结果
+
+ID: 1  Name: 小炒肉  Age: 22 
+ID: 2  Name: 大炒肉  Age: 30 
+ID: 3  Name: 小小肉  Age: 18 
+delete id: 3 Success  Rows: 1 
+ID: 1  Name: 小炒肉  Age: 22 
+ID: 2  Name: 大炒肉  Age: 30 
+
 ```
 
