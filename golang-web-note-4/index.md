@@ -595,6 +595,163 @@ ID: 1  Name: jicki  Age: 11
 
 
 
+### Go 实现 MySQL 事务
+
+* MySQL 只有使用 `Innodb` 数据引擎的数据库或表才支持事务。事务处理可以用来维护数据库的完整性, 保证多条联合 `SQL`语句要么全部执行, 要么全部不执行(回滚)。
+
+> 什么是事务
+
+* 事务: 一个最小的不可再分的工作单元, 通常一个事务对应一个完整的业务, 这个完整的业务需要执行多次(增Insert, 删Delete, 改Update)语句共同联合完成。
+
+
+
+
+#### 事务的ACID
+
+* 通常事务必须满足4个条件既满足(ACID)
+
+  * `Atomictiy` 原子性、不可分割性
+    * 一个事务中的所有操作, 要么全部完成, 要么全部不执行, 不会结束在中间环节。
+    * 一个事务在执行过程中出现错误, 整个事务都会回滚(Rollback)到事务开始前的状态。
+
+  * `Consistency` 一致性
+    * 事务开始之前和事务结束以后, 数据的完整性没有被破坏。
+    * 数据写入必须完全符合所规定的规则, 包含数据的精准度、串联性以及后续自发性地完成预定工作。
+
+  * `Isolation` 隔离性、独立性
+    * 数据库允许多个并发事务同时对数据进行读写和修改的能力。
+    * 隔离性可以防止多个事务并发执行时由于交叉执行导致的数据不一致问题。
+    * 事务隔离分为不同级别, 包括只读不提交(Read uncommitted)、读提交(Read committed)、可重复读(Repeatable Read)、串行化(Serializable)。
+
+  * `Durability` 持久性
+    * 事务处理结束后, 对数据的修改是永久性的, 故障不丢失。
+
+
+
+#### Go 操作事务的方法
+
+
+
+> 开始事务
+
+```go
+func (db *DB) Begin() (*Tx, error) 
+```
+
+
+> 提交事务
+
+```go
+func (db *DB) Commit() error
+
+```
+
+> 回滚事务
+
+```go
+func (tx *Tx) Rollback() error
+
+```
+
+
+
+
+#### 事务操作例子
+
+
+```shell
+# MySQL 表结果
+
+ID: 1  Name: jicki Age: 11 
+ID: 2  Name: Jack Age: 18 
+ID: 4  Name: 小炒肉 Age: 10 
+ID: 5  Name: 小小肉 Age: 20 
+ID: 6  Name: 大炒肉 Age: 20 
+
+```
+
+
+
+```go
+
+func transaction() {
+	tx, err := DB.Begin()
+	if err != nil {
+		if tx != nil {
+			err = tx.Rollback()
+			if err != nil {
+				fmt.Printf("Rollback Failed Error %v\n", err)
+				return
+			}
+			fmt.Printf("Transaction Begin Error %v\n", err)
+			return
+		}
+	}
+	sqlStr := "update user set age = 18 where id = ?"
+	rs1, err := tx.Exec(sqlStr, 2)
+	if err != nil {
+		err = tx.Rollback()
+		fmt.Printf("rs1 Exec Failed Error %v\n", err)
+		if err != nil {
+			fmt.Printf("Rollback Failed Error %v\n", err)
+			return
+		}
+	}
+	rowID1, _ := rs1.RowsAffected()
+
+	sqlStr = "update user set age = 40 where id = ?"
+	rs2, err := tx.Exec(sqlStr, 3)
+	if err != nil {
+		err = tx.Rollback()
+		fmt.Printf("rs2 Exec Failed Error %v\n", err)
+		if err != nil {
+			fmt.Printf("Rollback Failed Error %v\n", err)
+			return
+		}
+	}
+	rowID2, _ := rs2.RowsAffected()
+	if rowID1 == 1 && rowID2 == 1 {
+		fmt.Println("事务提交....")
+		err = tx.Commit()
+		if err != nil {
+			err = tx.Rollback()
+			fmt.Printf("Exec Failed Error %v\n", err)
+			if err != nil {
+				fmt.Printf("Rollback Failed Error %v\n", err)
+				return
+			}
+		}
+	} else {
+		fmt.Println("事务回滚....")
+		err = tx.Rollback()
+		if err != nil {
+			fmt.Printf("Rollback Failed Error %v\n", err)
+			return
+		}
+	}
+}
+
+func main() {
+	err := initDB()
+	if err != nil {
+		fmt.Printf("initDB failed, err:%v \n", err)
+		return
+	}
+	defer DB.Close()
+	transaction()
+}
+
+```
+
+
+```shell
+# 输出结果
+事务回滚....
+```
+
+
+
+
 
 ## sqlx 模块
 
