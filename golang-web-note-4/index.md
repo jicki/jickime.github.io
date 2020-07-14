@@ -978,6 +978,9 @@ ID: 3  Name: 小小肉  Age: 18
 ```
 
 
+
+### 更新数据
+
 > 更新数据
 
 
@@ -1026,6 +1029,7 @@ ID: 3  Name: 小小肉  Age: 18
 ```
 
 
+### 删除数据
 
 > 删除数据
 
@@ -1066,6 +1070,84 @@ ID: 3  Name: 小小肉  Age: 18
 delete id: 3 Success  Rows: 1 
 ID: 1  Name: 小炒肉  Age: 22 
 ID: 2  Name: 大炒肉  Age: 30 
+
+```
+
+
+
+### 事务的操作
+
+>  事务操作的例子
+
+
+```go
+
+func transaction() (err error) {
+	tx, err := DB.Begin()
+	if err != nil {
+		fmt.Printf("Transaction Begin Failed Error %v \n", err)
+		return
+	}
+
+	// 这里使用 defer 调用一个 匿名函数, 用于捕获 panic 执行 Rollback 操作
+	defer func() {
+		if p := recover(); p != nil {
+			tx.Rollback()
+			panic(p)
+		} else if err != nil {
+			fmt.Println("RollBack...")
+			tx.Rollback()
+		} else {
+			err = tx.Commit()
+			fmt.Println("Commit...")
+		}
+	}()
+	sqlStr1 := "update sqlx set age = 22 where id = ?"
+	result, err := tx.Exec(sqlStr1, 1)
+	if err != nil {
+		return err
+	}
+	n, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if n != 1 {
+		return errors.New("exec sqlStr1 Failed")
+	}
+
+	sqlStr2 := "update sqlx set age = 22 where id = ?"
+	result, err = tx.Exec(sqlStr2, 2)
+	if err != nil {
+		return err
+	}
+	n, err = result.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if n != 1 {
+		return errors.New("exec sqlStr2 Failed")
+	}
+	return err
+}
+
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+	if err := transaction(); err != nil {
+		fmt.Println("Transaction Error ", err)
+	}
+}
+
+```
+
+
+```shell
+# 输出结果
+
+RollBack...
+Transaction Error  exec sqlStr1 Failed
 
 ```
 
