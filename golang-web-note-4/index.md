@@ -3,6 +3,44 @@
 
 # Go Web 编程
 
+
+
+## SQL 科普
+
+
+
+### bindvars 绑定变量
+
+
+* 在 MySQL 语句中经常会出现占位符 `?` , 在 `SQL` 内部称为 `bindvars` 查询占位符。
+
+* 我们在日常的 `SQL` 语句中 任何时候都不应该自己拼接`SQL`语句, 应该始终使用 `bindvars` 占位符 来对数据发送值, 它可以防止`SQL`注入攻击。
+
+* 在Go语言的 `database/sql` 中, 不会尝试对查询文本进行任何校验, 它与编码参数一起按照原样发送到服务器。
+
+ 
+* 不同的数据库有不同的占位符
+
+  * `MySQL` 中使用 `?`
+
+  * `PostgreSQL` 中使用 `$1`、`$2` 等枚举的`bindvars`语法
+
+  * `SQLite` 中 `?` 与 `$1`、`$2` 等枚举 的语法都支持
+
+  * `Oracle` 中使用 `:name` 的语法
+
+
+* 注意:
+  
+  * `bindvars` 仅用于参数化, 不允许更改 `SQL`语句的结构。
+
+  * `bindvars` 占位符不能用于插入 表名。 如: `select * from ?` 这是不允许的
+
+  * `bindvars` 占位符不能用于插入 列名。如: `select ?,? from user` 这也是不允许的
+
+
+
+
 ## sql 标准库
 
 * Go 语言中的 `database/sql` 包提供了保证SQL或类SQL数据库的范接口, 但是并不提供具体的数据库驱动。
@@ -978,6 +1016,50 @@ ID: 3  Name: 小小肉  Age: 18
 ```
 
 
+> 查询指定的多条数据
+
+
+```go
+// 批量查询
+func queryRowByIDs(ids []int) (users []User, err error) {
+	query, args, err := sqlx.In("select id,name,age FROM sqlx WHERE id IN (?)", ids)
+	if err != nil {
+		fmt.Printf("QueryRowByIDs In Failed Error %v\n", err)
+		return
+	}
+	// 使用 Rebind() 重新绑定 组合后的 SQL 语句
+	query = DB.Rebind(query)
+	err = DB.Select(&users, query, args...)
+	for _, user := range users {
+		fmt.Printf("ID: %d  Name: %s  Age: %d \n", user.Id, user.Name, user.Age)
+	}
+	return
+}
+
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+        // 这里返回一个 []user 的切片 和 一个 error
+	_, err := queryRowByIDs([]int{1, 3, 5, 6})
+	if err != nil {
+		fmt.Printf("QueryRowByIDs Failed Error %v\n", err)
+		return
+	}
+}
+```
+
+```shell
+# 输出结果
+
+ID: 1  Name: 小炒肉  Age: 22 
+ID: 5  Name: 大肉肉  Age: 48 
+ID: 6  Name: 中肉肉  Age: 38 
+```
+
+
+
 
 ### 更新数据
 
@@ -1149,5 +1231,131 @@ func main() {
 RollBack...
 Transaction Error  exec sqlStr1 Failed
 
+```
+
+
+### 批量插入数据
+
+
+#### sqlx.In 函数
+
+* `sqlx.In` 是 `sqlx` 提供的一个函数。
+
+
+> 批量插入数据
+
+
+```shell
+# user 表结构如下:
+
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | bigint      | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(20) | YES  |     |         |                |
+| age   | int         | YES  |     | 0       |                |
++-------+-------------+------+-----+---------+----------------+
+```
+
+
+```shell
+# User 结构体如下:
+
+type User struct {
+	Id   int    `db:"id"`
+	Name string `db:"name"`
+	Age  int    `db:"age"`
+}
+```
+
+
+* 使用 `sqlx.In` 需要对数据映射的结构体实现一个 `driver.Valuer` 的接口返回值的方法.
+
+```go
+func (u User) Value() (driver.Value, error) {
+	return []interface{}{u.Name, u.Age}, nil
+}
+```
+
+
+
+```go
+// SqlX.In
+func BatchInsertSqlIn(users []interface{}) error {
+	query, args, _ := sqlx.In("INSERT INTO user (name, age) VALUES (?),(?),(?)",
+		users...)
+	fmt.Println(query)
+	fmt.Println(args)
+	_, err := DB.Exec(query, args...)
+	return err
+}
+
+func main() {
+	if err := initDB(); err != nil {
+		fmt.Printf("InitDB Failed Error %v\n", err)
+		return
+	}
+	u1 := User{
+		Name: "小肉肉",
+		Age:  28,
+	}
+	u2 := User{
+		Name: "大肉肉",
+		Age:  48,
+	}
+	u3 := User{
+		Name: "中肉肉",
+		Age:  38,
+	}
+	// 需要先创建 interface 的切片
+	users := []interface{}{u1, u2, u3}
+
+	if err := BatchInsertSqlIn(users); err != nil {
+		fmt.Printf("Batch Insert Failed Error %v \n", err)
+		return
+	}
+	queryMultiRows(0)
+}
+
+```
+
+
+
+```shell
+
+INSERT INTO user (name, age) VALUES (?, ?),(?, ?),(?, ?)
+[小肉肉 28 大肉肉 48 中肉肉 38]
+ID: 1  Name: 小炒肉  Age: 22 
+ID: 2  Name: 大炒肉  Age: 30 
+ID: 4  Name: 小肉肉  Age: 28 
+ID: 5  Name: 大肉肉  Age: 48 
+ID: 6  Name: 中肉肉  Age: 38 
+```
+
+
+
+#### NamedExec 函数
+
+* 注意: `sqlx` 版本必须 >= `v1.2.1`
+
+> 批量插入数据
+
+
+```shell
+# User 结构体如下:
+type User struct {
+        Id   int    `db:"id"`
+        Name string `db:"name"`
+        Age  int    `db:"age"`
+}
+```
+
+```go
+
+// NamedExec
+func BatchInsertNamed(users []*User) error {
+	_, err := DB.NamedExec("INSERT INTO user (name, age) VALUES (:name, :age)", users)
+	return err
+}
 ```
 
