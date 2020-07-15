@@ -3,10 +3,8 @@
 
 # Go Web 编程
 
-## Golang go-redis
+## Golang go-Redis
 
-> Go 操作 redis 
-> 
 > 官方 github https://github.com/go-redis/redis
 
 

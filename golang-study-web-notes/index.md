@@ -26,7 +26,7 @@
 
 [ 【Go Web编程 - GORM MYSQL 】](https://jicki.cn/golang-web-note-5 "Go GORM MYSQL")
 
-[ 【Go Web编程 - Go go-redis 】](https://jicki.cn/golang-web-note-6 "Go go-redis")
+[ 【Go Web编程 - Go 操作 Redis 】](https://jicki.cn/golang-web-note-6 "Go 操作 Redis")
 
 [ 【Go Web编程 - Go Logrus 日志模块 】](https://jicki.cn/golang-web-note-8 "Go Logrus 日志模块")
 
