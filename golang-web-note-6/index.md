@@ -7,6 +7,10 @@
 
 > 官方 github https://github.com/go-redis/redis
 
+### docs 文档
+
+> https://godoc.org/github.com/go-redis/redis
+
 
 ### Install
 
@@ -21,93 +25,123 @@ import "github.com/go-redis/redis"
 ```
 
 
-### 连接redis
+### 初始化连接
+
+
+#### 单 Redis 节点
 
 ```go
-package main
 
-import (
-	"fmt"
+// 创建一个全局的 redis 客户端实例 Rdb
+var Rdb *redis.Client
 
-	"github.com/go-redis/redis"
-)
-
-func main() {
-	// 创建一个 redis 连接实例
-	client := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+func initRdb() (err error) {
+        // 这里是赋值, 而不是 创建一个变量, 所以只需要使用 = 号
+	Rdb = redis.NewClient(&redis.Options{
+		Addr: "127.0.0.1:6379",
+		// 留空为没密码
 		Password: "",
-		DB:       0,
+		// 默认的 DB 为 0
+		DB: 0,
+		// 连接池大小
+		PoolSize: 100,
 	})
-
-	// 连接 redis,并使用 Result() 返回一个 PONG 表示成功, 和一个 err
-	pong, err := client.Ping().Result()
-	if err != nil {
-		panic(err)
-	}
-	// 打印 pong 返回
-	fmt.Println(pong)
+	// 测试 redis 是否可以连接
+	_, err = Rdb.Ping().Result()
+	return err
 }
 ```
 
 
-### 操作例子
+#### Redis 哨兵模式
 
 ```go
-package main
 
-import (
-	"fmt"
-	"video/util"
+// 创建一个全局的 redis 客户端实例 Rdb
+var Rdb *redis.Client
 
-	"github.com/go-redis/redis"
-)
-
-// redis 连接的函数, 返回一个 redis client 的指针实例
-func NewRedis(addr, password string, db int) (client *redis.Client, err error) {
-	// 创建一个 redis 连接实例
-	client = redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: password,
-		DB:       db,
+func initRdb() (err error) {
+        // 这里是赋值, 而不是 创建一个变量, 所以只需要使用 = 号
+	Rdb = redis.NewFailoverClient(&redis.FailoverOptions{
+		MasterName:    "master",
+		SentinelAddrs: []string{"127.0.0.1:6379", "127.0.0.1:6380", "127.0.0.1:6381"},
 	})
+        // 测试 redis 是否可以连接
+        _, err = Rdb.Ping().Result()
+        return err
+}
 
-	_, err = client.Ping().Result()
+```
 
-	if err != nil {
-		util.Log().Panic("连接Redis不成功 %v\n", err)
+
+#### Redis Cluster 集群模式
+
+* 集群模式的 客户端实例与单节点是不一样的 `*redis.ClusterClient`
+
+```go
+
+// 创建一个全局的 redis 客户端实例 Rdb
+var Rdb *redis.ClusterClient
+
+
+func initRdb() (err error) {
+        // 这里是赋值, 而不是 创建一个变量, 所以只需要使用 = 号
+        Rdb = redis.NewClusterClient(&redis.ClusterOptions{
+                Addrs: []string{"127.0.0.1:7000", "127.0.0.1:7001", "127.0.0.1:7002", "127.0.0.1:7003"},
+        })
+        // 测试 redis 是否可以连接
+        _, err = Rdb.Ping().Result()
+        return err
+}
+
+```
+
+
+### 连接redis
+
+```go
+
+func main() {
+	if err := initRdb(); err != nil {
+		fmt.Printf("initRdb Failed Error %v\n", err)
+		return
 	}
+	fmt.Println("Connect Redis Client Success")
+	defer Rdb.Close()
+}
+```
 
-	return
+
+### 操作 Redis
+
+
+
+#### Set/Get 操作
+
+
+> Set 操作的函数
+
+```go
+
+func redisSet(key string, value interface{}, expr time.Duration) {
+	err := Rdb.Set(key, value, expr).Err()
+	if err != nil {
+		fmt.Printf("redisSet Failed Error %v\n", err)
+		return
+	}
+	fmt.Printf("Redis Set key: [%s] value: [%v] Success \n", key, value)
 }
 
 func main() {
-	client, err := NewRedis("127.0.0.1:6379", "", 0)
-	if err != nil {
-		panic(err)
+	if err := initRdb(); err != nil {
+		fmt.Printf("initRdb Failed Error %v\n", err)
+		return
 	}
-	// 调用 redis Set 命令, 0 是 expiration key 的过期时间
-	err = client.Set("key01", "value01", 0).Err()
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println("Connect Redis Client Success")
+	defer Rdb.Close()
 
-	// 调用 redis Get 命令
-	value, err := client.Get("key01").Result()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("key01:%#v\n", value)
+	redisSet("RedisKey", "Value1", 0)
 
-	// 利用 redis.Nil 判断 key 是否存在
-	v2, err := client.Get("key_").Result()
-	if err == redis.Nil {
-		fmt.Println("key_ 不存在")
-	} else if err != nil {
-		panic(err)
-	} else {
-		fmt.Printf("key_:%#v\n", v2)
-	}
 }
 
 ```
@@ -116,12 +150,50 @@ func main() {
 
 ```shell
 
-key01:"value01"
-key_ 不存在
+Connect Redis Client Success
+Redis Set key: [RedisKey] value: [Value1] Success 
 
 ```
 
-### docs 文档
 
-> https://godoc.org/github.com/go-redis/redis
+> Get 操作的函数
+
+
+```go
+func redisGet(key string) {
+	value, err := Rdb.Get(key).Result()
+	// 应该首先使用 redis.Nil 判断 key 是否存在
+	if err == redis.Nil {
+		fmt.Printf("Key: [%s] is Null \n", key)
+		// 这里再判断 err != nil
+	} else if err != nil {
+		fmt.Printf("Redis Get Key Failed Error %v \n", err)
+	} else {
+		fmt.Printf("Key: [%s]  value: [%v] \n", key, value)
+	}
+}
+
+func main() {
+	if err := initRdb(); err != nil {
+		fmt.Printf("initRdb Failed Error %v\n", err)
+		return
+	}
+	fmt.Println("Connect Redis Client Success")
+	defer Rdb.Close()
+	// Get 一个不存在的 key
+	redisGet("redisKey")
+}
+
+```
+
+
+```shell
+# 输出结果
+
+Connect Redis Client Success
+Key: [redisKey] is Null 
+
+```
+
+
 
