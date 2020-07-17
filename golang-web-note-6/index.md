@@ -197,3 +197,140 @@ Key: [redisKey] is Null
 
 
 
+
+### Redis Pipeline
+
+
+* `Pipeline` 管道技术, 指的是客户端允许将多个请求依次发给服务器, 过程中而不需要等待请求的回复, 在最后再一并读取结果即可。
+
+
+> Pipeline 例子
+
+
+```go
+func redisPipeline() {
+	pipe := Rdb.Pipeline()
+	pipe.Set("key1", "value1", 0)
+	pipe.Set("key2", "value2", 0)
+	pipe.Set("key3", "value3", 0)
+	pipe.Get("key1")
+
+	cmder, err := pipe.Exec()
+	if err != nil {
+		fmt.Printf("Pipeline Exec Failed Error %v\n", err)
+		return
+	}
+	for _, cmd := range cmder {
+		fmt.Printf("Pipe Exec: [%v] \n", cmd)
+	}
+}
+
+func main() {
+	if err := initRdb(); err != nil {
+		fmt.Printf("initRdb Failed Error %v\n", err)
+		return
+	}
+	fmt.Println("Connect Redis Client Success")
+	defer Rdb.Close()
+	redisPipeline()
+}
+```
+
+```shell
+# 输出结果
+Connect Redis Client Success
+Pipe Exec: [set key1 value1: OK] 
+Pipe Exec: [set key2 value2: OK] 
+Pipe Exec: [set key3 value3: OK] 
+Pipe Exec: [get key1: value1] 
+```
+
+
+
+
+### Redis 事务操作
+
+
+#### TxPipeline
+
+
+* Redis 是单线程, 因此单个命令始终是原子的, 但是来自不同客户端的两个命令可以依次执行, 但是 `Multi/exec` 能够确保在`multi/exec`两个语句之间的命令没有其他客户端正在执行命令。基于这样的场景下我们需要使用`TxPipeline`来解决。
+
+  * `TxPipeline` 类似于 `Pipeline` 的方式,  不过 `TxPipeline` 内部会使用 `Multi/exec` 封装排列的命令。
+
+
+```go
+
+func redisTxPipeline() {
+	pipe := Rdb.TxPipeline()
+	pipe.Set("key1", "value1", 0)
+	pipe.Set("key2", "value2", 0)
+	pipe.Set("key3", "value3", 0)
+	pipe.Get("key1")
+
+	cmder, err := pipe.Exec()
+	if err != nil {
+		fmt.Printf("Pipeline Exec Failed Error %v\n", err)
+		return
+	}
+
+	for _, cmd := range cmder {
+		fmt.Printf("Pipe Exec: [%v] \n", cmd)
+	}
+}
+
+func main() {
+	if err := initRdb(); err != nil {
+		fmt.Printf("initRdb Failed Error %v\n", err)
+		return
+	}
+	fmt.Println("Connect Redis Client Success")
+	defer Rdb.Close()
+
+	redisTxPipeline()
+}
+```
+
+```shell
+# 输出结果
+
+Connect Redis Client Success
+Pipe Exec: [set key1 value1: OK] 
+Pipe Exec: [set key2 value2: OK] 
+Pipe Exec: [set key3 value3: OK] 
+Pipe Exec: [get key1: value1] 
+
+```
+
+
+
+
+#### WATCH
+
+* 某些场景下, 我们除了要使用 `Multi/Exec` 命令外, 还需要配合 `WATCH` 命令使用。
+
+* 如: 在使用 `WATCH` 命令监视某个键之后, 直到执行 `Exec` 命令的这段时间内, 如果有其他用户抢先对被监视的键进行了替换、更新、删除等操作, 那么当用户尝试执行`Exec` 的时候, 事务将返回一个错误, 用户可以根据这个错误选择重试事务或者放弃事务。
+
+
+```go
+func txWatch() {
+	key := "watch_count"
+	err := Rdb.Watch(func(tx *redis.Tx) error {
+		n, err := tx.Get(key).Int()
+		if err != nil && err != redis.Nil {
+			return err
+		}
+		_, err = tx.Pipelined(func(pipe redis.Pipeliner) error {
+			pipe.Set(key, n+1, 0)
+			return nil
+		})
+		return err
+	}, key)
+	if err != nil {
+		fmt.Printf("WATCH Failed Error %v\n", err)
+		return
+	}
+	fmt.Printf("WATCH Get watch_count: %v \n", Rdb.Get(key).Val())
+}
+```
+
