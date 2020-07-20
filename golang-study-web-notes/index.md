@@ -30,6 +30,8 @@
 
 [ 【Go Web编程 - Go Logrus 日志模块 】](https://jicki.cn/golang-web-note-8 "Go Logrus 日志模块")
 
+[ 【Go Web编程 - Uber Zap 日志库 】](https://jicki.cn/golang-web-zap-logs "Uber Zap 日志库")
+
 [ 【Go Web编程 - Cookie 与 Session 】](https://jicki.cn/golang-web-note-9 "Cookie 与 Session")
 
 [ 【Go Web编程 - Sonyflake 唯一ID 】](https://jicki.cn/golang-web-note-10 "Sonyflake 唯一ID")
