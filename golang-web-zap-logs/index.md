@@ -32,14 +32,13 @@ go get -u go.uber.org/zap
 ```
 
 
-## 配置 Zap Logger
+## 初始化 Zap Logger
 
 * `Zap` 提供了两种类型的日志记录器 分别是 `Sugared Logger`  与 `Logger`。
 
   * `Sugared Logger` - 在不是很关键的上下文中使用. 它支持 结构化和`printf`风格的日志记录。
 
   * `Logger` - 在每微秒和每次内存分配都很重要的上下文中使用. 它速度比 `Sugared Logger` 速度更快, 内存分配次数更少, 但是它只支持强类型的结构化日志记录。
-
 
 
 
@@ -160,4 +159,143 @@ func main() {
 {"level":"info","ts":1595236309.971819,"caller":"zap/main.go:50","msg":"Get for http://www.baidu.com Success \n"}
 
 ```
+
+
+
+
+
+### 自定义 New() 方法
+
+ 
+* `func New(core zapcore.Core, options ...Option) *Logger `
+
+  * `zapcore.Core` 主要的一些参数其中的三个配置项
+
+    * `Encoder` - 编码器, 1. 更改输出日志格式.  如: `zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())` 或 `zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())` 。 2. 更改日志时间的格式. 如: `encoderConfig := zap.NewProductionEncoderConfig() ` 、 `encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder`。
+
+    * `WriteSyncer` - 配置日志输出方式. 如需要输出到文件需使用 `zapcore.AddSync()` 函数,并将打开的文件句柄传入函数中. `file, _ := os.OpenFile("./HttpGet.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)` 
+
+    * `LogLevel` - 日志级别. ( Debug、Info、Warn、Error、DPanic、Panic、Fatal ) 
+
+
+  * `options` 配置, 可以增加一些额外的输出
+
+    * `zap.AddCaller()` - 函数调用信息记录。日志中输出如: `"caller":"zap/main.go:47"` 此类信息。
+
+
+
+> 自定义 New 例子
+
+```go
+
+// 定义一个全局的 zap.Logger 实例 Logger
+var Logger *zap.Logger
+
+// 定义一个全局的 zap.SugaredLogger 实例 SugarLogger
+var SugarLogger *zap.SugaredLogger
+
+// 初始化 zap Logger 函数
+func InitLogger() {
+	encoder := NewEncoder()
+	writeSync := NewLogWriter()
+	core := zapcore.NewCore(encoder, writeSync, zapcore.DebugLevel)
+	Logger = zap.New(core, zap.AddCaller())
+	SugarLogger = Logger.Sugar()
+}
+
+// InitLogger: zap.New() 函数的 code 部分 Encoder 配置项
+func NewEncoder() zapcore.Encoder {
+	//return zapcore.NewConsoleEncoder(zap.NewProductionEncoderConfig())
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+
+	return zapcore.NewJSONEncoder(encoderConfig)
+}
+
+// InitLogger: zap.New() 函数的 code 部分 LogWriter 配置项
+func NewLogWriter() zapcore.WriteSyncer {
+	file, _ := os.OpenFile("./HttpGet.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0644)
+	return zapcore.AddSync(file)
+}
+
+func simpleHttpGet(url string) {
+	resp, err := http.Get(url)
+	if err != nil {
+		SugarLogger.Errorf("Get [%s]  Error: %s \n", url, err)
+	} else {
+		SugarLogger.Infof("Get [%s] Success StatusCode: %d \n", url, resp.StatusCode)
+		_ = resp.Body.Close()
+	}
+}
+
+func main() {
+	InitLogger()
+
+	simpleHttpGet("http://www.baidu.com")
+	// Sync 是将内存中的数据保存到本地磁盘
+	defer SugarLogger.Sync()
+}
+```
+
+
+``shell
+# 输出文件的日志
+
+
+{"level":"info","ts":"2020-07-21T14:38:01.090+0800","msg":"Get [http://www.baidu.com] Success StatusCode: 200 \n"}
+{"level":"info","ts":"2020-07-21T14:48:29.474+0800","caller":"zap/main.go:47","msg":"Get [http://www.baidu.com] Success StatusCode: 200 \n"}
+
+```
+
+
+
+## Lumberjack 切割日志
+
+> lumberjack is a log rolling package for Go 
+
+* `Zap` 本身并不支持日志的切割, 需要配合第三方库实现。
+
+
+
+
+### 安装
+
+
+```shell
+go get -u github.com/natefinch/lumberjack
+
+```
+
+
+### zap 结合lumberjack
+
+* `zap` 使用 `lumberjack` 需要在 `zapcore.NewCore()` 函数中的 `WriteSyncer` 方法中集成。 
+
+> NewLogWriter 函数
+
+```go
+// InitLogger: zap.New() 函数的 code 部分 LogWriter 配置项
+func NewLogWriter() zapcore.WriteSyncer {
+	lumberjackLogger := &lumberjack.Logger{
+		// 日志文件路径
+		Filename: "./HttpGet.log",
+		// 最大切割文件大小 单位是 MB
+		MaxSize: 500,
+		// 最多备份数量
+		MaxBackups: 5,
+		// 最多保存天数
+		MaxAge: 30,
+		// 是否进行压缩
+		Compress: false,
+	}
+	return zapcore.AddSync(lumberjackLogger)
+}
+```
+
+
+* 切割日志的格式为: `HttpGet-2020-07-21T07-35-29.789.log` 。 
+
+
+
+
 
