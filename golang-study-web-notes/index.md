@@ -32,15 +32,17 @@
 
 13. {{< link "https://jicki.cn/golang-web-zap-logs" "Go Web编程 - Uber Zap Logger 库" "Uber Zap Logger 日志库" >}}
 
-14. {{< link "https://jicki.cn/golang-web-note-9" "Go Web编程 - Cookie 与 Session" "Cookie 与 Session" >}}
+14. {{< link "https://jicki.cn/golang-web-gin-zap-logs" "Go Web编程 - Gin 框架使用 Zap 日志库" "Gin 框架集成 Zap 日志库" >}}
 
-15. {{< link "https://jicki.cn/golang-web-note-10" "Go Web编程 - Sonyflake 生成唯一ID" "Sonyflake 生成唯一ID" >}}
+15. {{< link "https://jicki.cn/golang-web-note-9" "Go Web编程 - Cookie 与 Session" "Cookie 与 Session" >}}
 
-16. {{< link "https://jicki.cn/golang-web-note-11" "Go Web编程 - Go Context" "Context 基础库" >}}
+16. {{< link "https://jicki.cn/golang-web-note-10" "Go Web编程 - Sonyflake 生成唯一ID" "Sonyflake 生成唯一ID" >}}
 
-17. {{< link "https://jicki.cn/golang-web-note-12" "Go Web编程 - Go 操作 Kafka" "Go 操作 Kafka" >}}
+17. {{< link "https://jicki.cn/golang-web-note-11" "Go Web编程 - Go Context" "Context 基础库" >}}
 
-18. {{< link "https://jicki.cn/golang-web-note-15" "Go Web编程 - Go 使用 Protobuf 数据传输" "Google Protocol Buffer" >}}
+18. {{< link "https://jicki.cn/golang-web-note-12" "Go Web编程 - Go 操作 Kafka" "Go 操作 Kafka" >}}
+
+19. {{< link "https://jicki.cn/golang-web-note-15" "Go Web编程 - Go 使用 Protobuf 数据传输" "Google Protocol Buffer" >}}
 
 
   [1]: https://jicki.cn/img/posts/golang/goweb.png
