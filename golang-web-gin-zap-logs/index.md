@@ -94,3 +94,31 @@ func GinRecovery(logger *zap.Logger, stack bool) gin.HandlerFunc {
 
 
 
+
+## Gin New
+
+* 将两个中间件函数添加到 Gin 框架实例中
+
+
+```go
+
+func main() {
+	// r := gin.Default()
+	r := gin.New()
+        r.Use(GinLogger(), GinRecovery())
+
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"Code": http.StatusOK,
+			"Msg":  "OK",
+		})
+	})
+	_ = r.Run()
+}
+
+```
+
+
+
+ 
+
