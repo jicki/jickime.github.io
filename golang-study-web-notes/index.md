@@ -44,6 +44,11 @@
 
 19. {{< link "https://jicki.cn/golang-web-note-15" "Go Web编程 - Go 使用 Protobuf 数据传输" "Google Protocol Buffer" >}}
 
+20. {{< link "https://jicki.cn/golang-web-viper-config" "Go Web编程 - Go 使用 viper 管理配置" "Golang 使用 viper 管理配置" >}}
+
+
+
+
 
   [1]: https://jicki.cn/img/posts/golang/goweb.png
 

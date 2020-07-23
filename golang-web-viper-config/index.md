@@ -394,6 +394,8 @@ Version: v1.0
 
 > etcd
 
+* etcd 未加密 http
+
 
 ```go
 viper.AddRemoteProvider("etcd", "http://127.0.0.1:4001", "/config/")
