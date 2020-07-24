@@ -428,7 +428,7 @@ err := viper.ReadRemoteConfig()
 
 ### 获取 Viper 值
 
-* 获取 Viper 的值有如下方法: ( Get 方法查询不到值的时 会返回空值 )
+* 获取 Viper 的值有如下方法: ( Get 方法查询不到值时 会返回空值 )
 
   * `func (v *Viper) Get(key string) interface{}` 
 
@@ -539,7 +539,7 @@ Redis:[127.0.0.1:6379]
 
 ### 反序列化
 
-* 需要注意 `Strcut` 中的 `tag` 需要统一配置为 `mapstructure`
+* 需要注意 `Structt` 中的 `tag` 需要统一配置为 `mapstructure`
 
 * 使用 `viper.Unmarshal(&c)` 反序列化到 结构体实例中。
 
