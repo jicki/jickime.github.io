@@ -423,6 +423,217 @@ err := viper.ReadRemoteConfig()
 
 ```
 
+---
+
+
+### 获取 Viper 值
+
+* 获取 Viper 的值有如下方法: ( Get 方法查询不到值的时 会返回空值 )
+
+  * `func (v *Viper) Get(key string) interface{}` 
+
+  * `func (v *Viper) GetBool(key string) bool`
+
+  * `func (v *Viper) GetFloat64(key string) float64`
+
+  * `func (v *Viper) GetInt(key string) int` 
+
+  * `func (v *Viper) GetIntSlice(key string) []int` 
+
+  * `func (v *Viper) GetString(key string) string` 
+
+  * `func (v *Viper) GetStringMap(key string) map[string]interface{} `
+
+  * `func (v *Viper) GetStringMapString(key string) map[string]string`
+
+  * `func (v *Viper) GetStringSlice(key string) []string`
+
+  * `func (v *Viper) GetTime(key string) time.Time`
+
+  * `func (v *Viper) GetDuration(key string) time.Duration`
+
+  * `func (v *Viper) IsSet(key string) bool `
+
+  * `func (v *Viper) AllSettings() map[string]interface{}` 
+
+
+
+---
+
+> 访问嵌套的值
+
+* 支持深度嵌套键值的格式化路径。如: `JSON`
+
+```json
+{
+    "host": {
+        "address": "127.0.0.1",
+        "port": 9999
+    },
+    "datastore": {
+        "mysql": {
+           "host": "127.0.0.1",
+           "port": 3306
+        },
+        "redis": {
+           "host": "127.0.0.1",
+           "port": 6379
+        }
+    }
+}
+```
+
+
+> 访问嵌套例子
+
+
+```go
+func jsonExample() {
+	viper.SetConfigType("json")
+
+	var jsonConfig = []byte(`
+{
+    "host": {
+        "address": "127.0.0.1",
+        "port": 9999
+    },
+    "datastore": {
+        "mysql": {
+           "host": "127.0.0.1",
+           "port": 3306
+        },
+        "redis": {
+           "host": "127.0.0.1",
+           "port": 6379
+        }
+    }
+}
+`)
+	// 通过 io.Reader 读取 buffer 内的配置
+	config := bytes.NewBuffer(jsonConfig)
+	if err := viper.ReadConfig(config); err != nil {
+		fmt.Printf("Read Buffer Config Failed Error %s \n", err)
+		return
+	}
+	// 访问嵌套 通过 [ . ] 来直接获取
+	fmt.Printf("Mysql: [%s:%v]  \nRedis:[%s:%v] \n",
+		viper.Get("datastore.mysql.host"),
+		viper.Get("datastore.mysql.port"),
+		viper.Get("datastore.redis.host"),
+		viper.Get("datastore.redis.port"),
+	)
+}
+```
+
+
+```shell
+# 输出结果
+Mysql: [127.0.0.1:3306]  
+Redis:[127.0.0.1:6379] 
+```
+
+
+---
+
+
+
+### 反序列化
+
+* 需要注意 `Strcut` 中的 `tag` 需要统一配置为 `mapstructure`
+
+* 使用 `viper.Unmarshal(&c)` 反序列化到 结构体实例中。
+
+
+
+
+* 配置文件:
+
+```yaml
+
+host: "127.0.0.1"
+port: 9999
+version: "v1.1"
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  dbname: "viper_demo"
+
+```
+
+
+
+* 代码如下:
+
+
+```go
+type Config struct {
+	// 结构体 viper 配置文件 tag 统一使用 mapstructure 这个tag
+	Host        string `mapstructure:"host"`
+	Port        int    `mapstructure:"port"`
+	Version     string `mapstructure:"version"`
+	MysqlConfig `mapstructure:"mysql"`
+}
+
+type MysqlConfig struct {
+	Host   string `mapstructure:"host"`
+	Port   int    `mapstructure:"port"`
+	DBName string `mapstructure:"dbname"`
+}
+
+// 定义一个 Config 类型的实例 c
+var c Config
+
+
+func InitViper() {
+	// 设置默认值
+	viper.SetDefault("ConfDir", "./conf/")
+
+	// SetConfigName 设置配置文件名称 - 不需要定义文件扩展名
+	viper.SetConfigName("config")
+	// SetConfigType 设置配置文件类型 - 当设置配置文件时必须设置此项
+	viper.SetConfigType("yaml")
+	// AddConfigPath 添加配置文件读取目录, 支持添加多个
+	viper.AddConfigPath("./conf/")
+
+	// ReadInConfig 查找并读取配置文件
+	if err := viper.ReadInConfig(); err != nil {
+		panic(fmt.Errorf("Read Config Error %s \n", err))
+	}
+
+	// WatchConfig 监控配置文件变化
+	viper.WatchConfig()
+
+	// OnConfigChange 是监控配置文件有变化后调用的一个回调函数
+	viper.OnConfigChange(func(e fsnotify.Event) {
+		fmt.Println("配置文件发生变化:", e.Name)
+	})
+
+	// 将配置 反序列化到 实例 c 中
+	if err := viper.Unmarshal(&c); err != nil {
+		fmt.Printf("Viper Unmarshal Failed Error %v \n", err)
+		return
+	}
+}
+
+
+func main() {
+	InitViper()
+
+	fmt.Printf("c = [%#v]\n", c)
+
+}
+
+
+```
+
+
+```shell
+# 输出结果
+
+c = [main.Config{Host:"127.0.0.1", Port:9999, Version:"v1.1", \
+  MysqlConfig:main.MysqlConfig{Host:"127.0.0.1", Port:3306, DBName:"viper_demo"}}]
+
+```
 
 
 

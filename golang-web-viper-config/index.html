@@ -1,11 +1,11 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Go Viper 配置管理库 - 小炒肉</title><meta name=Description content="Go configuration with fangs"><meta property="og:title" content="Go Viper 配置管理库"><meta property="og:description" content="Go configuration with fangs"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/golang-web-viper-config/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2000-01-01T00:00:00+00:00"><meta property="article:modified_time" content="2000-01-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Go Viper 配置管理库"><meta name=twitter:description content="Go configuration with fangs"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/golang-web-viper-config/><link rel=prev href=https://jicki.cn/golang-web-zap-logs/><link rel=next href=https://jicki.cn/golang-web-gin-zap-logs/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Go Viper 配置管理库","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/golang-web-viper-config\/"},"genre":"posts","keywords":"golang","wordcount":1823,"url":"https:\/\/jicki.cn\/golang-web-viper-config\/","datePublished":"2000-01-01T00:00:00+00:00","dateModified":"2000-01-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Go configuration with fangs"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Go Viper 配置管理库 - 小炒肉</title><meta name=Description content="Go configuration with fangs"><meta property="og:title" content="Go Viper 配置管理库"><meta property="og:description" content="Go configuration with fangs"><meta property="og:type" content="article"><meta property="og:url" content="https://jicki.cn/golang-web-viper-config/"><meta property="og:image" content="https://jicki.cn/logo.png"><meta property="article:published_time" content="2000-01-01T00:00:00+00:00"><meta property="article:modified_time" content="2000-01-01T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://jicki.cn/logo.png"><meta name=twitter:title content="Go Viper 配置管理库"><meta name=twitter:description content="Go configuration with fangs"><meta name=application-name content="小炒肉"><meta name=apple-mobile-web-app-title content="小炒肉"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/images/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://jicki.cn/golang-web-viper-config/><link rel=prev href=https://jicki.cn/golang-web-zap-logs/><link rel=next href=https://jicki.cn/golang-web-gin-zap-logs/><link rel=stylesheet href=/lib/normalize/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=/lib/fontawesome-free/all.min.css><link rel=stylesheet href=/lib/animate/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Go Viper 配置管理库","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/jicki.cn\/golang-web-viper-config\/"},"genre":"posts","keywords":"golang","wordcount":2554,"url":"https:\/\/jicki.cn\/golang-web-viper-config\/","datePublished":"2000-01-01T00:00:00+00:00","dateModified":"2000-01-01T00:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"小炒肉"},"description":"Go configuration with fangs"}</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('auto'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'auto'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
 <a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=小炒肉>小炒肉</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
 <a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>文章</a><a class=menu-item href=/tags/>标签</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
-<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Go Viper 配置管理库</h1><h2 class=single-subtitle>Go Viper 配置管理库</h2><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/golang/><i class="far fa-folder fa-fw"></i>golang</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2000-01-01>2000-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1823 字&nbsp;
-<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id=/golang-web-viper-config/ class=leancloud_visitors data-flag-title="Go Viper 配置管理库">
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class="toc-content always-active" id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Go Viper 配置管理库</h1><h2 class=single-subtitle>Go Viper 配置管理库</h2><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://jicki.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw"></i>小炒肉</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/golang/><i class="far fa-folder fa-fw"></i>golang</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2000-01-01>2000-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2554 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id=/golang-web-viper-config/ class=leancloud_visitors data-flag-title="Go Viper 配置管理库">
 <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
 </span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#安装-viper>安装 Viper</a></li><li><a href=#viper-实践>Viper 实践</a><ul><li><a href=#定义配置源>定义配置源</a></li><li><a href=#远程-keyvalue-存储>远程 Key/Value 存储</a></li></ul></li></ul></nav></div></div><div class=content id=content><figure><img src=/img/posts/golang/viper-logo.png><figcaption><h4>Viper</h4></figcaption></figure><h1 id=viper>Viper</h1><ul><li><p>Viper 是 Go 语言项目中相对完善的一个配置文件解决方案。 Viper 可以处理所有类型的配置需求和格式。</p><ul><li><strong>注: 目前 Viper 是大小写不敏感的。</strong></li></ul></li><li><p>Viper 特性:</p><ul><li><p>设置默认值</p></li><li><p>支持 <code>JSON</code>、<code>TOML</code>、<code>YAML</code>、<code>INT</code>、<code>HCL</code>、<code>envfile</code>、<code>Java properties</code> 格式的配置文件中读取配置信息。</p></li><li><p>实时监控与重新读取加载配置文件, 既热加载。( 可选 )</p></li><li><p>环境变量读取配置。</p></li><li><p>支持从远程配置系统 (etcd、zk、Consul) 读取并监控配置信息变化。</p></li><li><p>命令行标准输入读取配置。</p></li><li><p><code>buffer</code> 里读取配置。</p></li><li><p>支持直接通过代码 <code>Set</code> 配置值。</p></li></ul></li><li><p>Viper 读取配置的优先级</p><ol><li><p>显示调用 <code>Set</code> 设置值 ( 代码中通过 Viper.Set 设置值 )</p></li><li><p>程序命令行参数 ( flag - 程序运行时指定的参数 )</p></li><li><p>环境变量</p></li><li><p>配置文件</p></li><li><p>远程 <code>key/value</code> 存储系统</p></li><li><p>默认值</p></li></ol></li></ul><h2 id=安装-viper>安装 Viper</h2><ul><li><code>go get</code> and <code>go module</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#安装-viper>安装 Viper</a></li><li><a href=#viper-实践>Viper 实践</a><ul><li><a href=#定义配置源>定义配置源</a></li><li><a href=#远程-keyvalue-存储>远程 Key/Value 存储</a></li><li><a href=#获取-viper-值>获取 Viper 值</a></li><li><a href=#反序列化>反序列化</a></li></ul></li></ul></nav></div></div><div class=content id=content><figure><img src=/img/posts/golang/viper-logo.png><figcaption><h4>Viper</h4></figcaption></figure><h1 id=viper>Viper</h1><ul><li><p>Viper 是 Go 语言项目中相对完善的一个配置文件解决方案。 Viper 可以处理所有类型的配置需求和格式。</p><ul><li><strong>注: 目前 Viper 是大小写不敏感的。</strong></li></ul></li><li><p>Viper 特性:</p><ul><li><p>设置默认值</p></li><li><p>支持 <code>JSON</code>、<code>TOML</code>、<code>YAML</code>、<code>INT</code>、<code>HCL</code>、<code>envfile</code>、<code>Java properties</code> 格式的配置文件中读取配置信息。</p></li><li><p>实时监控与重新读取加载配置文件, 既热加载。( 可选 )</p></li><li><p>环境变量读取配置。</p></li><li><p>支持从远程配置系统 (etcd、zk、Consul) 读取并监控配置信息变化。</p></li><li><p>命令行标准输入读取配置。</p></li><li><p><code>buffer</code> 里读取配置。</p></li><li><p>支持直接通过代码 <code>Set</code> 配置值。</p></li></ul></li><li><p>Viper 读取配置的优先级</p><ol><li><p>显示调用 <code>Set</code> 设置值 ( 代码中通过 Viper.Set 设置值 )</p></li><li><p>程序命令行参数 ( flag - 程序运行时指定的参数 )</p></li><li><p>环境变量</p></li><li><p>配置文件</p></li><li><p>远程 <code>key/value</code> 存储系统</p></li><li><p>默认值</p></li></ol></li></ul><h2 id=安装-viper>安装 Viper</h2><ul><li><code>go get</code> and <code>go module</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
 </span><span class=lnt>4
@@ -454,6 +454,258 @@ Version: v1.0
 <span class=nx>viper</span><span class=p>.</span><span class=nf>SetConfigType</span><span class=p>(</span><span class=s>&#34;json&#34;</span><span class=p>)</span>
 
 <span class=nx>err</span> <span class=o>:=</span> <span class=nx>viper</span><span class=p>.</span><span class=nf>ReadRemoteConfig</span><span class=p>()</span>
+
+</code></pre></td></tr></table></div></div><hr><h3 id=获取-viper-值>获取 Viper 值</h3><ul><li><p>获取 Viper 的值有如下方法: ( Get 方法查询不到值的时 会返回空值 )</p><ul><li><p><code>func (v *Viper) Get(key string) interface{}</code></p></li><li><p><code>func (v *Viper) GetBool(key string) bool</code></p></li><li><p><code>func (v *Viper) GetFloat64(key string) float64</code></p></li><li><p><code>func (v *Viper) GetInt(key string) int</code></p></li><li><p><code>func (v *Viper) GetIntSlice(key string) []int</code></p></li><li><p><code>func (v *Viper) GetString(key string) string</code></p></li><li><p><code>func (v *Viper) GetStringMap(key string) map[string]interface{}</code></p></li><li><p><code>func (v *Viper) GetStringMapString(key string) map[string]string</code></p></li><li><p><code>func (v *Viper) GetStringSlice(key string) []string</code></p></li><li><p><code>func (v *Viper) GetTime(key string) time.Time</code></p></li><li><p><code>func (v *Viper) GetDuration(key string) time.Duration</code></p></li><li><p><code>func (v *Viper) IsSet(key string) bool</code></p></li><li><p><code>func (v *Viper) AllSettings() map[string]interface{}</code></p></li></ul></li></ul><hr><blockquote><p>访问嵌套的值</p></blockquote><ul><li>支持深度嵌套键值的格式化路径。如: <code>JSON</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+    <span class=nt>&#34;host&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;address&#34;</span><span class=p>:</span> <span class=s2>&#34;127.0.0.1&#34;</span><span class=p>,</span>
+        <span class=nt>&#34;port&#34;</span><span class=p>:</span> <span class=mi>9999</span>
+    <span class=p>},</span>
+    <span class=nt>&#34;datastore&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;mysql&#34;</span><span class=p>:</span> <span class=p>{</span>
+           <span class=nt>&#34;host&#34;</span><span class=p>:</span> <span class=s2>&#34;127.0.0.1&#34;</span><span class=p>,</span>
+           <span class=nt>&#34;port&#34;</span><span class=p>:</span> <span class=mi>3306</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;redis&#34;</span><span class=p>:</span> <span class=p>{</span>
+           <span class=nt>&#34;host&#34;</span><span class=p>:</span> <span class=s2>&#34;127.0.0.1&#34;</span><span class=p>,</span>
+           <span class=nt>&#34;port&#34;</span><span class=p>:</span> <span class=mi>6379</span>
+        <span class=p>}</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><blockquote><p>访问嵌套例子</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>func</span> <span class=nf>jsonExample</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nx>viper</span><span class=p>.</span><span class=nf>SetConfigType</span><span class=p>(</span><span class=s>&#34;json&#34;</span><span class=p>)</span>
+
+	<span class=kd>var</span> <span class=nx>jsonConfig</span> <span class=p>=</span> <span class=p>[]</span><span class=nb>byte</span><span class=p>(</span><span class=s>`
+</span><span class=s>{
+</span><span class=s>    &#34;host&#34;: {
+</span><span class=s>        &#34;address&#34;: &#34;127.0.0.1&#34;,
+</span><span class=s>        &#34;port&#34;: 9999
+</span><span class=s>    },
+</span><span class=s>    &#34;datastore&#34;: {
+</span><span class=s>        &#34;mysql&#34;: {
+</span><span class=s>           &#34;host&#34;: &#34;127.0.0.1&#34;,
+</span><span class=s>           &#34;port&#34;: 3306
+</span><span class=s>        },
+</span><span class=s>        &#34;redis&#34;: {
+</span><span class=s>           &#34;host&#34;: &#34;127.0.0.1&#34;,
+</span><span class=s>           &#34;port&#34;: 6379
+</span><span class=s>        }
+</span><span class=s>    }
+</span><span class=s>}
+</span><span class=s>`</span><span class=p>)</span>
+	<span class=c1>// 通过 io.Reader 读取 buffer 内的配置
+</span><span class=c1></span>	<span class=nx>config</span> <span class=o>:=</span> <span class=nx>bytes</span><span class=p>.</span><span class=nf>NewBuffer</span><span class=p>(</span><span class=nx>jsonConfig</span><span class=p>)</span>
+	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>viper</span><span class=p>.</span><span class=nf>ReadConfig</span><span class=p>(</span><span class=nx>config</span><span class=p>);</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;Read Buffer Config Failed Error %s \n&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
+		<span class=k>return</span>
+	<span class=p>}</span>
+	<span class=c1>// 访问嵌套 通过 [ . ] 来直接获取
+</span><span class=c1></span>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;Mysql: [%s:%v]  \nRedis:[%s:%v] \n&#34;</span><span class=p>,</span>
+		<span class=nx>viper</span><span class=p>.</span><span class=nf>Get</span><span class=p>(</span><span class=s>&#34;datastore.mysql.host&#34;</span><span class=p>),</span>
+		<span class=nx>viper</span><span class=p>.</span><span class=nf>Get</span><span class=p>(</span><span class=s>&#34;datastore.mysql.port&#34;</span><span class=p>),</span>
+		<span class=nx>viper</span><span class=p>.</span><span class=nf>Get</span><span class=p>(</span><span class=s>&#34;datastore.redis.host&#34;</span><span class=p>),</span>
+		<span class=nx>viper</span><span class=p>.</span><span class=nf>Get</span><span class=p>(</span><span class=s>&#34;datastore.redis.port&#34;</span><span class=p>),</span>
+	<span class=p>)</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出结果</span>
+Mysql: <span class=o>[</span>127.0.0.1:3306<span class=o>]</span>  
+Redis:<span class=o>[</span>127.0.0.1:6379<span class=o>]</span> 
+</code></pre></td></tr></table></div></div><hr><h3 id=反序列化>反序列化</h3><ul><li><p>需要注意 <code>Strcut</code> 中的 <code>tag</code> 需要统一配置为 <code>mapstructure</code></p></li><li><p>使用 <code>viper.Unmarshal(&c)</code> 反序列化到 结构体实例中。</p></li><li><p>配置文件:</p></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-yaml data-lang=yaml><span class=w>
+</span><span class=w></span><span class=k>host</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;127.0.0.1&#34;</span><span class=w>
+</span><span class=w></span><span class=k>port</span><span class=p>:</span><span class=w> </span><span class=m>9999</span><span class=w>
+</span><span class=w></span><span class=k>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;v1.1&#34;</span><span class=w>
+</span><span class=w></span><span class=k>mysql</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>host</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;127.0.0.1&#34;</span><span class=w>
+</span><span class=w>  </span><span class=k>port</span><span class=p>:</span><span class=w> </span><span class=m>3306</span><span class=w>
+</span><span class=w>  </span><span class=k>dbname</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;viper_demo&#34;</span><span class=w>
+</span><span class=w>
+</span></code></pre></td></tr></table></div></div><ul><li>代码如下:</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-go data-lang=go><span class=kd>type</span> <span class=nx>Config</span> <span class=kd>struct</span> <span class=p>{</span>
+	<span class=c1>// 结构体 viper 配置文件 tag 统一使用 mapstructure 这个tag
+</span><span class=c1></span>	<span class=nx>Host</span>        <span class=kt>string</span> <span class=s>`mapstructure:&#34;host&#34;`</span>
+	<span class=nx>Port</span>        <span class=kt>int</span>    <span class=s>`mapstructure:&#34;port&#34;`</span>
+	<span class=nx>Version</span>     <span class=kt>string</span> <span class=s>`mapstructure:&#34;version&#34;`</span>
+	<span class=nx>MysqlConfig</span> <span class=s>`mapstructure:&#34;mysql&#34;`</span>
+<span class=p>}</span>
+
+<span class=kd>type</span> <span class=nx>MysqlConfig</span> <span class=kd>struct</span> <span class=p>{</span>
+	<span class=nx>Host</span>   <span class=kt>string</span> <span class=s>`mapstructure:&#34;host&#34;`</span>
+	<span class=nx>Port</span>   <span class=kt>int</span>    <span class=s>`mapstructure:&#34;port&#34;`</span>
+	<span class=nx>DBName</span> <span class=kt>string</span> <span class=s>`mapstructure:&#34;dbname&#34;`</span>
+<span class=p>}</span>
+
+<span class=c1>// 定义一个 Config 类型的实例 c
+</span><span class=c1></span><span class=kd>var</span> <span class=nx>c</span> <span class=nx>Config</span>
+
+
+<span class=kd>func</span> <span class=nf>InitViper</span><span class=p>()</span> <span class=p>{</span>
+	<span class=c1>// 设置默认值
+</span><span class=c1></span>	<span class=nx>viper</span><span class=p>.</span><span class=nf>SetDefault</span><span class=p>(</span><span class=s>&#34;ConfDir&#34;</span><span class=p>,</span> <span class=s>&#34;./conf/&#34;</span><span class=p>)</span>
+
+	<span class=c1>// SetConfigName 设置配置文件名称 - 不需要定义文件扩展名
+</span><span class=c1></span>	<span class=nx>viper</span><span class=p>.</span><span class=nf>SetConfigName</span><span class=p>(</span><span class=s>&#34;config&#34;</span><span class=p>)</span>
+	<span class=c1>// SetConfigType 设置配置文件类型 - 当设置配置文件时必须设置此项
+</span><span class=c1></span>	<span class=nx>viper</span><span class=p>.</span><span class=nf>SetConfigType</span><span class=p>(</span><span class=s>&#34;yaml&#34;</span><span class=p>)</span>
+	<span class=c1>// AddConfigPath 添加配置文件读取目录, 支持添加多个
+</span><span class=c1></span>	<span class=nx>viper</span><span class=p>.</span><span class=nf>AddConfigPath</span><span class=p>(</span><span class=s>&#34;./conf/&#34;</span><span class=p>)</span>
+
+	<span class=c1>// ReadInConfig 查找并读取配置文件
+</span><span class=c1></span>	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>viper</span><span class=p>.</span><span class=nf>ReadInConfig</span><span class=p>();</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nb>panic</span><span class=p>(</span><span class=nx>fmt</span><span class=p>.</span><span class=nf>Errorf</span><span class=p>(</span><span class=s>&#34;Read Config Error %s \n&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>))</span>
+	<span class=p>}</span>
+
+	<span class=c1>// WatchConfig 监控配置文件变化
+</span><span class=c1></span>	<span class=nx>viper</span><span class=p>.</span><span class=nf>WatchConfig</span><span class=p>()</span>
+
+	<span class=c1>// OnConfigChange 是监控配置文件有变化后调用的一个回调函数
+</span><span class=c1></span>	<span class=nx>viper</span><span class=p>.</span><span class=nf>OnConfigChange</span><span class=p>(</span><span class=kd>func</span><span class=p>(</span><span class=nx>e</span> <span class=nx>fsnotify</span><span class=p>.</span><span class=nx>Event</span><span class=p>)</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Println</span><span class=p>(</span><span class=s>&#34;配置文件发生变化:&#34;</span><span class=p>,</span> <span class=nx>e</span><span class=p>.</span><span class=nx>Name</span><span class=p>)</span>
+	<span class=p>})</span>
+
+	<span class=c1>// 将配置 反序列化到 实例 c 中
+</span><span class=c1></span>	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>viper</span><span class=p>.</span><span class=nf>Unmarshal</span><span class=p>(</span><span class=o>&amp;</span><span class=nx>c</span><span class=p>);</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+		<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;Viper Unmarshal Failed Error %v \n&#34;</span><span class=p>,</span> <span class=nx>err</span><span class=p>)</span>
+		<span class=k>return</span>
+	<span class=p>}</span>
+<span class=p>}</span>
+
+
+<span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+	<span class=nf>InitViper</span><span class=p>()</span>
+
+	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;c = [%#v]\n&#34;</span><span class=p>,</span> <span class=nx>c</span><span class=p>)</span>
+
+<span class=p>}</span>
+
+
+</code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell><span class=c1># 输出结果</span>
+
+<span class=nv>c</span> <span class=o>=</span> <span class=o>[</span>main.Config<span class=o>{</span>Host:<span class=s2>&#34;127.0.0.1&#34;</span>, Port:9999, Version:<span class=s2>&#34;v1.1&#34;</span>, <span class=se>\
+</span><span class=se></span>  MysqlConfig:main.MysqlConfig<span class=o>{</span>Host:<span class=s2>&#34;127.0.0.1&#34;</span>, Port:3306, DBName:<span class=s2>&#34;viper_demo&#34;</span><span class=o>}}]</span>
 
 </code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2000-01-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md><span><a class=link-to-markdown href=/golang-web-viper-config/index.md target=_blank>阅读原始文档</a></span></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 Twitter" data-sharer=twitter data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库" data-via=jicki234 data-hashtags=golang><i class="fab fa-twitter fa-fw"></i></a><a href=javascript:void(0); title="分享到 Facebook" data-sharer=facebook data-url=https://jicki.cn/golang-web-viper-config/ data-hashtag=golang><i class="fab fa-facebook-square fa-fw"></i></a><a href=javascript:void(0); title="分享到 WhatsApp" data-sharer=whatsapp data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href=javascript:void(0); title="分享到 Line" data-sharer=line data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库"><i data-svg-src=/lib/simple-icons/icons/line.min.svg></i></a><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 Myspace" data-sharer=myspace data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库" data-description="Go configuration with fangs"><i data-svg-src=/lib/simple-icons/icons/myspace.min.svg></i></a><a href=javascript:void(0); title="分享到 Blogger" data-sharer=blogger data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库" data-description="Go configuration with fangs"><i class="fab fa-blogger fa-fw"></i></a><a href=javascript:void(0); title="分享到 Evernote" data-sharer=evernote data-url=https://jicki.cn/golang-web-viper-config/ data-title="Go Viper 配置管理库"><i class="fab fa-evernote fa-fw"></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/golang/>golang</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/golang-web-zap-logs/ class=prev rel=prev title="Go Zap 日志库"><i class="fas fa-angle-left fa-fw"></i>Go Zap 日志库</a>
 <a href=/golang-web-gin-zap-logs/ class=next rel=next title="Gin 集成 Zap 日志库">Gin 集成 Zap 日志库<i class="fas fa-angle-right fa-fw"></i></a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line>由 <a href=https://gohugo.io/ target=_blank rel="noopener noreffer" title="Hugo 0.73.0">Hugo</a> 强力驱动 | 主题 - <a href=https://github.com/dillonzq/LoveIt target=_blank rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i>LoveIt</a></div><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2020</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=https://jicki.cn target=_blank>小炒肉</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span><span class=icp-splitter>&nbsp;|&nbsp;</span><br class=icp-br><span class=icp>粤ICP备20055633号</span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><link rel=stylesheet href=/lib/katex/katex.min.css><link rel=stylesheet href=/lib/katex/copy-tex.min.css><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script type=text/javascript src=/lib/valine/Valine.min.js></script><script type=text/javascript src=/lib/smooth-scroll/smooth-scroll.min.js></script><script type=text/javascript src=/lib/autocomplete/autocomplete.min.js></script><script type=text/javascript src=/lib/lunr/lunr.min.js></script><script type=text/javascript src=/lib/lunr/lunr.stemmer.support.min.js></script><script type=text/javascript src=/lib/lunr/lunr.zh.min.js></script><script type=text/javascript src=/lib/lazysizes/lazysizes.min.js></script><script type=text/javascript src=/lib/clipboard/clipboard.min.js></script><script type=text/javascript src=/lib/sharer/sharer.min.js></script><script type=text/javascript src=/lib/katex/katex.min.js></script><script type=text/javascript src=/lib/katex/auto-render.min.js></script><script type=text/javascript src=/lib/katex/copy-tex.min.js></script><script type=text/javascript src=/lib/katex/mhchem.min.js></script><script type=text/javascript src=/lib/cookieconsent/cookieconsent.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"1LTTCvDe4Nt8XSdFzejtUsVF-gzGzoHsz","appKey":"cvpPM7sbgOw0pTXbh6YVKrjc","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"visitor":true}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
