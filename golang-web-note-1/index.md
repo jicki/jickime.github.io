@@ -78,7 +78,7 @@ graph TD;
 
 
 {{< mermaid >}}
-graph TD;
+graph LR;
     A[前端Vue 等] -->| B(LB Nginx 等)
     B -->| C(HTTP、Thrift、gRPC 协议等)
     C -->| D(Controller)
