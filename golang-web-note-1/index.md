@@ -85,11 +85,11 @@ graph TD;
   id4((Controller))
   id5((Logic))
   id6((Dao))
-  id1-------->id2;
-  id2-------->id3;
-  id3-------->id4;
-  id4-------->id5;
-  id5-------->id6;
+  id1-->id2;
+  id2-->id3;
+  id3-->id4;
+  id4-->id5;
+  id5-->id6;
 {{< /mermaid >}}
 
 
