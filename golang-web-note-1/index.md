@@ -79,17 +79,10 @@ graph TD;
 
 {{< mermaid >}}
 graph TD;
-  id1((前端Vue 等))
-  id2((LB Nginx 等))
-  id3((协议 HTTP、Thrift、gRPC 等))
-  id4((Controller))
-  id5((Logic))
-  id6((Dao))
-  id1-->id2;
-  id2-->id3;
-  id3-->id4;
-  id4-->id5;
-  id5-->id6;
+    A[前端Vue 等] -->| B(LB Nginx 等)
+    B -->| C(HTTP、Thrift、gRPC 协议等)
+    C -->| D(Controller)
+    D -->| E(Logic)
+    E -->| F(Dao)
 {{< /mermaid >}}
-
 
