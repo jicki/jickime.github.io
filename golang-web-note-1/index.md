@@ -61,6 +61,7 @@ graph TD;
   * 对应MVC中模型（Model）中的Dao层，提供接口支持。
 
 
+---
 
 ## CLD 框架
 
@@ -79,11 +80,11 @@ graph TD;
 
 {{< mermaid >}}
 graph LR;
-    A[前端Vue 等] -->| B(LB Nginx 等)
-    B -->| C(HTTP、Thrift、gRPC 协议等)
-    C -->| D(Controller)
-    D -->| E(Logic)
-    E -->| F(Dao)
+    A[前端Vue 等] --> B(LB Nginx 等)
+    B --> C(HTTP、Thrift、gRPC 协议等)
+    C --> D(Controller)
+    D --> E(Logic)
+    E --> F(Dao)
 {{< /mermaid >}}
 
 ---
