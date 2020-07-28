@@ -1,4 +1,4 @@
-# MVC 框架
+# MVC 与 CLD 框架
 
 
 # Go Web 编程
@@ -59,4 +59,37 @@ graph TD;
 * 数据访问层/持久层，DAL，Data Access Layer:
 
   * 对应MVC中模型（Model）中的Dao层，提供接口支持。
+
+
+
+## CLD 框架
+
+* `Controller` 层
+
+  * 服务的入口, 负责处理路由、参数校检、请求转发。
+
+* `Logic` 层
+
+  * 逻辑(服务)层, 负责处理业务逻辑。
+
+* `Dao` 层
+
+  * 负责数据与存储相关的服务。
+
+
+{{< mermaid >}}
+graph TD;
+  id1((前端Vue 等))
+  id2((LB Nginx 等))
+  id3((协议 HTTP、Thrift、gRPC 等))
+  id4((Controller))
+  id5((Logic))
+  id6((Dao))
+  id1-------->id2;
+  id2-------->id3;
+  id3-------->id4;
+  id4-------->id5;
+  id5-------->id6;
+{{< /mermaid >}}
+
 
