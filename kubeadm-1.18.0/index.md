@@ -1873,7 +1873,10 @@ k8s-node-3   94m          4%     1028Mi          26%
 ```
 
 
-# 6. Nginx Ingress
+# 6. Nginx Ingress (更新 2020-07-29)
+
+> 真是不想吐槽这个 ingress 每次更新都是大的变动而且文档说明也没有, 更加不可能兼容前面的。
+
 
 > 官方地址 https://kubernetes.github.io/ingress-nginx/
 
@@ -1884,13 +1887,14 @@ k8s-node-3   94m          4%     1028Mi          26%
 
 
 
+
 ## 6.2 部署 Nginx ingress
 
 
 ### 6.2.1 下载 yaml 文件
 
 ```
-wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.34.1/deploy/static/provider/cloud/deploy.yaml 
 
 ```
 
@@ -1898,17 +1902,49 @@ wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/st
 ### 6.2.2 修改 yaml 文件
 
 ```
-# 替换 阿里 镜像下载地址
+# 镜像下载地址
 
-sed -i 's/quay\.io\/kubernetes-ingress-controller/registry\.cn-hangzhou\.aliyuncs\.com\/google_containers/g' mandatory.yaml
+image: us.gcr.io/k8s-artifacts-prod/ingress-nginx/controller:v0.34.1@sha256:0e072dddd1f7f8fc8909a2ca6f65e76c5f0d2fcfb8be47935ae3457e8bbceb20
+
+# 替换为
+
+image: jicki/controller:v0.34.1
 
 ```
 
-```
-# 修改 副本数
-spec:
-  replicas: 2
+---
 
+```shell
+# 修改如下部分:
+
+# Source: ingress-nginx/templates/controller-service.yaml
+apiVersion: v1
+kind: Service
+
+# 如下部分:
+
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+
+
+# 修改为
+
+  type: ClusterIP
+  externalTrafficPolicy: Local
+
+
+```
+
+---
+
+
+
+```
+# Deployment 部分
+
+# Source: ingress-nginx/templates/controller-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
 
 # 配置 node affinity 
 # 配置 hostNetwork
@@ -1917,109 +1953,37 @@ spec:
 
 # 在 如下之间添加
     spec:
-      serviceAccountName: nginx-ingress-serviceaccount
+      dnsPolicy: ClusterFirst
 
-
-# 添加完如下:
+# 修改为如下:
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - k8s-node-2
-                - k8s-node-3
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values: 
-                    - ingress-nginx
-              topologyKey: "kubernetes.io/hostname"
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
-      serviceAccountName: nginx-ingress-serviceaccount
 
-```
-
-```
-# 如上 affinity 说明
-
-      affinity:  # 声明 亲和性设置
-        nodeAffinity: # 声明 为 Node 亲和性设置
-          requiredDuringSchedulingIgnoredDuringExecution:  # 必须满足下面条件
-            nodeSelectorTerms: # 声明 为 Node 调度选择标签
-            - matchExpressions: # 设置node拥有的标签
-              - key: kubernetes.io/hostname  #  kubernetes内置标签
-                operator: In   # 操作符
-                values:        # 值,既集群 node 名称
-                - k8s-node-2
-                - k8s-node-3
-        podAntiAffinity:  # 声明 为 Pod 亲和性设置
-          requiredDuringSchedulingIgnoredDuringExecution:  # 必须满足下面条件
-            - labelSelector:  # 与哪个pod有亲和性，在此设置此pod具有的标签
-                matchExpressions:  # 要匹配如下的pod的,标签定义
-                  - key: app.kubernetes.io/name  # 标签定义为 空间名称(namespaces)
-                    operator: In
-                    values:              
-                    - ingress-nginx
-              topologyKey: "kubernetes.io/hostname"    # 节点所属拓朴域
-      tolerations:    # 声明 为 可容忍 的选项
-      - key: node-role.kubernetes.io/master    # 声明 标签为 node-role 选项
-        effect: NoSchedule                     # 声明 node-role 为 NoSchedule 也可容忍
-      serviceAccountName: nginx-ingress-serviceaccount
-
-```
-
-
-* 添加一个 svc 用于解决如下错误问题
-  * `err services "ingress-nginx" not found `
-
-
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: ingress-nginx
-  namespace: ingress-nginx
-spec:
-  type: ClusterIP
-  ports:
-  - name: http
-    port: 80
-    targetPort: 80
-    protocol: TCP
-  - name: https
-    port: 443
-    targetPort: 443
-    protocol: TCP
-  selector:
-    app: ingress-nginx
 ```
 
 ### 6.2.3  apply 导入 文件
 
 ```
-[root@k8s-node-1 ingress]# kubectl apply -f mandatory.yaml
+[root@k8s-node-1 ingress]# kubectl apply -f deploy.yaml
 namespace/ingress-nginx created
-configmap/nginx-configuration created
-configmap/tcp-services created
-configmap/udp-services created
-serviceaccount/nginx-ingress-serviceaccount created
-clusterrole.rbac.authorization.k8s.io/nginx-ingress-clusterrole created
-role.rbac.authorization.k8s.io/nginx-ingress-role created
-rolebinding.rbac.authorization.k8s.io/nginx-ingress-role-nisa-binding created
-clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-clusterrole-nisa-binding created
-deployment.apps/nginx-ingress-controller created
-limitrange/ingress-nginx created
+serviceaccount/ingress-nginx created
+configmap/ingress-nginx-controller created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created
+role.rbac.authorization.k8s.io/ingress-nginx created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx created
+service/ingress-nginx-controller-admission created
+service/ingress-nginx-controller created
+deployment.apps/ingress-nginx-controller created
+validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+job.batch/ingress-nginx-admission-create created
+job.batch/ingress-nginx-admission-patch created
+role.rbac.authorization.k8s.io/ingress-nginx-admission created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+serviceaccount/ingress-nginx-admission created
 
 ```
 
@@ -2028,10 +1992,16 @@ limitrange/ingress-nginx created
 
 
 ```
-[root@k8s-node-1 ingress]# kubectl get pods -n ingress-nginx -o wide
-NAME                                        READY   STATUS    RESTARTS   AGE     IP             NODE         NOMINATED NODE   READINESS GATES
-nginx-ingress-controller-5d5b986984-lxsng   1/1     Running   0          2m16s   10.18.77.218   k8s-node-3   <none>           <none>
-nginx-ingress-controller-5d5b986984-t8tvx   1/1     Running   0          53s     10.18.77.117   k8s-node-2   <none>           <none>
+[root@k8s-node-1 ingress]# kubectl get pods,svc -n ingress-nginx
+NAME                                            READY   STATUS      RESTARTS   AGE
+pod/ingress-nginx-admission-create-dgg76        0/1     Completed   0          114s
+pod/ingress-nginx-admission-patch-f65qj         0/1     Completed   1          114s
+pod/ingress-nginx-controller-5f4cb6d6f4-pft6x   1/1     Running     0          2m4s
+
+NAME                                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/ingress-nginx-controller             ClusterIP   10.99.155.236   <none>        80/TCP,443/TCP   2m4s
+service/ingress-nginx-controller-admission   ClusterIP   10.102.95.56    <none>        443/TCP          2m4s
+
 ```
 
 
