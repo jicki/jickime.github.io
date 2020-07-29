@@ -339,8 +339,10 @@ data:
   drone_db_driver: mysql
   drone_db_datasource: root:dronepass@tcp(mysql.database.svc.cluster.local:3306)/drone?parseTime=true
   gin_mode: release
-  drone_server: ws://drone-server.drone.svc.cluster.local:8000/ws/broker
+  drone_server_host: drone-server.drone.svc.cluster.local:8000
+  drone_server_proto: http
   remote_driver: gogs
+  
 
 ```
 
