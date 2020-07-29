@@ -1,5 +1,38 @@
-# CI/CD with Drone Kubernetes and Gogs
+---
+# 文章标题
+title: "CI/CD with Drone Kubernetes and Gogs"
+# 文章副标题
+subtitle: "CI/CD with Drone Kubernetes and Gogs"
+# 文章创建的日期时间
+date: 2020-07-29
+# 文章最后修改的日期时间
+lastmod: 2020-07-29
+# 文章作者
+author: "小炒肉"
+# 文章所属的类别
+categories:
+    - kubernetes
+    - docker
+    - devops
+# 文章内容的描述
+description: "CI/CD with Drone Kubernetes and Gogs"
+# 是否设置为草稿, 如果为 true 则不会被 hugo 渲染成 HTML
+draft: false
+# 文章是否不显示在主页上
+# hiddenFromHomePage: true
+# 是否使用 twemoji 
+twemoji: false
+# 文章的标签
+tags:
+    - kubernetes
+    - docker
+    - devops
+# 主页预览的文章特色图片.
+featuredImagePreview: "/img/posts/drone/drone-k8s.png"
 
+# 文章中的图片是否按照画廊形式呈现
+lightgallery: false
+---
 
 
 # Drone
@@ -362,10 +395,6 @@ metadata:
 spec:
   serviceName: drone-server
   replicas: 1
-  selector:
-    matchLabels:
-      app: drone-server
-      service: cicd
   template:
     metadata:
       labels:
@@ -459,37 +488,4 @@ spec:
     app: drone-server
     service: cicd
 
-
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: drone-ingress
-  namespace: drone
-spec:
-  rules:
-  - host: drone.jicki.cn
-    http:
-      paths:
-      - backend:
-          serviceName: drone-server
-          servicePort: 8000
-
 ```
-
-
----
-
-
-```shell
-# 导入yaml 文件
-
-[root@jicki drone]# kubectl apply -f .
-namespace/drone created
-configmap/drone created
-statefulset.apps/drone-server created
-service/drone-server created
-ingress.extensions/drone-ingress created
-
-```
-
