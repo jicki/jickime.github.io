@@ -620,7 +620,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: drone
-              key: drone_server_proto
+              key: drone_server_host
         - name: DRONE_RPC_PROTO
           valueFrom:
             configMapKeyRef:
