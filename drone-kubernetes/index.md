@@ -301,6 +301,13 @@ ingress.extensions/gogs-ingress created
 ## Drone-Server
 
 
+* `level=fatal msg="main: invalid configuration" error="Invalid port configuration. See https://discourse.drone.io/t/drone-server-changing-ports-protocol/4144"`
+
+  * 这个问题是 k8s 与 drone 之间的命名问题, 官方竟然一直不解决或者明确说明。 
+
+    * 解决方式一: 在创建 `deployment`、`StatefulSet`、`service` 不能创建名字为 `drone-server` 的服务。  
+
+    * 解决方式二: 配置 `DRONE_SERVER_PORT=:80` 变量
 
 ```shell
 # drone-namespace.yaml 
@@ -331,21 +338,14 @@ metadata:
   name: drone
   namespace: drone
 data:
-  docker_api_version: '1.40'
-  gogs: 'true'
-  gogs_private_mode: 'true'
-  gogs_url: http://gogs.git.svc.cluster.local:3000
-  drone_open: 'true'
+  drone_gogs_server: http://gogs.jicki.cn
+  drone_agents_enabled: 'true'
+  drone_rpc_secret: 'ff7848cbd12a26c133fb6136301371c0'
   drone_db_driver: mysql
-  drone_db_datasource: root:dronepass@tcp(mysql.database.svc.cluster.local:3306)/drone?parseTime=true
-  gin_mode: release
-  drone_server_host: drone-server.drone.svc.cluster.local:8000
+  drone_db_datasource: root:123456@tcp(mysql.database.svc.cluster.local:3306)/drone?parseTime=true
+  drone_server_host: drone.jicki.cn
   drone_server_proto: http
-  remote_driver: gogs
-  
-
 ```
-
 
 ---
 
@@ -356,61 +356,63 @@ data:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: drone-server
+  name: drone
   namespace: drone
   labels:
-    app: drone-server
+    app: drone
     service: cicd
 spec:
-  serviceName: drone-server
+  serviceName: drone
   replicas: 1
   selector:
     matchLabels:
-      app: drone-server
+      app: drone
       service: cicd
   template:
     metadata:
       labels:
-        app: drone-server
+        app: drone
         service: cicd
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-      - name: drone-server
+      - name: drone
         image: drone/drone
         ports:
         - name: http
-          containerPort: 8000
+          containerPort: 80
+        - name: https
+          containerPort: 443
         #securityContext:
         #  capabilities: {}
         #  privileged: true
         env:
         # Drone-ConfigMap
-        - name: DOCKER_API_VERSION
+        - name: DRONE_AGENTS_ENABLED
           valueFrom:
             configMapKeyRef:
               name: drone
-              key: docker_api_version
-        - name: DRONE_GOGS
+              key: drone_agents_enabled
+        - name: DRONE_GOGS_SERVER
           valueFrom:
             configMapKeyRef:
               name: drone
-              key: gogs
-        - name: DRONE_GOGS_PRIVATE_MODE
+              key: drone_gogs_server
+        - name: DRONE_RPC_SECRET
           valueFrom:
             configMapKeyRef:
               name: drone
-              key: gogs_private_mode
-        - name: DRONE_GOGS_URL
+              key: drone_rpc_secret
+        - name: DRONE_SERVER_HOST
           valueFrom:
             configMapKeyRef:
               name: drone
-              key: gogs_url
-        - name: DRONE_OPEN
+              key: drone_server_host
+        - name: DRONE_SERVER_PROTO
           valueFrom:
             configMapKeyRef:
               name: drone
-              key: drone_open
+              key: drone_server_proto
         - name: DRONE_DATABASE_DRIVER
           valueFrom:
             configMapKeyRef:
@@ -421,11 +423,6 @@ spec:
             configMapKeyRef:
               name: drone
               key: drone_db_datasource
-        - name: GIN_MODE
-          valueFrom:
-            configMapKeyRef:
-              name: drone
-              key: gin_mode
         volumeMounts:
         - name: drone-data-storage
           mountPath: /var/lib/drone
@@ -441,24 +438,27 @@ spec:
       - name: tz-config
         hostPath:
           path: /etc/localtime
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: drone-server
+  name: drone
   namespace: drone
   labels:
-    app: drone-server
+    app: drone
     service: cicd
 spec:
   ports:
   - name: http
     protocol: TCP
-    port: 8000
-    targetPort: 8000
+    port: 80
+    targetPort: 80
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443
   selector:
-    app: drone-server
+    app: drone
     service: cicd
 
 
@@ -474,8 +474,8 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: drone-server
-          servicePort: 8000
+          serviceName: drone
+          servicePort: 80
 
 ```
 
@@ -489,9 +489,52 @@ spec:
 [root@jicki drone]# kubectl apply -f .
 namespace/drone created
 configmap/drone created
-statefulset.apps/drone-server created
-service/drone-server created
+statefulset.apps/drone created
+service/drone created
 ingress.extensions/drone-ingress created
 
 ```
+
+
+
+---
+
+
+```shell
+# 查看相关服务
+
+[root@jicki drone]# kubectl get pods,svc,ingress -n drone
+NAME          READY   STATUS    RESTARTS   AGE
+pod/drone-0   1/1     Running   0          5m21s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+service/drone   ClusterIP   10.100.29.28   <none>        80/TCP,443/TCP   12m
+
+NAME                               CLASS    HOSTS            ADDRESS         PORTS   AGE
+ingress.extensions/drone-ingress   <none>   drone.jicki.cn   10.99.155.236   80      12m
+
+```
+
+
+---
+
+
+### 访问WebUI
+
+* 这里特别注意, 因为我们关联的是 gogs 的 git , 所以这里登录 `drone` 的时候, 使用 `gogs` 的账号密码。
+
+
+{{< figure src="/img/posts/drone/drone-web-1.png" >}}
+
+{{< figure src="/img/posts/drone/drone-web-2.png" >}}
+
+{{< figure src="/img/posts/drone/drone-web-3.png" >}}
+
+
+
+
+## drone-agent
+
+
+
 
