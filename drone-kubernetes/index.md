@@ -535,6 +535,101 @@ ingress.extensions/drone-ingress   <none>   drone.jicki.cn   10.99.155.236   80 
 
 ## drone-agent
 
+* 官方说 Kubernetes 部署 drone-agent 还在测试中。
 
 
+```shell
+# drone-agent-rbac.yaml 
+
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: drone
+  name: drone
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - create
+  - delete
+  - list
+  - watch
+  - update
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: drone
+  namespace: drone
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: drone
+roleRef:
+  kind: Role
+  name: drone
+  apiGroup: rbac.authorization.k8s.io
+
+```
+
+
+---
+
+
+```shell
+# drone-agent-deployment.yaml
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone-agent
+  namespace: drone
+  labels:
+    app.kubernetes.io/name: drone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: drone
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: drone
+    spec:
+      containers:
+      - name: runner
+        image: drone/drone-runner-kube:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DRONE_RPC_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: drone
+              key: drone_server_proto
+        - name: DRONE_RPC_PROTO
+          valueFrom:
+            configMapKeyRef:
+              name: drone
+              key: drone_server_proto
+        - name: DRONE_RPC_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: drone
+              key: drone_rpc_secret
+```
 
