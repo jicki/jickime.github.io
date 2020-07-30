@@ -324,9 +324,6 @@ metadata:
 
 ---
 
-* 这里配置 `gogs_git_user` 需要单独在 gogs 里创建一个有所有组织权限的账户, 或者是管理员。
-
-
 * `drone_agent_secret` 是用于 drone-agent 与 drone-server 进行通讯的 秘钥。
 
   * 使用 `openssl rand -hex 16` 进行生成。
