@@ -173,6 +173,9 @@ service/mysql   ClusterIP   10.104.238.35   <none>        3306/TCP   6m1s
 * 在 WebUI 下初始化配置, 可能会遇到 `Error 1049: Unknown database 'gogs'` 需要在数据库先创建 用户 以及 数据库
 
 
+* 数据库连接使用 svc 地址 `mysql.database.svc.cluster.local:3306`
+
+
 * 相关 yaml 文件
 
 ```shell
@@ -541,11 +544,10 @@ ingress.extensions/drone-ingress   <none>   drone.jicki.cn   10.99.155.236   80 
 ```shell
 # drone-agent-rbac.yaml 
 
-
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: drone
+  namespace: default
   name: drone
 rules:
 - apiGroups:
@@ -573,11 +575,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: drone
-  namespace: drone
+  namespace: default
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: drone
+  namespace: default
 roleRef:
   kind: Role
   name: drone
@@ -632,4 +634,69 @@ spec:
               name: drone
               key: drone_rpc_secret
 ```
+
+
+
+---
+
+
+```shell
+# 查看服务
+
+[root@jicki drone]# kubectl get pods -n drone
+NAME                           READY   STATUS    RESTARTS   AGE
+drone-0                        1/1     Running   0          75m
+drone-agent-5c599f5c97-lmsr2   1/1     Running   0          3m8s
+
+```
+
+
+---
+
+```shell
+# 查看连接日志状态
+
+[root@jicki drone]# kubectl logs drone-agent-5c599f5c97-lmsr2 -n drone
+time="2020-07-30T04:02:08Z" level=info msg="starting the server" addr=":3000"
+time="2020-07-30T04:02:09Z" level=info msg="successfully pinged the remote server"
+time="2020-07-30T04:02:09Z" level=info msg="polling the remote server" capacity=100 endpoint="http://drone.jicki.cn" kind=pipeline type=kubernetes
+
+```
+
+
+
+
+
+## 测试CI/CD
+
+
+###  .drone.yml
+
+* `drone` 的操作都是通过 配置 `.drone.yml` 文件来定义。
+
+* `.drone.yml` 创建以后提交到对应的仓库中。
+
+```shell
+# .drone.yml
+
+
+kind: pipeline
+name: default
+
+steps:
+- name: Job
+  image: alpine
+  commands:
+  - echo "Drone With Kubernetes Pipeline CI"
+
+```
+
+
+
+---
+
+
+
+
+
 
