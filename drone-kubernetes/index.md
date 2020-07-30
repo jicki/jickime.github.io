@@ -541,6 +541,12 @@ ingress.extensions/drone-ingress   <none>   drone.jicki.cn   10.99.155.236   80 
 * 官方说 Kubernetes 部署 drone-agent 还在测试中。
 
 
+* 这里配置 drone-agent 的 `namespaces` 都在 `default` 下。 否则会报 `ServiceAccount` 权限错误。
+
+
+* drone-agent 默认使用 `ServiceAccount` 名字为 `default`  的用户执行构建。如需使用其他需要在 `DRONE_SERVICE_ACCOUNT_DEFAULT` 指定。
+
+
 ```shell
 # drone-agent-rbac.yaml 
 
@@ -599,18 +605,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: drone-agent
-  namespace: drone
   labels:
-    app.kubernetes.io/name: drone
+    app.kubernetes.io/name: drone-agent
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: drone
+      app.kubernetes.io/name: drone-agent
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: drone
+        app.kubernetes.io/name: drone-agent
     spec:
       containers:
       - name: runner
@@ -618,21 +623,32 @@ spec:
         ports:
         - containerPort: 3000
         env:
+        #- name: DRONE_SERVICE_ACCOUNT_DEFAULT
+        #  value: drone
         - name: DRONE_RPC_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: drone
-              key: drone_server_host
+          value: drone.jicki.cn
         - name: DRONE_RPC_PROTO
-          valueFrom:
-            configMapKeyRef:
-              name: drone
-              key: drone_server_proto
+          value: http
         - name: DRONE_RPC_SECRET
-          valueFrom:
-            configMapKeyRef:
-              name: drone
-              key: drone_rpc_secret
+          value: ff7848cbd12a26c133fb6136301371c0
+        volumeMounts:
+        - name: dockersocket
+          mountPath: /var/run/docker.sock
+        - name: dockersocket-2
+          mountPath: /run/docker.sock
+        - name: docker-client
+          mountPath: /usr/bin/docker
+      restartPolicy: Always
+      volumes:
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+      - name: dockersocket-2
+        hostPath:
+          path: /run/docker.sock
+      - name: docker-client
+        hostPath:
+          path: /usr/bin/docker
 ```
 
 
@@ -643,10 +659,9 @@ spec:
 ```shell
 # 查看服务
 
-[root@jicki drone]# kubectl get pods -n drone
+[root@jicki drone]# kubectl get pods
 NAME                           READY   STATUS    RESTARTS   AGE
-drone-0                        1/1     Running   0          75m
-drone-agent-5c599f5c97-lmsr2   1/1     Running   0          3m8s
+drone-agent-6c88f5847d-9c8x5   1/1     Running   0          60s
 
 ```
 
@@ -656,10 +671,10 @@ drone-agent-5c599f5c97-lmsr2   1/1     Running   0          3m8s
 ```shell
 # 查看连接日志状态
 
-[root@jicki drone]# kubectl logs drone-agent-5c599f5c97-lmsr2 -n drone
-time="2020-07-30T04:02:08Z" level=info msg="starting the server" addr=":3000"
-time="2020-07-30T04:02:09Z" level=info msg="successfully pinged the remote server"
-time="2020-07-30T04:02:09Z" level=info msg="polling the remote server" capacity=100 endpoint="http://drone.jicki.cn" kind=pipeline type=kubernetes
+[root@jicki drone]# kubectl logs pods/drone-agent-6c88f5847d-9c8x5
+time="2020-07-30T07:29:48Z" level=info msg="starting the server" addr=":3000"
+time="2020-07-30T07:29:52Z" level=info msg="successfully pinged the remote server"
+time="2020-07-30T07:29:52Z" level=info msg="polling the remote server" capacity=100 endpoint="http://drone.jicki.cn" kind=pipeline type=kubernetes
 
 ```
 
@@ -674,6 +689,8 @@ time="2020-07-30T04:02:09Z" level=info msg="polling the remote server" capacity=
 
 * `drone` 的操作都是通过 配置 `.drone.yml` 文件来定义。
 
+* `.drone.yml` 在 kubernetes 中使用, 必须指定 `type: kubernetes`。
+
 * `.drone.yml` 创建以后提交到对应的仓库中。
 
 ```shell
@@ -681,6 +698,7 @@ time="2020-07-30T04:02:09Z" level=info msg="polling the remote server" capacity=
 
 
 kind: pipeline
+type: kubernetes
 name: default
 
 steps:
@@ -695,6 +713,23 @@ steps:
 
 ---
 
+
+```shell
+# 构建过程中的 pods, 构建完成会自动销毁
+
+[root@jicki drone]# kubectl get pods
+NAME                           READY   STATUS              RESTARTS   AGE
+drone-2qeray1ji25xjbavnjdh     0/2     ContainerCreating   0          3m28s
+
+
+```
+
+---
+
+
+{{< figure src="/img/posts/drone/drone-web-4.png" >}}
+
+{{< figure src="/img/posts/drone/drone-web-5.png" >}}
 
 
 
