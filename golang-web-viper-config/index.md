@@ -89,8 +89,8 @@ func main() {
 	// SetConfigName 设置配置文件名称 - 不需要定义文件扩展名
 	viper.SetConfigName("config")
 
-	// SetConfigType 设置配置文件类型 - 当设置配置文件时必须设置此项
-	viper.SetConfigType("yaml")
+	// SetConfigType 设置配置文件类型 - 专用于 远程配置中心定义类型
+	//viper.SetConfigType("yaml")
 
 	// AddConfigPath 添加配置文件读取目录, 支持添加多个
 	// 这里注意 搜索路径是从上到下搜索, 如果下面有配置写入会生成
@@ -189,8 +189,8 @@ func InitViper() {
 
 	// SetConfigName 设置配置文件名称 - 不需要定义文件扩展名
 	viper.SetConfigName("config")
-	// SetConfigType 设置配置文件类型 - 当设置配置文件时必须设置此项
-	viper.SetConfigType("yaml")
+	// SetConfigType 设置配置文件类型 - 专用于 远程配置中心定义类型
+	//viper.SetConfigType("yaml")
 	// AddConfigPath 添加配置文件读取目录, 支持添加多个
 	viper.AddConfigPath("./conf/")
 
@@ -590,8 +590,8 @@ func InitViper() {
 
 	// SetConfigName 设置配置文件名称 - 不需要定义文件扩展名
 	viper.SetConfigName("config")
-	// SetConfigType 设置配置文件类型 - 当设置配置文件时必须设置此项
-	viper.SetConfigType("yaml")
+	// SetConfigType 设置配置文件类型 - 专用于 远程配置中心定义类型
+	//viper.SetConfigType("yaml")
 	// AddConfigPath 添加配置文件读取目录, 支持添加多个
 	viper.AddConfigPath("./conf/")
 
