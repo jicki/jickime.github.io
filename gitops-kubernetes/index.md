@@ -77,8 +77,8 @@
 {{< mermaid >}}
 graph LR;
     A( Dev ) -->| RW | B( Git Code Repo )
-    B <--| RO | C ( CI 流程 )
+    C(CI 流程) -->| RO | B
     C -->| RW | D( Docker Image Repo )
-    D <--| RO | E( Kuberneres Cluster ) 
+    E( Kuberneres Cluster ) -->| RO | D
 {{< /mermaid >}}
 
