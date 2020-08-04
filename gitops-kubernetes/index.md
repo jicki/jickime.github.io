@@ -99,7 +99,7 @@ graph LR;
     A( Dev ) -->| RW | B( Git Code Repo )
     C(CI 流程) -->| RO | B
     C -->| RW | D( Docker Image Repo )
-    E( Kuberneres Cluster ( Operator ) -->| RO | D
+    E( Kuberneres Cluster Operator ) -->| RO | D
     E -->| RW | F( Config Repo )
 {{< /mermaid >}}
 
