@@ -80,6 +80,5 @@ graph LR;
     B <--| RO | C ( CI 流程 )
     C <-->| RW | D( Docker Image Repo )
     D <--| RO | E( Kuberneres Cluster ) 
-    C <-->| RW | E( Kuberneres Cluster )
 {{< /mermaid >}}
 
