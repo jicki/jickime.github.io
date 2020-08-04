@@ -67,10 +67,10 @@
 
 
 
-## 拉式流水线 —— Pull Request
+## 推送流水线
 
 
-* 有拉式流水线自然就有 `推送流水线`。
+* `推送流水线`
 
   * 目前大多数CI / CD工具都使用基于推送的模型。基于推送的流水线意味着代码从CI系统开始, 通过一系列构建测试等最终生成镜像, 最后手动使用 `kubectl` 将任何更改推送到`Kubernetes` 集群。 
 
@@ -80,5 +80,26 @@ graph LR;
     C(CI 流程) -->| RO | B
     C -->| RW | D( Docker Image Repo )
     E( Kuberneres Cluster ) -->| RO | D
+{{< /mermaid >}}
+
+
+
+## 拉式流水线
+
+* `拉式流水线`
+
+  * GitOps中, 镜像被拉出并且凭证保留在集群中.
+
+  * Git库是拉式流水线模式的核心, 它存储应用程序和配置文件集。开发人员将更新的代码推送到`Git`代码库, CI 工具获取更改并最终构建`Docker`镜像。GitOps 检测到有镜像, 从存储库中提取新镜像, 然后在Git配置仓库中更新其YAML。然后, GitOps 会检测到群集已过期, 并从配置库中提取已更改的清单, 并将新镜像部署到群集。
+
+
+
+{{< mermaid >}}
+graph LR;
+    A( Dev ) -->| RW | B( Git Code Repo )
+    C(CI 流程) -->| RO | B
+    C -->| RW | D( Docker Image Repo )
+    E( Kuberneres Cluster ( Operator ) -->| RO | D
+    E -->| RW | F( Config Repo )
 {{< /mermaid >}}
 
