@@ -46,7 +46,7 @@
 
 20. {{< link "https://jicki.cn/golang-web-viper-config" "Go Web编程 - Go 使用 viper 管理配置" "Golang 使用 viper 管理配置" >}}
 
-
+21. {{< link "https://jicki.cn/golang-web-validator" "Go Web编程 - Go 使用 validator 检验参数" "Go 使用 validator 检验参数" >}}
 
 
 
