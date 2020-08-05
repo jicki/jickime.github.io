@@ -62,6 +62,16 @@ var trans ut.Translator
 func InitTrans(locale string) (err error) {
 	// 更改Gin框架中validator引擎的属性,实现翻译
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+
+		// 注册一个获取 json tag 的自定义方法
+		v.RegisterTagNameFunc(func(field reflect.StructField) string {
+			name := strings.SplitN(field.Tag.Get("json"), ",", 2)[0]
+			if name == "-" {
+				return ""
+			}
+			return name
+		})
+
 		// 中文
 		zhT := zh.New()
 		// 英文
