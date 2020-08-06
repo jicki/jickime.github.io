@@ -48,6 +48,7 @@
 
 21. {{< link "https://jicki.cn/golang-web-validator" "Go Web编程 - Go 使用 validator 检验参数" "Go 使用 validator 检验参数" >}}
 
+22. {{< link "https://jicki.cn/golang-web-jwt-token" "Go Web编程 - Go 使用 Jwt 实现 Token 认证" "Go 使用 Jwt 实现 Token 认证" >}}
 
 
   [1]: https://jicki.cn/img/posts/golang/goweb.png
