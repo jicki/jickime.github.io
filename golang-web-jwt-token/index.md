@@ -176,7 +176,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 			return
 		}
 		// 将解析后获取的信息, 保存到 上下文 (c *gin.Context) 中
-		c.Set("user_ID", mc.UserID)
+		c.Set("userID", mc.UserID)
 		// 执行下一个函数
 		c.Next()
 	}
